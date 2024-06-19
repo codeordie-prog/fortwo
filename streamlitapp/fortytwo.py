@@ -507,7 +507,7 @@ try:
                         qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     #define repo query
-    def github_repo_query(github_repo_url: str):
+    def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 # Clone the repo
@@ -532,14 +532,14 @@ try:
                 texts = python_splitter.split_documents(documents)
 
                 # Retriever
-                db = Chroma.from_documents(texts, OpenAIEmbeddings(disallowed_special=()))
+                db = Chroma.from_documents(texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
                 retriever = db.as_retriever(
                     search_type="mmr",  # Also test "similarity"
                     search_kwargs={"k": 8},
                 )
 
                 llm_model = st.sidebar.selectbox("Choose LLM model", ("gpt-4o", "gpt-4"))
-                llm = ChatOpenAI(model_name=llm_model)
+                llm = ChatOpenAI(model_name=llm_model,api_key=open_ai_key)
 
                 # Prompt
                 prompt_retriever = ChatPromptTemplate.from_messages(
@@ -605,7 +605,7 @@ try:
                             st.session_state["messages"].append({"role": "user", "content": user_input})
                             st.chat_message("user").write(user_input)
                         
-                            chain = github_repo_query(repo_url)
+                            chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
                             response = chain.invoke({"input":user_input})
                             #st.write(response["answer"])  
                             ass_msg = response["answer"]
