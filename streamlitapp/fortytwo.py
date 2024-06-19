@@ -508,7 +508,7 @@ try:
                         qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     #define repo query
-    @st.cache_resource(ttl="2h")
+   
     def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
