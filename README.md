@@ -26,8 +26,8 @@ This project uses [Poetry](https://python-poetry.org/) for dependency management
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/codeordie-prog/askfortytwo.git
-   cd ask-fortytwo
+   git clone https://github.com/codeordie-prog/fortwo.git
+   cd fortwo
 
 2. **install dependencies**
     poetry install
