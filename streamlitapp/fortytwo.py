@@ -3,8 +3,6 @@ import io
 import tempfile
 import os
 import requests
-import sqlite3
-import pysqlite3
 import sys
 from lxml import html
 from PIL import Image
