@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "streamlitapp"
+version = "0.1.0"
+description = ""
+authors = ["Kelvin Ndeti <kelvinndeti3142@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.2.1"
+requests = "^2.32.3"
+langchain-community = "^0.2.1"
+langchain-core = "^0.2.3"
+langchain-openai = "^0.1.8"
+langchain-text-splitters = "^0.2.0"
+streamlit = "^1.35.0"
+lxml = "^5.2.2"
+chromadb = "^0.5.0"
+sentence-transformers = "^3.0.0"
+docarray = "^0.40.0"
+torch = "^2.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

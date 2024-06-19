@@ -1,0 +1,22 @@
+{
+    "name": "Streamlit App",
+    "build": {
+      "dockerfile": "Dockerfile",
+      "context": ".."
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-azuretools.vscode-docker"
+        ],
+        "settings": {
+          "python.pythonPath": "/usr/local/bin/python"
+        }
+      }
+    },
+    "forwardPorts": [
+      8501
+    ],
+    "postCreateCommand": "poetry install"
+  }
