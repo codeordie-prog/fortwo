@@ -608,8 +608,11 @@ try:
                             st.chat_message("user").write(user_input)
                         
                             chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
-                            response = chain.invoke({"input":user_input})
-                            #st.write(response["answer"])  
+                            response_container = st.container()  # Create a container for streaming response
+                            stream_handler = StreamHandler(response_container)  # Instantiate the StreamHandler
+
+                            response = chain.invoke({"input":user_input}, callbacks=[stream_handler])
+                              
                             ass_msg = response["answer"]
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             st.chat_message("assistant").write(ass_msg)
