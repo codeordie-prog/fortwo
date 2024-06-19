@@ -66,7 +66,7 @@ try:
             st.error(f"Error loading image: {e}")
             return None
 
-    imag_path = "logo/lgo.jfif"
+    imag_path = "streamlitapp/logo/lgo.jfif"
     image_bytes = load_image(imag_path)
 
     # Create two columns
@@ -84,7 +84,7 @@ try:
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
-    st.sidebar.image("logo/stimage.jfif",width=300)
+    st.sidebar.image("streamlitapp/logo/stimage.jfif",width=300)
     st.sidebar.title("Ask FortyTwo")
     st.sidebar.subheader("About")
     st.sidebar.info("""
@@ -611,7 +611,7 @@ try:
                             ass_msg = response["answer"]
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             st.chat_message("assistant").write(ass_msg)
-                            
+
                 except Exception as e:
                      st.write("an error occured in Github sidebar option",e)
                         
