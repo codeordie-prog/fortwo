@@ -3,6 +3,9 @@ import io
 import tempfile
 import os
 import requests
+import sqlite3
+import pysqlite3
+import sys
 from lxml import html
 from PIL import Image
 from io import BytesIO
@@ -507,6 +510,7 @@ try:
                         qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     #define repo query
+    @st.cache_resource(ttl="2h")
     def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
