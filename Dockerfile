@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.11
 
 # Install git and other necessary packages
 RUN apt-get update && apt-get install -y git
