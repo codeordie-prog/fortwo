@@ -611,7 +611,7 @@ try:
                             response_container = st.container()  # Create a container for streaming response
                             stream_handler = StreamHandler(response_container)  # Instantiate the StreamHandler
 
-                            response = chain.invoke({"input":user_input}, callbacks=[stream_handler])
+                            response = chain.invoke({"input":user_input}, callback=[stream_handler,])
                               
                             ass_msg = response["answer"]
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
