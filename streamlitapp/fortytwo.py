@@ -610,12 +610,15 @@ try:
                             st.chat_message("user").write(user_input)
                         
                             chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
-                            response_container = st.container()  # Create a container for streaming response
-                            stream_handler = StreamHandler(response_container)  # Instantiate the StreamHandler
+                            
+                            #use pick to select the desired key
+                            stream_chain = chain.pick("answer")
 
-                            response = chain.invoke({"input":user_input})
+                            for chunk in stream_chain.stream({"input":user_input}):
+                                st.write(chunk,end="")
+                                response = f"{chunk}"
                               
-                            ass_msg = response["answer"]
+                            ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             st.chat_message("assistant").write(ass_msg)
 
