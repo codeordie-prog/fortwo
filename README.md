@@ -5,7 +5,10 @@
 
 **Ask FortyTwo** is an intelligent digital assistant that leverages the power of GPT models and Retrieval Augmented Generation (RAG) to answer user queries. It can handle various tasks, including document querying, code requests, math assistance, and writing help. Additionally, it can query a GitHub repository for specific information.
 
-[watch a demo](vdeo/github.mp4)
+<video width="600" controls>
+  <source src="videos/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Features
 
