@@ -16,17 +16,18 @@ Ask FortyTwo is an AI Assistant that leverages Retrieval Augmented Generation (R
 ### Requirements
 Install the necessary dependencies using: 
 
-   ``bash
-   pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
+   
+   ```pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic```
 
 # Usage
 
 **Running the Application**
 To run the application, use Streamlit:
 
-streamlit run chat_with_documents.py
+   ```streamlit run chat_with_documents.py```
 
 # Sidebar Options
+
 Clear Message History: Clears the chat history.
 Upload Files: Upload documents in .pdf, .txt, or .csv formats.
 GitHub Repository: Enter the URL of a GitHub repository to query its contents.
