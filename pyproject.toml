@@ -19,6 +19,7 @@ chromadb = "^0.3.29"
 sentence-transformers = "^3.0.0"
 docarray = "^0.40.0"
 torch = "^2.3.1"
+pypdf = "^4.2.0"
 
 
 [build-system]
