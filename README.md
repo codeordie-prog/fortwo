@@ -3,12 +3,10 @@
 
 ## Overview
 
+![ask42](logo/stimage.jfif)
+
 **Ask FortyTwo** is an intelligent digital assistant that leverages the power of GPT models and Retrieval Augmented Generation (RAG) to answer user queries. It can handle various tasks, including document querying, code requests, math assistance, and writing help. Additionally, it can query a GitHub repository for specific information.
 
-<video width="600" controls>
-  <source src="vdeo/github.mp4" type="vdeo/mp4">
-  Your browser does not support the video tag.
-</video>
 
 ## Features
 
@@ -23,7 +21,7 @@ This project uses [Poetry](https://python-poetry.org/) for dependency management
 
 ### Prerequisites
 
-- Python 3.12
+- Python 3.11
 - Poetry
 
 ### Steps
