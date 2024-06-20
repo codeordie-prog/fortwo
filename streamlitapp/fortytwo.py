@@ -615,7 +615,7 @@ try:
                             stream_chain = chain.pick("answer")
 
                             for chunk in stream_chain.stream({"input":user_input}):
-                                st.write(chunk,end="")
+                                st.write(f"{chunk}",end='')
                                 response = f"{chunk}"
                               
                             ass_msg = response
