@@ -1,63 +1,72 @@
 
 # Ask FortyTwo
 
-## Overview
+Overview
 
 ![ask42](https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/logo/stimage.jfif)
 
-**Ask FortyTwo** is an intelligent digital assistant that leverages the power of GPT models and Retrieval Augmented Generation (RAG) to answer user queries. It can handle various tasks, including document querying, code requests, math assistance, and writing help. Additionally, it can query a GitHub repository for specific information.
+Ask FortyTwo is an AI Assistant that leverages Retrieval Augmented Generation (RAG) to answer queries about your documents in .pdf, .txt, or .csv format. The assistant, named 42, is inspired by the answer to the ultimate question in "The Hitchhiker's Guide to the Galaxy" and is designed to provide accurate and helpful responses to a wide range of queries, including coding requests, math assistance, and document writing.
 
+# Features
+1. **Query documents** in .pdf, .txt, or .csv formats.
+2. **Interact with GitHub repositories.**
+3. **Query web information**.
+4. **Engage in general chat sessions with the AI assistant.**
 
-## Features
+### Requirements
+Install the necessary dependencies using: 
 
-- **Chat Interface**: Interact with the AI through a chat interface.
-- **Document Upload**: Upload PDF, TXT, and CSV files for querying.
-- **GitHub Repository Query**: Enter a repository URL and query its contents.
-- **Conversational Memory**: The AI maintains context throughout the conversation.
+pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
 
-## Installation
+ # Usage
 
-This project uses [Poetry](https://python-poetry.org/) for dependency management. Follow the steps below to set up and run the application.
+**Running the Application**
+To run the application, use Streamlit:
 
-### Prerequisites
+streamlit run chat_with_documents.py
 
-- Python 3.11
-- Poetry
+# Sidebar Options
+Clear Message History: Clears the chat history.
+Upload Files: Upload documents in .pdf, .txt, or .csv formats.
+GitHub Repository: Enter the URL of a GitHub repository to query its contents.
+Query Web Section: Interact with web information by entering a URL and a document name.
+Chat Interface
+User Query: Enter your query in the chat input field.
+AI Responses: The assistant will respond with relevant information from the provided documents or general knowledge.
 
-### Steps
+# Configuration
 
-1. **Clone the Repository**
+# Document Loader
+The application supports loading documents from various formats:
 
-   ```bash
-   git clone https://github.com/codeordie-prog/fortwo.git
-   cd fortwo
+.pdf: Uses PyPDFLoader.
+.txt: Uses TextLoader.
+.csv: Uses CSVLoader.
 
-2. **install dependencies**
-    poetry install
+# Text Splitting
+Documents are split into manageable chunks using RecursiveCharacterTextSplitter.
 
-3. **Set Up Environment Variables**
+# Embeddings
+Embeddings are generated using HuggingFaceEmbeddings with the model all-MiniLM-L6-v2.
 
-    Create a .env file in the project root and add your OpenAI API key:
+# Vector Database
+The document chunks and embeddings are stored in a vector database (DocArrayInMemorySearch) for efficient retrieval.
 
+# Functionality
 
-    OPENAI_API_KEY=your_openai_api_key_here
+GitHub Repository Query
+To query a GitHub repository, enter the repository URL in the sidebar. The code will clone the repository, load the relevant files, and prepare them for querying.
 
-4. **Run the Application**
-
-    poetry run streamlit run app.py
-
+Web Query
+To query web information, enter the URL and a name for the web document. The assistant will process the webpage and make it available for querying.
 
 # Contributing
-    We welcome contributions! Please fork the repository and create a pull request.
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
-    Fork the repository
-    Create a new branch (git checkout -b feature/your-feature)
-    Commit your changes (git commit -am 'Add new feature')
-    Push to the branch (git push origin feature/your-feature)
-    Create a new Pull Request
-    License
-    This project is licensed under the MIT License. See the LICENSE file for details.
+# License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-# Acknowledgments
-Inspired by the need to utilize Retrieval Augmented Generation in data querying.
+# Contact
+For help or issues, please visit the GitHub repository.
 
+This README file provides a clear and structured overview of your project, its features, requirements, and usage instructions. Feel free to modify it further to suit your specific needs.
