@@ -613,10 +613,9 @@ try:
                             
                             #use pick to select the desired key
                             stream_chain = chain.pick("answer")
-
+                            response = ""
                             for chunk in stream_chain.stream({"input":user_input}):
-                                st.write(f"{chunk}",end='')
-                                response = f"{chunk}"
+                                response += f"{chunk}"
                               
                             ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
