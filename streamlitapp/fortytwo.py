@@ -613,13 +613,15 @@ try:
                             
                             #use pick to select the desired key
                             stream_chain = chain.pick("answer")
+                            response_placeholder = st.empty()
                             response = ""
                             for chunk in stream_chain.stream({"input":user_input}):
                                 response += f"{chunk}"
+                                response_placeholder.write(response)
                               
                             ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
-                            st.chat_message("assistant").write(ass_msg)
+                            response_placeholder.write(ass_msg)
 
                 except Exception as e:
                      st.write("an error occured in Github sidebar option",e)
