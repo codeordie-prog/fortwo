@@ -90,8 +90,9 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
-        is a smart bot that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`.
-        42 also has a chat section where users can chat with the bot without uploading the documents.
+        is a smart bot that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
+        42 also has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
+        you can query a repository on GitHub.
     """)
 
 
@@ -578,6 +579,7 @@ try:
 
        
     #--------------------------------------------------------------main function------------------------------------------------------------------#
+    st.cache_resource(ttl="2h")
     def main():
 
         try:
@@ -631,6 +633,6 @@ try:
 
 
 except Exception as e:
-    st.write("an error occured check the key",e)
+    st.write("an error occured check the key")
 
  
