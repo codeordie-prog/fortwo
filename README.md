@@ -3,7 +3,7 @@
 
 ## Overview
 
-![ask42](logo/fortwo.png)
+![ask42](https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/logo/stimage.jfif)
 
 **Ask FortyTwo** is an intelligent digital assistant that leverages the power of GPT models and Retrieval Augmented Generation (RAG) to answer user queries. It can handle various tasks, including document querying, code requests, math assistance, and writing help. Additionally, it can query a GitHub repository for specific information.
 
