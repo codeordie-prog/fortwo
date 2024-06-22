@@ -24,7 +24,7 @@ Install the necessary dependencies using:
 **Running the Application**
 To run the application, use Streamlit:
 
-   ```streamlit run chat_with_documents.py```
+   ```streamlit run fortytwo.py```
 
 # Sidebar Options
 

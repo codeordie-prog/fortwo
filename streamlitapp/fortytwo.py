@@ -355,7 +355,10 @@ try:
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
                     assistant_msg = response  # Adjusted to fetch text from the response
 
-                    
+                    intermediate_steps = llm_chain.pick("intermediate_steps")
+                    intermediate_placeholder = st.empty()
+                    intermediate_string = ""
+
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
@@ -363,6 +366,14 @@ try:
                     if st.sidebar.button("Download Chat"):
                         all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                         create_and_download(text_content=all_messages)
+
+                    if st.button("thoughts"):
+                        for chunk in intermediate_steps:
+                              intermediate_string+= f"{chunk}"
+                              intermediate_placeholder.write(chunk)
+                         
+                        intermediate_placeholder.write(intermediate_string)
+                        
             except Exception:
                 st.write("an Error occured please enter a valid OpenAI API key")
 
@@ -439,7 +450,7 @@ try:
                     verbose=True
                 )
 
-                
+              
 
             if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
                     msgs.clear()
@@ -613,11 +624,14 @@ try:
                             
                             #use pick to select the desired key
                             stream_chain = chain.pick("answer")
+                            #intermediate_step_chain = chain.pick("intermediate_steps")
+                            
+                            #create a response placeholder and set it to empty, it will be updated with each chunk
                             response_placeholder = st.empty()
                             response = ""
                             for chunk in stream_chain.stream({"input":user_input}):
                                 response += f"{chunk}"
-                                response_placeholder.write(response)
+                                response_placeholder.write(response) #update place holder
                               
                             ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
