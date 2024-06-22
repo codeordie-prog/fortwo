@@ -366,10 +366,13 @@ try:
                         all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                         create_and_download(text_content=all_messages)
 
+                    st.session_state["thoughts"] = intermediate_string
+
                     for chunk in intermediate_steps:
                          intermediate_string += f"{chunk}"
+                         st.session_state["thoughts"].append({"role":"assistant","content":intermediate_string})
                     
-                    st.session_state["thoughts"] = intermediate_string
+                    
                         
                    
                     if st.button("thoughts"):
