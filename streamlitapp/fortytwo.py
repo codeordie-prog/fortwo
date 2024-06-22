@@ -376,7 +376,7 @@ try:
 
                    
 
-            except Exception as e:
+            except Exception:
                 st.write("an Error occured please enter a valid OpenAI API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
@@ -642,6 +642,8 @@ try:
                             ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             response_placeholder.write(ass_msg)
+
+                
 
                 except Exception as e:
                      st.write("an error occured in Github sidebar option")
