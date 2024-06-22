@@ -367,13 +367,15 @@ try:
                         all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                         create_and_download(text_content=all_messages)
 
-                    if st.button("thoughts"):
-                        for chunk in intermediate_steps:
-                              intermediate_string+= f"{chunk}"
-                              intermediate_placeholder.write(chunk)
+                    
+                    for chunk in intermediate_steps:
+                        intermediate_string+= f"{chunk}"
+                        intermediate_placeholder.write(chunk)
                         
-                        ass_thoughts = intermediate_string
-                        st.session_state["messages"].append({"role":"assistant","content":ass_thoughts})
+                    ass_thoughts = intermediate_string
+                    st.session_state["messages"].append({"role":"assistant","content":ass_thoughts})
+
+                    if st.button("thoughts"):
                         intermediate_placeholder.write(ass_thoughts)
 
             except Exception:
