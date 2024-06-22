@@ -355,9 +355,6 @@ try:
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
                     assistant_msg = response  # Adjusted to fetch text from the response
 
-                    intermediate_steps = llm_chain.pick("intermediate_steps")
-                    intermediate_string = ""
-
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
@@ -366,19 +363,7 @@ try:
                         all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                         create_and_download(text_content=all_messages)
 
-                    st.session_state["thoughts"] = intermediate_string
-
-                    for chunk in intermediate_steps:
-                         intermediate_string += f"{chunk}"
-                    
-                    st.session_state["thoughts"].append({"role":"assistant","content":intermediate_string})
-                    
-                    
-                        
                    
-                    if st.button("thoughts"):
-                        if "thoughts" in st.session_state["thoughts"]:
-                            st.write(st.session_state["thoughts"])
 
             except Exception as e:
                 st.write("an Error occured please enter a valid OpenAI API key",e)
