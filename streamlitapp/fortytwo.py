@@ -360,11 +360,11 @@ try:
             
                     # Get response from LLM chain
                     #response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
-                    llm_response = llm_chain.predict(inputs=
+                    llm_response = llm_chain(
                          {"question":user_input,
                           "scratchpad":st.session_state["scratchpad"],
                           "chat_history":st.session_state["messages"]},
-                          
+
                           callbacks=[stream_handler]
                     )
 
