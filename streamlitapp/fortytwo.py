@@ -299,6 +299,7 @@ try:
                     ),
                     MessagesPlaceholder(variable_name="chat_history"),
                     ("human", "{question}"),
+                    ("assistant","Scratchpad:{scratchpad}"),
                 ]
             )
 
@@ -306,9 +307,15 @@ try:
             if "messages" not in st.session_state:
                 st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
+            if "scratchpad" not in st.session_state:
+                 st.session_state["scratchpad"] = ""
+
             # Display chat history messages
             for msg in st.session_state["messages"]:
                 st.chat_message(msg["role"]).write(msg["content"])
+
+            st.sidebar.subheader("LLM thought process")
+            st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
 
             # "Clear Chat History" button
             if st.sidebar.button("Clear Chat History"):
@@ -353,11 +360,17 @@ try:
             
                     # Get response from LLM chain
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
-                    
+                    llm_response = llm_chain(
+                         {"input":user_input,
+                          "scratchpad":st.session_state["scratchpad"],
+                          "chat_history":st.session_state["messages"]},
+                    )
+
                     assistant_msg = response  # Adjusted to fetch text from the response
 
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+                    st.session_state["scratchpad"].append({"role":"assistant","content":llm_response["scratchpad"]})
 
                     # Download chat button
                     if st.sidebar.button("Download Chat"):
