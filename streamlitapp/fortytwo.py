@@ -307,15 +307,15 @@ try:
             if "messages" not in st.session_state:
                 st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
-            if "scratchpad" not in st.session_state:
-                 st.session_state["scratchpad"] = ""
+            #if "scratchpad" not in st.session_state:
+                 #st.session_state["scratchpad"] = ""
 
             # Display chat history messages
             for msg in st.session_state["messages"]:
                 st.chat_message(msg["role"]).write(msg["content"])
 
-            st.sidebar.subheader("LLM thought process")
-            st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
+            #st.sidebar.subheader("LLM thought process")
+            #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
 
             # "Clear Chat History" button
             if st.sidebar.button("Clear Chat History"):
@@ -377,7 +377,7 @@ try:
                    
 
             except Exception as e:
-                st.write("an Error occured please enter a valid OpenAI API key",e)
+                st.write("an Error occured please enter a valid OpenAI API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
@@ -586,8 +586,8 @@ try:
                 qa = create_retrieval_chain(retriever_chain, document_chain)
 
                 return qa
-        except Exception as e:
-             st.write("an error occured inside the github repo function.",e)
+        except Exception as:
+             st.write("an error occured inside the github repo function.")
 
 
        
@@ -640,7 +640,7 @@ try:
                             response_placeholder.write(ass_msg)
 
                 except Exception as e:
-                     st.write("an error occured in Github sidebar option",e)
+                     st.write("an error occured in Github sidebar option")
                         
                 
         except Exception as e:
@@ -649,10 +649,11 @@ try:
 
         
     #call main
-    main()
+    if __name__ == "__main__":
+        main()
 
 
-except Exception as e:
+except Exception :
     st.write("an error occured check the key")
 
  
