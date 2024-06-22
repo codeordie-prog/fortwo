@@ -356,8 +356,7 @@ try:
                     assistant_msg = response  # Adjusted to fetch text from the response
 
                     intermediate_steps = llm_chain.pick("intermediate_steps")
-                    intermediate_placeholder = st.empty()
-                    intermediate_string = ""
+                    intermediate_string = "".join(intermediate_steps)
 
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
@@ -368,15 +367,12 @@ try:
                         create_and_download(text_content=all_messages)
 
                     
-                    for chunk in intermediate_steps:
-                        intermediate_string+= f"{chunk}"
-                        intermediate_placeholder.write(chunk)
+                    st.session_state["thought"] = intermediate_string
                         
-                    ass_thoughts = intermediate_string
-                    st.session_state["messages"].append({"role":"assistant","content":ass_thoughts})
-
+                   
                     if st.button("thoughts"):
-                        intermediate_placeholder.write(ass_thoughts)
+                        if "thoughts" in st.session_state["thoughts"]:
+                            st.write(st.session_state["thoughts"])
 
             except Exception:
                 st.write("an Error occured please enter a valid OpenAI API key")
