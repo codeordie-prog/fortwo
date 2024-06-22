@@ -370,7 +370,8 @@ try:
 
                     for chunk in intermediate_steps:
                          intermediate_string += f"{chunk}"
-                         st.session_state["thoughts"].append({"role":"assistant","content":intermediate_string})
+                    
+                    st.session_state["thoughts"].append({"role":"assistant","content":intermediate_string})
                     
                     
                         
