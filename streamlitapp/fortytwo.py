@@ -364,6 +364,7 @@ try:
                          {"question":user_input,
                           "scratchpad":st.session_state["scratchpad"],
                           "chat_history":st.session_state["messages"]},
+                          callbacks=[stream_handler]
                     )
 
                     #assistant_msg = response  # Adjusted to fetch text from the response
@@ -371,7 +372,9 @@ try:
                     # Append assistant message to session state and display it
                     #st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
                     st.session_state["messages"].append({"role": "assistant", "content": llm_response["content"]})
-                    st.session_state["scratchpad"].append({"role":"assistant","content":llm_response["scratchpad"]})
+                    st.session_state["scratchpad"] = llm_response["scratchpad"]
+
+                    st.chat_message("assistant").write(llm_response["content"])
 
                     # Download chat button
                     if st.sidebar.button("Download Chat"):
