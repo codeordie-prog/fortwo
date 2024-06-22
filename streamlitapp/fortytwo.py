@@ -356,7 +356,7 @@ try:
                     assistant_msg = response  # Adjusted to fetch text from the response
 
                     intermediate_steps = llm_chain.pick("intermediate_steps")
-                    intermediate_string = "".join(intermediate_steps)
+                    intermediate_string = ""
 
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
@@ -366,6 +366,8 @@ try:
                         all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                         create_and_download(text_content=all_messages)
 
+                    for chunk in intermediate_steps:
+                         intermediate_string += f"{chunk}"
                     
                     st.session_state["thoughts"] = intermediate_string
                         
