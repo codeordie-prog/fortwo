@@ -367,7 +367,7 @@ try:
                         create_and_download(text_content=all_messages)
 
                     
-                    st.session_state["thought"] = intermediate_string
+                    st.session_state["thoughts"] = intermediate_string
                         
                    
                     if st.button("thoughts"):
