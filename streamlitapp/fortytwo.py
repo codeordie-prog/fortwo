@@ -299,7 +299,7 @@ try:
                     ),
                     MessagesPlaceholder(variable_name="chat_history"),
                     ("human", "{question}"),
-                    ("assistant","Scratchpad:{scratchpad}"),
+                    
                 ]
             )
 
@@ -359,23 +359,15 @@ try:
                     stream_handler = StreamHandler(st.empty())
             
                     # Get response from LLM chain
-                    #response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
-                    llm_response = llm_chain(
-                         {"question":user_input,
-                          "scratchpad":st.session_state["scratchpad"],
-                          "chat_history":st.session_state["messages"]},
+                    response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+                   
 
-                          callbacks=[stream_handler]
-                    )
-
-                    #assistant_msg = response  # Adjusted to fetch text from the response
+                    assistant_msg = response  # Adjusted to fetch text from the response
 
                     # Append assistant message to session state and display it
-                    #st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
-                    st.session_state["messages"].append({"role": "assistant", "content": llm_response["content"]})
-                    st.session_state["scratchpad"] = llm_response["scratchpad"]
-
-                    st.chat_message("assistant").write(llm_response["content"])
+                    st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+                    
+                   
 
                     # Download chat button
                     if st.sidebar.button("Download Chat"):
