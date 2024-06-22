@@ -374,8 +374,8 @@ try:
                         if "thoughts" in st.session_state["thoughts"]:
                             st.write(st.session_state["thoughts"])
 
-            except Exception:
-                st.write("an Error occured please enter a valid OpenAI API key")
+            except Exception as e:
+                st.write("an Error occured please enter a valid OpenAI API key",e)
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
