@@ -37,7 +37,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
 
 st.set_page_config(
-    page_title="Ask FortyTwo",
+    page_title="Chatwith42",
     page_icon="👽",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -45,7 +45,7 @@ st.set_page_config(
         "Get help": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
         "Report a bug": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
         "About": """
-            ## Ask FortyTwo
+            ## Chatwith42
             
             **GitHub**: https://github.com/codeordie-prog
             
@@ -86,7 +86,7 @@ try:
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=300)
-    st.sidebar.title("Ask FortyTwo")
+    st.sidebar.title("Chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
