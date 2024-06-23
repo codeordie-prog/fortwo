@@ -648,9 +648,10 @@ try:
                 except Exception:
                      st.write("an error occured in Github sidebar option")
 
-        all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-        create_and_download(all_messages)
+            all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+            create_and_download(all_messages)
 
+         
         except TypeError:
             st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
         except Exception:
