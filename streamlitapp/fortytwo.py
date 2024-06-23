@@ -275,7 +275,7 @@ try:
             buffer.seek(0)
 
             # Provide download button
-            st.download_button(
+            st.sidebar.download_button(
                 label="Download Text File",
                 data=buffer,
                 file_name="my_text_file.txt",
@@ -371,9 +371,9 @@ try:
                    
 
                     # Download chat button
-                    if st.sidebar.button("Download Chat"):
-                        all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                        create_and_download(text_content=all_messages)
+                    #if st.sidebar.button("Download Chat"):
+                        #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                        #create_and_download(text_content=all_messages)
 
                    
 
@@ -648,8 +648,9 @@ try:
                 except Exception:
                      st.write("an error occured in Github sidebar option")
 
-            all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-            create_and_download(all_messages)
+            if st.sidebar.button("Download chat"):
+               all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+               create_and_download(all_messages)
 
          
         except TypeError:
