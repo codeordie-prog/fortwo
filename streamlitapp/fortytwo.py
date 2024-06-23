@@ -42,8 +42,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        "Get help": "https://github.com/codeordie-prog/testapp/blob/master/streamlit_agent/chat_with_documents.py",
-        "Report a bug": "https://github.com/codeordie-prog/testapp/blob/master/streamlit_agent/chat_with_documents.py",
+        "Get help": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
+        "Report a bug": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
         "About": """
             ## Ask FortyTwo
             
@@ -92,7 +92,7 @@ try:
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
         is a smart bot that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
         42 also has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
-        you can query a repository on GitHub. For code understanding select the GitHub toggle button and key in the repository url.
+        you can query a python repository on GitHub. For code understanding select the GitHub toggle button and key in the python repository url.
         Use gpt-4o and gpt-4 for a better response. 
     """)
 
