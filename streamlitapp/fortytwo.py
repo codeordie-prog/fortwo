@@ -644,12 +644,13 @@ try:
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             response_placeholder.write(ass_msg)
 
-                    all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                    create_and_download(all_messages)
-
+            
                 except Exception:
                      st.write("an error occured in Github sidebar option")
-                        
+
+        all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+        create_and_download(all_messages)
+
         except TypeError:
             st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
         except Exception:
