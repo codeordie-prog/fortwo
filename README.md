@@ -1,15 +1,15 @@
 
-# Ask FortyTwo
+# Chatwith42 
 
 Overview
 
 ![ask42](https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/logo/stimage.jfif)
 
-Ask FortyTwo is an AI Assistant that leverages Retrieval Augmented Generation (RAG) to answer queries about your documents in .pdf, .txt, or .csv format. The assistant, named 42, is inspired by the answer to the ultimate question in "The Hitchhiker's Guide to the Galaxy" and is designed to provide accurate and helpful responses to a wide range of queries, including coding requests, math assistance, and document writing.
+Chatwith42 is an AI Assistant that leverages Retrieval Augmented Generation (RAG) to answer queries about your documents in .pdf, .txt, or .csv format. The assistant, named 42, is inspired by the answer to the ultimate question in "The Hitchhiker's Guide to the Galaxy" and is designed to provide accurate and helpful responses to a wide range of queries, including coding requests, math assistance, and document writing.
 
 # Features
 1. **Query documents** in .pdf, .txt, or .csv formats.
-2. **Interact with GitHub repositories.**
+2. **Interact with GitHub python repositories.**
 3. **Query web information**.
 4. **Engage in general chat sessions with the AI assistant.**
 
@@ -57,7 +57,7 @@ The document chunks and embeddings are stored in a vector database (DocArrayInMe
 # Functionality
 
 GitHub Repository Query
-To query a GitHub repository, enter the repository URL in the sidebar. The code will clone the repository, load the relevant files, and prepare them for querying.
+To query a python GitHub repository, enter the repository URL in the sidebar. The code will clone the repository, load the relevant files, and prepare them for querying.
 
 Web Query
 To query web information, enter the URL and a name for the web document. The assistant will process the webpage and make it available for querying.
