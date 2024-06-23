@@ -645,12 +645,13 @@ try:
 
                 
 
-                except Exception as e:
+                except Exception:
                      st.write("an error occured in Github sidebar option")
                         
-                
-        except Exception as e:
-             st.write("An error was encountered at main call",e)
+        except TypeError:
+            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
+        except Exception:
+             st.write("An error was encountered at main call")
     
 
         
