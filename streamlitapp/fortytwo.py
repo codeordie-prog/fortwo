@@ -90,8 +90,8 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
-        is a smart bot that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
-        42 also has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
+        is a knowledge discovery engine that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
+        42 has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
         you can query a python repository on GitHub. For code understanding select the GitHub toggle button and key in the python repository url.
         Use gpt-4o and gpt-4 for a better response. 
     """)
