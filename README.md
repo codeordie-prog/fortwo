@@ -5,6 +5,8 @@ Overview
 
 ![ask42](https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/logo/stimage.jfif)
 
+find the app at https://chatwith42@streamlit.app
+
 Chatwith42 is an AI Assistant that leverages Retrieval Augmented Generation (RAG) to answer queries about your documents in .pdf, .txt, or .csv format. The assistant, named 42, is inspired by the answer to the ultimate question in "The Hitchhiker's Guide to the Galaxy" and is designed to provide accurate and helpful responses to a wide range of queries, including coding requests, math assistance, and document writing.
 
 # Features
