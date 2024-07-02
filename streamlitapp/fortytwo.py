@@ -92,7 +92,7 @@ try:
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
         is a knowledge discovery engine that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
         42 has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
-        you can query a python repository on GitHub. For code understanding select the GitHub toggle button and key in the python repository url.
+        you can query a repository on GitHub. For code understanding select the GitHub toggle button and key in the repository url.
         Use gpt-4o and gpt-4 for a better response. 
     """)
 
@@ -534,26 +534,48 @@ try:
                 # Clone the repo
                 repo_path = os.path.join(temp_dir, "repo")
                 repo = Repo.clone_from(github_repo_url, to_path=repo_path)
+                documents = []
 
-                # Load
-                loader = GenericLoader.from_filesystem(
-                    repo_path,
-                    glob="**/*",
-                    suffixes=[".py"],
-                    exclude=["**/non-utf8-encoding.py"],
-                    parser=LanguageParser(language=Language.PYTHON, parser_threshold=500),
-                )
-                documents = loader.load()
-                #st.write(documents)
+                #add suffixes
+                language_suffixes = {
+                     
+                     Language.PYTHON : [".py"],
+                     Language.JAVA : [".java"],
+                     Language.GO : [".go"],
+                     Language.HTML : [".html"],
+                     Language.C : [".c",".h"],
+                     Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"]
+                }
 
-                # Split
-                python_splitter = RecursiveCharacterTextSplitter.from_language(
-                    language=Language.PYTHON, chunk_size=2000, chunk_overlap=200
-                )
-                texts = python_splitter.split_documents(documents)
+                #document loader
+                for language, suffix in language_suffixes.items():
+                     loader = GenericLoader.from_filesystem(
+                          
+                          repo_path,
+                          glob="**/*",
+                          suffixes=suffix,
+                          exclude=["**/non-utf8-encoding.*"],
+                          parser=LanguageParser(
+                               language=language, parser_threshold=500
+                          )
+                     )
 
+                     documents.extend(loader.load())
+
+                #split
+
+                split_texts = []
+
+                for language in language_suffixes.keys():
+                     splitter = RecursiveCharacterTextSplitter.from_language(
+                          language=language, chunk_size = 2000, chunk_overlap = 200
+                    )
+
+                     split_texts.extend(splitter.split_documents(documents))
+
+                
                 # Retriever
-                db = Chroma.from_documents(texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
+                db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
                 retriever = db.as_retriever(
                     search_type="mmr",  # Also test "similarity"
                     search_kwargs={"k": 8},
