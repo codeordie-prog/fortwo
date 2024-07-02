@@ -542,7 +542,8 @@ try:
                      Language.PYTHON : [".py"],
                      Language.JAVA : [".java"],
                      Language.GO : [".go"],
-                     Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"]
+                     Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
+                     Language.KOTLIN:[".kt",".kts"]
                 }
 
                 #document loader
