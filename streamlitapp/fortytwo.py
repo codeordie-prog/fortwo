@@ -542,7 +542,6 @@ try:
                      Language.PYTHON : [".py"],
                      Language.JAVA : [".java"],
                      Language.GO : [".go"],
-                     Language.HTML : [".html"],
                      Language.C : [".c",".h"],
                      Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"]
                 }
