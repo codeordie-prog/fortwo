@@ -546,7 +546,7 @@ try:
                      Language.KOTLIN:[".kt",".kts"],
                      Language.C : [".c",".h"],
                      Language.TS : [".ts"],
-                     Language.CPP : [".cpp"]
+                    
                 }
 
                 #document loader
