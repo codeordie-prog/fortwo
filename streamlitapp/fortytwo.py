@@ -544,7 +544,8 @@ try:
                      Language.GO : [".go"],
                      Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
                      Language.KOTLIN:[".kt",".kts"],
-                     Language.TS : [".ts"]
+                     Language.TS : [".ts"],
+                     Language.CSHARP : [".cs"]
                     
                 }
 
