@@ -166,7 +166,7 @@ try:
         unsafe_allow_html=True,
     )
 
-
+    
 
     #----------------------------------------------streamhandler and retriever class section------------------------------------------------------#
 
@@ -583,8 +583,8 @@ try:
                     search_kwargs={"k": 8},
                 )
 
-                llm_model = st.sidebar.selectbox("Choose LLM model", ("gpt-4o", "gpt-4"))
-                llm = ChatOpenAI(model_name=llm_model,api_key=open_ai_key)
+                
+                llm = ChatOpenAI(model_name="gpt-4o",api_key=open_ai_key)
 
                 # Prompt
                 prompt_retriever = ChatPromptTemplate.from_messages(
@@ -641,7 +641,7 @@ try:
                 try:
                     if repo_url:
                         if "messages" not in st.session_state:
-                             st.session_state["messages"] = [{"role":"assistant","content":"how can i help with the code base?"}]
+                             st.session_state["messages"] = [{"role":"assistant","content":"how can I help with the code base?"}]
 
                         for msg in st.session_state["messages"]:
                              st.chat_message(msg["role"]).write(msg["content"])     
@@ -655,7 +655,7 @@ try:
                             
                             #use pick to select the desired key
                             stream_chain = chain.pick("answer")
-                            #intermediate_step_chain = chain.pick("intermediate_steps")
+                           
                             
                             #create a response placeholder and set it to empty, it will be updated with each chunk
                             response_placeholder = st.empty()
@@ -667,6 +667,8 @@ try:
                             ass_msg = response
                             st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                             response_placeholder.write(ass_msg)
+
+                            
 
             
                 except Exception:
