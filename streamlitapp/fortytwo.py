@@ -543,7 +543,9 @@ try:
                      Language.JAVA : [".java"],
                      Language.GO : [".go"],
                      Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
-                     Language.KOTLIN:[".kt",".kts"]
+                     Language.KOTLIN:[".kt",".kts"],
+                     Language.C : [".c",".h"],
+                     Language.TS : [".ts"]
                 }
 
                 #document loader
@@ -613,7 +615,7 @@ try:
 
                 return qa
         except Exception :
-             st.write("an error occured inside the github repo function, its related to parsing of languages that rewuire Tree sitter.")
+             st.write("an error occured inside the github repo function, its related to parsing of languages that require Tree sitter.")
 
 
        
