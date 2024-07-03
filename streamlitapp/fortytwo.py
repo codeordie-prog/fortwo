@@ -612,8 +612,8 @@ try:
                 qa = create_retrieval_chain(retriever_chain, document_chain)
 
                 return qa
-        except Exception as e:
-             st.write("an error occured inside the github repo function.",e)
+        except Exception :
+             st.write("an error occured inside the github repo function, its related to parsing of languages that rewuire Tree sitter.")
 
 
        
