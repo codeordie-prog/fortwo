@@ -329,8 +329,9 @@ try:
             
             try:
                 
+                user_input = st.chat_input()
                 # Handle user input
-                if user_input := st.chat_input():
+                if user_input :
                     if not openai_api_key:
                         st.info("Please add your OpenAI API key to continue.")
                         st.stop()
