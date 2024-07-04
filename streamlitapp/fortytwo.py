@@ -118,7 +118,7 @@ try:
 
     sidebar_option = st.sidebar.radio(
          "Select an option",
-         ("Chat, Docs and Web","Github")
+         ("chat and query","Github")
      )
 
     if sidebar_option == "Github":
@@ -627,7 +627,7 @@ try:
 
         try:
 
-            if sidebar_option == "Chat and query":
+            if sidebar_option == "chat and query":
                 
                 if uploaded_files and not url and not web_document_name:
                     query_documents()
