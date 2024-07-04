@@ -86,7 +86,7 @@ try:
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=300)
-    st.sidebar.title("Chatwith42")
+    st.sidebar.title("chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
         42 named after the Hitch Hiker's Guide to the Galaxy answer to the ultimate question of life,
@@ -109,16 +109,17 @@ try:
     
     # Input for OpenAI API key in the sidebar
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+    
     if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
+           st.info("Please add your OpenAI API key to continue.")
+           st.stop()
 
-    #____________________________________________________________radios_______________________________________________________________________
+   #________________________________________radios_______________________________________________________________________
 
     sidebar_option = st.sidebar.radio(
          "Select an option",
-         ("Chat and query","Github")
-    )
+         ("Chat, Docs and Web","Github")
+     )
 
     if sidebar_option == "Github":
          repo_url = st.sidebar.text_input("Enter repository url: ")
