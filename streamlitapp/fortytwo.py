@@ -93,7 +93,7 @@ try:
         is a knowledge discovery engine that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv` and `.txt`,
         42 has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
         you can query a repository on GitHub. For code understanding select the GitHub toggle button and key in the repository url.
-        Use gpt-4o and gpt-4 for a better response. 
+        Use gpt-4o for a better response. 
     """)
 
 
@@ -442,7 +442,7 @@ try:
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4","gpt-4o"))
+                                        ("gpt-3.5-turbo","gpt-4o"))
                 
                 
                 # Setup LLM and QA chain for the documents part
@@ -491,7 +491,7 @@ try:
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4","gpt-4o"))
+                                        ("gpt-3.5-turbo","gpt-4o"))
                 
                 
                 # Setup LLM and QA chain for the documents part
