@@ -322,7 +322,7 @@ try:
             # "Clear Chat History" button
             if st.sidebar.button("Clear Chat History"):
                 st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
-                st.experimental_rerun()  # Rerun the app to clear the chat history
+                st.rerun()  # Rerun the app to clear the chat history
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
                                     ("gpt-3.5-turbo","gpt-4","gpt-4o"))
