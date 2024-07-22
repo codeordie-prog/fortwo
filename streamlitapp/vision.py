@@ -3,6 +3,12 @@ import base64
 import json
 
 
+""""
+This file defines all the functions for vision capabilities. The model relies on
+GPT4o-mini for vision where the description is converted to parsed json string and stored
+in a vector database
+"""
+
 #encode the image to base64
 def encode_image(image_path : str):
     with open(image_path,'rb') as file:
