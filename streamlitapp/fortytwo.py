@@ -32,6 +32,7 @@ from langchain_community.document_loaders.parsers.language import LanguageParser
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+import vision
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -67,7 +68,7 @@ try:
             st.error(f"Error loading image: {e}")
             return None
 
-    imag_path = "streamlitapp/logo/lgo.jfif"
+    imag_path = "logo/lgo.jfif"
     image_bytes = load_image(imag_path)
 
     # Create two columns
@@ -85,7 +86,7 @@ try:
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
-    st.sidebar.image("streamlitapp/logo/stimage.jfif",width=300)
+    st.sidebar.image("logo/stimage.jfif",width=300)
     st.sidebar.title("chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
@@ -127,7 +128,7 @@ try:
     #-----------------------------------------------------upload documents sidebar--------------------------------------------------------------
     # File uploader in the sidebar
     uploaded_files = st.sidebar.file_uploader(
-        label="Upload files", type=["pdf", "txt", "csv"], accept_multiple_files=True
+        label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
     )
 
     #---------------------------------------------------sidebar for query web-------------------------------------------------------------------#
@@ -217,30 +218,43 @@ try:
 
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
 
-        #function-2   
     @st.cache_resource(ttl="2h")
     def configure_retriever(uploaded_files):
             # Read documents
             docs = []
-            temp_dir = tempfile.TemporaryDirectory()
-            for file in uploaded_files:
-                temp_filepath = os.path.join(temp_dir.name, file.name)
-                st.write(temp_filepath)
-                with open(temp_filepath, "wb") as f:
-                    f.write(file.getvalue())
+            with tempfile.TemporaryDirectory() as temp_dir:
+                 temp_dir_path = temp_dir
+                 temp_dir = tempfile.TemporaryDirectory()
+                 for file in uploaded_files:
+                    temp_filepath = os.path.join(temp_dir.name, file.name)
+                    st.write(temp_filepath)
+                    with open(temp_filepath, "wb") as f:
+                        f.write(file.getvalue())
 
-                #load pdf,txt and csv
-                if temp_filepath.endswith(".pdf"):
-                    loader = PyPDFLoader(temp_filepath)
-                    docs.extend(loader.load())
+                    #load pdf,txt and csv
+                    if temp_filepath.endswith(".pdf"):
+                        loader = PyPDFLoader(temp_filepath)
+                        docs.extend(loader.load())
+                        
+                    elif temp_filepath.endswith(".txt"):
+                        loader = TextLoader(temp_filepath)
+                        docs.extend(loader.load())
                     
-                elif temp_filepath.endswith(".txt"):
-                    loader = TextLoader(temp_filepath)
-                    docs.extend(loader.load())
-                
-                elif temp_filepath.endswith(".csv"):
-                    loader = CSVLoader(temp_filepath)
-                    docs.extend(loader.load())   
+                    elif temp_filepath.endswith(".csv"):
+                        loader = CSVLoader(temp_filepath)
+                        docs.extend(loader.load())  
+
+                    elif temp_filepath.endswith(".jpg") or temp_filepath.endswith(".jpeg") or temp_filepath.endswith(".png"):
+                        st.image(file,width=200)
+                        base64image = vision.encode_image(temp_filepath)
+                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,query="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' ")
+                        description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
+                        with open(description_file_path, "w") as description_file:
+                            description_file.write(description)
+                        loader = TextLoader(description_file_path)
+                        
+                        docs.extend(loader.load())
+                    
 
             # Split documents
             text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
@@ -256,6 +270,7 @@ try:
                  search_kwargs = {"k" : 8}) #retrieve default
 
             return retriever
+
 
 
     #---------------------------------------------define download txt function-------------------------------------------------------------------#
