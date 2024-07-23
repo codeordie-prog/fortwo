@@ -10,8 +10,8 @@ find the app at https://chatwith42@streamlit.app
 Chatwith42 is an AI Assistant that leverages Retrieval Augmented Generation (RAG) to answer queries about your documents in .pdf, .txt,.csv,.jpg,.png or .jpeg formats. The assistant, named 42, is inspired by the answer to the ultimate question in "The Hitchhiker's Guide to the Galaxy" and is designed to provide accurate and helpful responses to a wide range of queries, including coding requests, math assistance, and document writing.
 
 # Features
-1. **Query documents** in .pdf, .txt, or .csv formats.
-2. **Interact with GitHub python repositories.**
+1. **Query documents** in .pdf, .txt, .csv , .jpeg, .png or .jpg formats.
+2. **Interact with GitHub repositories.**
 3. **Query web information**.
 4. **Engage in general chat sessions with the AI assistant.**
 
@@ -31,7 +31,7 @@ To run the application, use Streamlit:
 # Sidebar Options
 
 Clear Message History: Clears the chat history.
-Upload Files: Upload documents in .pdf, .txt, or .csv formats.
+Upload Files: Upload documents in .pdf, .txt,.csv, .jpg,.jpeg or .png formats.
 GitHub Repository: Enter the URL of a GitHub repository to query its contents.
 Query Web Section: Interact with web information by entering a URL and a document name.
 Chat Interface
