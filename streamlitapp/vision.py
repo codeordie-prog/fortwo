@@ -16,7 +16,7 @@ def encode_image(image_path : str):
 
 #use GPT4o-mini to describe the image
 #returns a string parsed from a json object
-def describe_image(image_url, openai_api_key, query):
+def describe_image(image_url, openai_api_key, prompt):
     headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {openai_api_key}"
@@ -30,7 +30,7 @@ def describe_image(image_url, openai_api_key, query):
             "content": [
                 {
                 "type": "text",
-                "text": query
+                "text": prompt
                 },
                 {
                 "type": "image_url",
