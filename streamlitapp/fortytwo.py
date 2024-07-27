@@ -514,7 +514,7 @@ try:
 
     def query_web():
 
-            if not url and web_document_name:
+            if not url or not web_document_name:
                 st.info("Please add url to continue.")
                 st.stop()
                 
