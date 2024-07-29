@@ -220,7 +220,7 @@ try:
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
 
     @st.cache_resource(ttl="2h")
-    def configure_retriever(uploaded_files,user_input=""):
+    def configure_retriever(uploaded_files):
             # Read documents
             docs = []
             with tempfile.TemporaryDirectory() as temp_dir:
@@ -248,7 +248,7 @@ try:
                     elif temp_filepath.endswith(".jpg") or temp_filepath.endswith(".jpeg") or temp_filepath.endswith(".png"):
                         st.image(file,width=200)
                         base64image = vision.encode_image(temp_filepath)
-                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=f"in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, also if provided take into cosideration the context to desccribe the image better:{user_query} ")
+                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description")
                         description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
                         with open(description_file_path, "w") as description_file:
                             description_file.write(description)
@@ -469,7 +469,7 @@ try:
                 st.info("Please upload documents or add url to continue.")
                 st.stop()
                  
-            retriever = configure_retriever(uploaded_files,user_query)   
+            retriever = configure_retriever(uploaded_files)   
             
             # Setup memory for contextual conversation for the documents part
             msgs = StreamlitChatMessageHistory()
