@@ -220,7 +220,7 @@ try:
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
 
     @st.cache_resource(ttl="2h")
-    def configure_retriever(uploaded_files,user_input:str):
+    def configure_retriever(uploaded_files,user_input=""):
             # Read documents
             docs = []
             with tempfile.TemporaryDirectory() as temp_dir:
