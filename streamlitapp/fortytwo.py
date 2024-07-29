@@ -469,7 +469,7 @@ try:
                 st.info("Please upload documents or add url to continue.")
                 st.stop()
                  
-            retriever = configure_retriever(uploaded_files)   
+            retriever = configure_retriever(uploaded_files,user_query)   
             
             # Setup memory for contextual conversation for the documents part
             msgs = StreamlitChatMessageHistory()
