@@ -223,6 +223,7 @@ try:
     def configure_retriever(uploaded_files):
             # Read documents
             docs = []
+            ext=[".jpeg",".jpg",".png"]
             with tempfile.TemporaryDirectory() as temp_dir:
                  temp_dir_path = temp_dir
                  temp_dir = tempfile.TemporaryDirectory()
@@ -245,7 +246,7 @@ try:
                         loader = CSVLoader(temp_filepath)
                         docs.extend(loader.load())  
 
-                    elif temp_filepath.endswith(".jpg") or temp_filepath.endswith(".jpeg") or temp_filepath.endswith(".png"):
+                    elif any(temp_filepath.endswith(e) for e in ext):
                         st.image(file,width=380)
                         base64image = vision.encode_image(temp_filepath)
                         description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, if the image happens to be an unstructured document, describe every detail in the description, do not fail to provide assistance with the image")
