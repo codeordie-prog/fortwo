@@ -248,7 +248,7 @@ try:
                     elif temp_filepath.endswith(".jpg") or temp_filepath.endswith(".jpeg") or temp_filepath.endswith(".png"):
                         st.image(file,width=380)
                         base64image = vision.encode_image(temp_filepath)
-                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, if the image happens to be a medical document, describe every detail in your description, you can also add a section for speculated diagnosis where you lay out what might be the diagnosis, if asked to recommend medication don't fail to do so however insist on seeking a doctor advice, however always advice the user to seek a doctor's advice")
+                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, if the image happens to be a medical document, describe every detail in your description, you can also add a section for speculated diagnosis where you lay out what might be the diagnosis")
                         description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
                         with open(description_file_path, "w") as description_file:
                             description_file.write(description)
