@@ -23,7 +23,7 @@ def describe_image(image_url, openai_api_key, prompt):
             }
 
     payload = {
-        "model": "gpt-4o-mini",
+        "model": "gpt-4o",
         "messages": [
             {
             "role": "user",
