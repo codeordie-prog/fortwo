@@ -411,7 +411,7 @@ try:
                                  st.image(image=image_path,use_column_width=True)
 
                                  if image_path:
-                                    st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                                    #st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
                                     with open(image_path,"rb") as file:
                                          image_bytes = file.read()
 
@@ -424,6 +424,10 @@ try:
 
 
                     assistant_msg = response  # Adjusted to fetch text from the response
+
+                    if assistant_msg == "Generating image...":
+                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                         
 
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
