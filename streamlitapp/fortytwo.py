@@ -324,7 +324,7 @@ try:
                     Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
                     GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                     
-                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generating image...
+                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generated image.
   
                     Additional Enhancements:
 
@@ -401,7 +401,7 @@ try:
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
                     #image generation
-                    if response.startswith("Generating image..."):
+                    if response.startswith("Generated image."):
                          with st.spinner(text="Generating image in progress..."):
                             image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                             st.write(image_url)
@@ -411,7 +411,6 @@ try:
                                  st.image(image=image_path,use_column_width=True)
 
                                  if image_path:
-                                    #st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
                                     with open(image_path,"rb") as file:
                                          image_bytes = file.read()
 
