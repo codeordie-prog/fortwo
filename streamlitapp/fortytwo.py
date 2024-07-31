@@ -324,6 +324,8 @@ try:
                     Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
                     GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                     
+                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generating image...
+  
                     Additional Enhancements:
 
                     Context Awareness: Always consider the context of the user's query. Ask clarifying questions if the query is ambiguous or incomplete.
@@ -397,7 +399,29 @@ try:
             
                     # Get response from LLM chain
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
-                   
+
+                    #image generation
+                    if response.startswith("Generating image..."):
+                         with st.spinner(text="Generating image in progress..."):
+                            image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
+                            st.write(image_url)
+                            
+                            with tempfile.TemporaryDirectory() as temporary_directory:
+                                 image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
+                                 st.image(image=image_path,use_column_width=True)
+
+                                 if image_path:
+                                    st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                                    with open(image_path,"rb") as file:
+                                         image_bytes = file.read()
+
+                                    st.download_button(
+                                         label="download_image",
+                                         data=image_bytes,
+                                         file_name="image.png",
+                                         mime="image/png"
+                                    )
+
 
                     assistant_msg = response  # Adjusted to fetch text from the response
 
