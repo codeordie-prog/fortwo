@@ -83,7 +83,7 @@ def generate_image(description:str, openai_api_key:str):
         )
         chain = LLMChain(llm=llm,prompt=prompt)
 
-        return DallEAPIWrapper(model="dall-e-3").run(chain.run(description))
+        return DallEAPIWrapper(model="dall-e-3",api_key=openai_api_key).run(chain.run(description))
 
     except Exception as e:
         st.write("An error occured while generating the image",e)
