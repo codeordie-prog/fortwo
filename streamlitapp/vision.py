@@ -70,7 +70,7 @@ def create_a_textfile(image_description,file_path):
 
         return file
     
-
+#generate image function
 def generate_image(description:str, openai_api_key:str):
 
     try:
@@ -89,6 +89,7 @@ def generate_image(description:str, openai_api_key:str):
         st.write("An error occured while generating the image",e)
 
 
+#download the generated image
 def download_generated_image(image_url: str, image_storage_path:str):
 
     try:

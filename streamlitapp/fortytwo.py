@@ -404,7 +404,7 @@ try:
                     if response.startswith("Generated image."):
                          with st.spinner(text="Generating image in progress..."):
                             image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
-                            st.write(image_url)
+                            
                             
                             with tempfile.TemporaryDirectory() as temporary_directory:
                                  image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
