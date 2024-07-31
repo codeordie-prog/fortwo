@@ -400,7 +400,7 @@ try:
                     # Get response from LLM chain
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
-                    #image generation
+                    #image generation function calling
                     if response.startswith("Generated image."):
                          with st.spinner(text="Generating image in progress..."):
                             image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
