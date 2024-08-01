@@ -18,14 +18,14 @@ in a vector database, and dall-e-3 for image generation
 
 
 image_description_prompt = """
-                                in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, 
+                                in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a code segment make sure you rewrite the segment in the description, 
                                 if the image happens to be an unstructured text with or without images document, aim at reproducing every detail in your description and then describe your observation. 
                                 if its a code snippet or a math problem, you should first rewrite it as it is organised properly then proceed to describe it and even to highlight potential errors or fixes that you observe.
 
                                 Your description should have 3 areas:
                                 1. Title - which should be 'IMAGE DESCRIPTION'
-                                2. Content - Observed contents explained in great detail 
-                                3. Observation - this area has everything you observe from the image
+                                2. Content - Observed contents explained in great detail and listed in bullet format
+                                3. Observation - this area has everything you observe from the image, detailed explanation of the contents
 
                                 describe every detail in the description, do not fail to provide assistance with the image provided.
 
