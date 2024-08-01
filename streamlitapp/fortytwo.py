@@ -330,8 +330,8 @@ try:
                     GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                     
                     Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generated image. The reason
-                                      for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
-                                      a condition such that if your responce starts with 'Generated image' it proceeds and generates the image requested.
+                    for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
+                    a condition such that if your responce starts with 'Generated image' it proceeds and generates the image requested.
   
                     Additional Enhancements:
 
@@ -432,7 +432,7 @@ try:
                     assistant_msg = response  # Adjusted to fetch text from the response
 
                     if assistant_msg == "Generated image.":
-                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{["IMAGE"](image_url)}, for the description : {user_input}"})
                          
 
                     # Append assistant message to session state and display it
