@@ -217,12 +217,17 @@ try:
         #use the chain to invoke chat query
 
 
+    
+
+
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
 
+    
     @st.cache_resource(ttl="2h")
     def configure_retriever(uploaded_files):
             # Read documents
             docs = []
+            image_description_prompt = vision.image_description_prompt
             ext=[".jpeg",".jpg",".png"]
             with tempfile.TemporaryDirectory() as temp_dir:
                  temp_dir_path = temp_dir
@@ -249,7 +254,7 @@ try:
                     elif any(temp_filepath.endswith(e) for e in ext):
                         st.image(file,width=380)
                         base64image = vision.encode_image(temp_filepath)
-                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt="in great detail describe the image, start with the Title : 'IMAGE DESCRIPTION' , when presented with an image with a program make sure you rewrite the program in full in the description, if the image happens to be an unstructured document, describe every detail in the description, do not fail to provide assistance with the image")
+                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=image_description_prompt)
                         description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
                         with open(description_file_path, "w") as description_file:
                             description_file.write(description)
@@ -324,7 +329,9 @@ try:
                     Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
                     GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                     
-                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generated image.
+                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generated image. The reason
+                                      for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
+                                      a condition such that if your responce starts with 'Generated image' it proceeds and generates the image requested.
   
                     Additional Enhancements:
 
