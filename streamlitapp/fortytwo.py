@@ -432,7 +432,7 @@ try:
                     assistant_msg = response  # Adjusted to fetch text from the response
 
                     if assistant_msg == "Generated image.":
-                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{['IMAGE'](image_url)}, for the description : {user_input}"})
+                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
                          
 
                     # Append assistant message to session state and display it
