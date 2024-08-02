@@ -91,7 +91,7 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
        """
-        42 is a powerful knowledge discovery engine inspired by the ultimate answer in the Hitchhiker's Guide to the Galaxy.
+        42 is a powerful knowledge discovery engine inspired by the ultimate answer in the Hitchhikers Guide to the Galaxy.
         Capabilities:
         - Image Generation
         - Image Description
