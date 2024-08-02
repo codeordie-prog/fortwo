@@ -91,9 +91,9 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         Named after the Hitchhiker's Guide to the Galaxy answer to the ultimate question of life,
-        42 is a knowledge discovery engine that utilizes Retrieval Augmented Generation to query uploaded documents in the format `.pdf`,`.csv`, `.txt`, 
+        42 is a knowledge discovery engine that utilizes Image generation, Image description and Retrieval Augmented Generation capabilities to query uploaded documents in the format `.pdf`,`.csv`, `.txt`, 
         `.jpeg`,`.png` and `.jpg`.
-        42 has a chat section where users can chat with the bot without uploading the documents, and a code understanding section where
+        42 has a chat section where users can chat with the bot and generate images with simple prompts, and a code understanding section where
         you can query a repository on GitHub. For code understanding select the GitHub toggle button and key in the repository url.
         Use gpt-4o for a better response. 
     """)
@@ -329,9 +329,9 @@ try:
                     Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
                     GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                     
-                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Generated image. The reason
+                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Abracadabra baby. The reason
                     for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
-                    a condition such that if your responce starts with 'Generated image' it proceeds and generates the image requested.
+                    a condition such that if your responce starts with 'Abracadabra baby.' it proceeds and generates the image requested.
   
                     Additional Enhancements:
 
@@ -408,7 +408,7 @@ try:
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
                     #image generation function calling
-                    if response.startswith("Generated image."):
+                    if response.startswith("Abracadabra baby."):
                          with st.spinner(text="Generating image in progress..."):
                             image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                             
