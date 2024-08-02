@@ -90,12 +90,15 @@ try:
     st.sidebar.title("chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
-        Named after the Hitchhiker's Guide to the Galaxy answer to the ultimate question of life,
-        42 is a knowledge discovery engine that utilizes Image generation, Image description and Retrieval Augmented Generation capabilities to query uploaded documents in the format `.pdf`,`.csv`, `.txt`, 
-        `.jpeg`,`.png` and `.jpg`.
-        42 has a chat section where users can chat with the bot and generate images with simple prompts, and a code understanding section where
-        you can query a repository on GitHub. For code understanding select the GitHub toggle button and key in the repository url.
-        Use gpt-4o for a better response. 
+       """
+        42 is a powerful knowledge discovery engine inspired by the ultimate answer in the Hitchhiker's Guide to the Galaxy.
+        Capabilities:
+        - Image Generation
+        - Image Description
+        - Retrieval Augmented Generation
+        Query documents in formats: .pdf, .csv, .txt, .jpeg, .png, .jpg.
+        Chat with the bot or query a GitHub repository using the GitHub toggle.
+        Use gpt-4o for better responses.. 
     """)
 
 
