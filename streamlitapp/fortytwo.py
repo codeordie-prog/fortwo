@@ -308,8 +308,8 @@ try:
             st.sidebar.download_button(
                 label="Download Text File",
                 data=buffer,
-                file_name="my_text_file.pdf",
-                mime="application/pdf"
+                file_name="my_text_file.txt",
+                mime="text/plain"
             )
         
     #-------------------------------------------------------------chat setup section---------------------------------------------------------#
