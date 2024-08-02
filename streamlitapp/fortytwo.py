@@ -96,6 +96,8 @@ try:
         - Image Generation
         - Image Description
         - Retrieval Augmented Generation
+        - Github repositories querying
+        - Web scrapping
         
         Query documents in formats: .pdf, .csv, .txt, .jpeg, .png, .jpg.
         Chat with the bot or query a GitHub repository using the GitHub toggle.
