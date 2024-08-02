@@ -90,7 +90,6 @@ try:
     st.sidebar.title("chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
-       """
         42 is a powerful knowledge discovery engine inspired by the ultimate answer in the Hitchhikers Guide to the Galaxy.
         Capabilities:
         - Image Generation
@@ -98,7 +97,7 @@ try:
         - Retrieval Augmented Generation
         Query documents in formats: .pdf, .csv, .txt, .jpeg, .png, .jpg.
         Chat with the bot or query a GitHub repository using the GitHub toggle.
-        Use gpt4o for better responses""")
+        Use gpt-4o for better responses""")
 
 
 
