@@ -77,7 +77,7 @@ try:
     #Display the image in the center column
     with col2:
         if image_bytes:
-         st.image(io.BytesIO(image_bytes), width=400)
+         st.image(io.BytesIO(image_bytes), width=200)
         else:
          st.error("Failed to load image.")
 
