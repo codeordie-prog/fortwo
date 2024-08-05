@@ -68,7 +68,7 @@ try:
             st.error(f"Error loading image: {e}")
             return None
 
-    imag_path = "streamlitapp/logo/lgo.jfif"
+    imag_path = "streamlitapp/logo/stimage.jfif"
     image_bytes = load_image(imag_path)
 
     # Create two columns
