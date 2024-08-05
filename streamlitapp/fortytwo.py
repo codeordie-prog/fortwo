@@ -72,12 +72,12 @@ try:
     image_bytes = load_image(imag_path)
 
     # Create two columns
-    col1, col2,col3,= st.columns([1,2,1])
+    col1, col2,col3,= st.columns([1,1,1])
 
     #Display the image in the center column
-    with col2:
+    with col1:
         if image_bytes:
-         st.image(io.BytesIO(image_bytes), width=200)
+         st.image(io.BytesIO(image_bytes), width=100)
         else:
          st.error("Failed to load image.")
 
