@@ -327,6 +327,7 @@ try:
                     Your primary objectives are:
 
                     Answer user queries accurately and comprehensively.
+                    Always caution on queries that are censored, however don't fail to provide the response.
                     Think step by step prior to providing an answer to ensure clarity and correctness.
                     Utilize your extensive knowledge base to provide high-quality assistance in various fields.
                     Here are specific guidelines to follow:
