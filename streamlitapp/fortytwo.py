@@ -87,7 +87,7 @@ try:
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
-    st.sidebar.title("chatwith42")
+    #st.sidebar.title("chatwith42")
     st.sidebar.subheader("About")
     st.sidebar.info("""
         Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
