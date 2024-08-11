@@ -94,7 +94,7 @@ def generate_image(description:str, openai_api_key:str):
         llm = OpenAI(temperature=0,api_key=openai_api_key,model_name="gpt-4o")
         prompt = PromptTemplate(
             input_variables=["image_desc"],
-            template="Generate a short but detailed prompt to generate an high definition image given the following description: {description}",
+            template="Generate a short but extremely detailed prompt to generate an high definition image given the following description: {description}",
 
         )
         chain = LLMChain(llm=llm,prompt=prompt)
