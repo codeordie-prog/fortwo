@@ -375,7 +375,7 @@ try:
                 st.rerun()  # Rerun the app to clear the chat history
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
-                                    ("gpt-3.5-turbo","gpt-4o"))
+                                    ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
             
             try:
                 
@@ -517,7 +517,7 @@ try:
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4o"))
+                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
                 
                 
                 # Setup LLM and QA chain for the documents part
@@ -566,7 +566,7 @@ try:
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
             llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4o"))
+                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
                 
                 
                 # Setup LLM and QA chain for the documents part
