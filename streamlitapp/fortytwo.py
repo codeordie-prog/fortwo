@@ -495,7 +495,7 @@ try:
                    
 
             except Exception as e:
-                st.write("an Error occured please enter a valid OpenAI API key",e)
+                st.write("an Error occured please enter a valid API key",e)
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
