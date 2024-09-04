@@ -12,6 +12,6 @@ def text_to_speech(input,api_key):
         input=input
         )
         with open(temp_path,"wb") as f:
-            f.write(response)
+            f.write(response.content)
 
     return temp_path
