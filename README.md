@@ -20,14 +20,14 @@ Chatwith42 is a knowledge discovery engine that leverages Image generation, imag
 
 ### clone the repository
 
- ``````git clone https://github.com/codeordie-prog/fortwo.git```
+ ```git clone https://github.com/codeordie-prog/fortwo.git```
 
 ### Requirements
 cd to the root where the pyproject.toml file is then;
 Install the necessary dependencies using: 
 
    
-   ``````poetry install```
+   ```poetry install```
 
 # Usage
 
