@@ -451,10 +451,10 @@ try:
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
                     
                     #audio
-                    if huggingface_api_token:
-                        audio_path = audio.text_to_speech(response,huggingface_api_token)
-                        if audio_path:
-                            st.audio(audio_path,format="audio.wav")
+                    
+                    audio_path = audio.text_to_speech(response,huggingface_api_token)
+                    if audio_path:
+                        st.audio(audio_path,format="audio.wav")
 
                     # Download chat button
                     #if st.sidebar.button("Download Chat"):

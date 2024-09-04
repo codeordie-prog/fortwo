@@ -4,7 +4,6 @@ import tempfile,os
 
 # Replace 'your_api_key' with your actual Hugging Face API key
 def authentication(API_TOKEN):
-    
     return {"Authorization": f"Bearer {API_TOKEN}"}
 
 def text_to_speech(text,hugginface_api):
