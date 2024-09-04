@@ -32,7 +32,7 @@ from langchain_community.document_loaders.parsers.language import LanguageParser
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-import vision,audio
+import vision,audio,openai_audio
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -449,6 +449,9 @@ try:
 
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+
+                    responses=openai_audio.text_to_speech(response,openai_api_key)
+                    st.audio(responses,format="audio")
                     
                     #audio
                     if huggingface_api_token:
