@@ -455,7 +455,7 @@ try:
                         try:
                             audio_path = audio.text_to_speech(response,huggingface_api_token)
                             if audio_path:
-                                st.audio(audio_path,format="audio.wav")
+                                st.audio(audio_path,format="audio/wav")
                                 st.download_button(label="download_audio",data=audio_path,file_name="audio.wav")
                         except Exception as e:
                              st.write(f"an error occured while converting to speech: {e}")
