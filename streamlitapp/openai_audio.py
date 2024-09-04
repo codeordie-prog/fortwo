@@ -8,7 +8,7 @@ def text_to_speech(input,api_key):
         temp_path = temp_file.name  # Get the name of the temporary file
         response = client.audio.speech.create(
         model="tts-1",
-        voice="alloy",
+        voice="shimmer",
         input=input
         )
         with open(temp_path,"wb") as f:
