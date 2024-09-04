@@ -449,8 +449,8 @@ try:
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
                     
                     #audio
-                    audio_path = audio.text_to_speech(response)
-                    st.audio(audio_path,format="audio.wav")
+                   # audio_path = audio.text_to_speech(response)
+                   # st.audio(audio_path,format="audio.wav")
 
                     # Download chat button
                     #if st.sidebar.button("Download Chat"):
