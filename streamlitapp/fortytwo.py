@@ -120,6 +120,8 @@ try:
            st.info("Please add your OpenAI API key to continue.")
            st.stop()
 
+    huggingface_api_token = st.sidebar.text_input("Huggingface API token",type="password")
+
    #________________________________________radios_______________________________________________________________________
 
     sidebar_option = st.sidebar.radio(
@@ -449,9 +451,10 @@ try:
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
                     
                     #audio
-                    audio_path = audio.text_to_speech(response)
-                    if audio_path:
-                        st.audio(audio_path,format="audio.wav")
+                    if huggingface_api_token:
+                        audio_path = audio.text_to_speech(response,huggingface_api_token)
+                        if audio_path:
+                            st.audio(audio_path,format="audio.wav")
 
                     # Download chat button
                     #if st.sidebar.button("Download Chat"):

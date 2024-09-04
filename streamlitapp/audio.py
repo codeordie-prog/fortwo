@@ -3,12 +3,13 @@ import requests
 import tempfile,os
 
 # Replace 'your_api_key' with your actual Hugging Face API key
-API_TOKEN = "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"
-API_URL = "https://api-inference.huggingface.co/models/facebook/fastspeech2-en-ljspeech"
+def authentication(API_TOKEN):
+    
+    return {"Authorization": f"Bearer {API_TOKEN}"}
 
-headers = {"Authorization": f"Bearer {API_TOKEN}"}
-
-def text_to_speech(text):
+def text_to_speech(text,hugginface_api):
+    headers= authentication(hugginface_api)
+    API_URL="https://api-inference.huggingface.co/models/facebook/fastspeech2-en-ljspeech"
     payload = {"inputs": text}
     response = requests.post(API_URL, headers=headers, json=payload)
 
