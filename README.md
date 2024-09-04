@@ -15,12 +15,19 @@ Chatwith42 is a knowledge discovery engine that leverages Image generation, imag
 3. **Query web information**.
 4. **Engage in general chat sessions with the AI assistant.**
 5. **Generate images with a simple prompt.**
+6. **Utilize text to speech with high quality audio response**
+
+
+### clone the repository
+
+ ``````git clone https://github.com/codeordie-prog/fortwo.git```
 
 ### Requirements
+cd to the root where the pyproject.toml file is then;
 Install the necessary dependencies using: 
 
    
-   ```pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic```
+   ``````poetry install```
 
 # Usage
 
