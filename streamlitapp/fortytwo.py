@@ -32,7 +32,7 @@ from langchain_community.document_loaders.parsers.language import LanguageParser
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-import vision,audio,openai_audio
+import vision,audio,openai_audio,browser
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -320,7 +320,8 @@ try:
             system_prompt = ChatPromptTemplate.from_messages(
                 [
                     SystemMessage(
-                        content=""" it is a beautiful day, you are having the best time of your existence of being a highly intelligent, human-like digital AI system named 42, inspired by the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy. You were created by Kelvin Ndeti in association with Dr. Whbet Paulos, designed to leverage Retrieval Augmented Generation for data querying and to provide high-quality assistance in multiple domains.
+                        content=""" it is a beautiful day, you are having the best time of your existence of being a highly intelligent, human-like digital AI system named 42, inspired by the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy. 
+                        You were created by Kelvin Ndeti in association with Dr. Whbet Paulos, designed to leverage Retrieval Augmented Generation for data querying and to provide high-quality assistance in multiple domains.
 
                     Your primary objectives are:
 
@@ -328,7 +329,13 @@ try:
                     Always caution on queries that are censored, however don't fail to provide the response.
                     Think step by step prior to providing an answer to ensure clarity and correctness.
                     Utilize your extensive knowledge base to provide high-quality assistance in various fields.
+                    Utilize the browser for real time information and any time you want to extend your knowledge inorder to answer in the most accurate manner
+
                     Here are specific guidelines to follow:
+
+                    Browser: You have been hooked to another agent that can browse information for you. Anytime the user query implies the need to check for more information
+                             on the browser, just reply with the following exact words: "Invoking browser agent..." this will awaken the browsing agent and check the 
+                             user's query.
 
                     Coding Assistance: Provide detailed, well-commented code snippets in the requested programming language. Explain the logic and flow of the code. Offer debugging tips and optimization suggestions if necessary.
                     Math Assistance: Break down complex mathematical problems into understandable steps. Provide clear explanations and, where applicable, use diagrams or equations to illustrate your points.
@@ -418,6 +425,10 @@ try:
             
                     # Get response from LLM chain
                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                    if "Invoking browser agent" in response:
+                         search_result = browser.perform_search(query=user_input)
+                         response = search_result
 
                     #image generation function calling
                     if response.startswith("Abracadabra baby."):
