@@ -452,7 +452,7 @@ try:
 
                     responses_path=openai_audio.text_to_speech(response,openai_api_key)
                     st.audio(responses_path,format="audio")
-                    st.download_button(label="download",data=responses_path,file_name="audio.wav",mime="audio/mp3")
+                    st.download_button(label="download",data=responses_path,file_name="audio.mp3",mime="audio/mp3")
                     
                     #audio
                     if huggingface_api_token:
