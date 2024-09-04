@@ -430,7 +430,7 @@ try:
 
                     if "Invoking browser agent" in response:
                          search_query = browser.query_prompt(query=user_input,api=openai_api_key)
-                         search_result = browser.perform_search(query=search_query)
+                         search_result = browser.perform_search(query=search_query.content)
                          response = search_result
                          st.write(response)
 

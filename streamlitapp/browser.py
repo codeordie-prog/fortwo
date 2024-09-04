@@ -13,7 +13,7 @@ search = DuckDuckGoSearchRun()
 
 def query_prompt(query,api):
     llm = ChatOpenAI(api_key=api,model="gpt-4o")
-    query_string = f"Given the following query by the user{query}, come up with the most detailed efficient search prompt for a browser, that will definitely and accurately if send to the browser returns a reliable response"
+    query_string = f"Given the following query by the user{query}, you should reply directly without including anything else, the most detailed efficient search prompt for a browser, that will definitely and accurately if send to the browser returns a reliable response"
     resp = llm.invoke(query_string)
 
     return resp
@@ -27,3 +27,5 @@ def perform_search(query):
     except RatelimitException:
         time.sleep(60)  # Wait for 60 seconds before retrying
         return perform_search(query)  # Retry the search
+
+
