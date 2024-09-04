@@ -12,16 +12,16 @@ def text_to_speech(text):
     payload = {"inputs": text}
     response = requests.post(API_URL, headers=headers, json=payload)
 
-    with tempfile.TemporaryDirectory() as temp_file:
-        temp_file = tempfile.TemporaryDirectory()
-        temp_path = os.path.join(temp_file.name,"output.wav")
-
+    # Create a temporary file that will not be deleted immediately
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+        temp_path = temp_file.name  # Get the name of the temporary file
 
         if response.status_code == 200:
             with open(temp_path, "wb") as f:
                 f.write(response.content)
-
-    return temp_path
+            return temp_path
+        else:
+            return None
 
 
 
