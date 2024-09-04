@@ -336,7 +336,7 @@ try:
 
                     Browser: You have been hooked to another agent that can browse information for you. Anytime the user query requires the need to check for more information for example,
                              checking the current time and date, checking latest information about a given topic or person,
-                             on the browser, just reply with the following exact words: "Invoking browser agent..." this will awaken the browsing agent and check the 
+                             on the browser, just reply with the following exact words: "Invoking browser agent" this will awaken the browsing agent and check the 
                              user's query.
 
                     Coding Assistance: Provide detailed, well-commented code snippets in the requested programming language. Explain the logic and flow of the code. Offer debugging tips and optimization suggestions if necessary.
