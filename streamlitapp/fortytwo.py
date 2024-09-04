@@ -452,9 +452,12 @@ try:
                     
                     #audio
                     if huggingface_api_token:
-                        audio_path = audio.text_to_speech(response,huggingface_api_token)
-                        if audio_path:
-                            st.audio(audio_path,format="audio.wav")
+                        try:
+                            audio_path = audio.text_to_speech(response,huggingface_api_token)
+                            if audio_path:
+                                st.audio(audio_path,format="audio.wav")
+                        except Exception as e:
+                             st.write(f"an error occured while converting to speech: {e}")
 
                     # Download chat button
                     #if st.sidebar.button("Download Chat"):
