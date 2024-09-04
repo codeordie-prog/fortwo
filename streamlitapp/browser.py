@@ -4,7 +4,7 @@ from langchain_community.tools.ddg_search import DuckDuckGoSearchRun
 from duckduckgo_search.exceptions import RatelimitException
 
 # Set the event loop policy for Windows, if needed
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+#asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 # Create an instance of DuckDuckGoSearchRun
 search = DuckDuckGoSearchRun()
