@@ -430,6 +430,7 @@ try:
                     if "Invoking browser agent" in response:
                          search_result = browser.perform_search(query=user_input)
                          response = search_result
+                         st.write(response)
 
                     #image generation function calling
                     if response.startswith("Abracadabra baby."):
