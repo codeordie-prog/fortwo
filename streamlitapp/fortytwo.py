@@ -3,7 +3,7 @@ import io
 import tempfile
 import os
 import requests
-import sys
+import sys,base64
 from lxml import html
 from PIL import Image
 from io import BytesIO
@@ -32,7 +32,7 @@ from langchain_community.document_loaders.parsers.language import LanguageParser
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-import vision
+import vision,audio
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -448,7 +448,9 @@ try:
                     # Append assistant message to session state and display it
                     st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
                     
-                   
+                    #audio
+                    audio_path = audio.text_to_speech(response)
+                    st.audio(audio_path,format="audio.wav")
 
                     # Download chat button
                     #if st.sidebar.button("Download Chat"):
@@ -699,6 +701,8 @@ try:
              st.write("an error occured inside the github repo function, its related to parsing of languages that require Tree sitter.")
 
 
+    #-----------------------------------------------------------audio---------------------------------------------------------------------------
+    
        
     #--------------------------------------------------------------main function------------------------------------------------------------------#
     st.cache_resource(ttl="2h")
