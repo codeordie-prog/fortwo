@@ -454,11 +454,12 @@ try:
                     st.audio(responses_path,format="audio")
 
                     #download the audio
-                    with open(responses_path, "rb") as audio_file:
-                         data = audio_file.read()
-                         st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                    if st.button(label="Generate audio"):
+                        with open(responses_path, "rb") as audio_file:
+                            data = audio_file.read()
+                            st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                     
-                    #audio
+                    #audio if huggingface
                     if huggingface_api_token:
                         try:
                             audio_path = audio.text_to_speech(response,huggingface_api_token)
