@@ -399,111 +399,113 @@ try:
                                     ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="chat model")
             
             user_input =  st.chat_input(key="chat input") 
+
+            with input_placeholder.container():
             
-            try:
+                try:
+                    
+                    # Handle user input
+                    if user_input != None:
+                        if not openai_api_key:
+                            st.info("Please add your OpenAI API key to continue.")
+                            st.stop()
+
+                        # Initialize OpenAI LLM
+                        llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model, streaming = True)
+
+                        # Initialize Streamlit chat history
+                        chat_history = StreamlitChatMessageHistory(key="chat_history")
+
+                        # Set up memory for conversation
+                        memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=chat_history, return_messages=True)
+
+                        # Create the LLM chain
+                        llm_chain = LLMChain(
+                            llm=llm2,
+                            verbose=False,
+                            memory=memory,
+                            prompt=system_prompt
+                        )
+
+                        
+                        # Append user message to session state
+                        st.session_state["messages"].append({"role": "user", "content": user_input})
+                        st.chat_message("user").write(user_input)
+
+                        #introduce streaming in chat session
+                        stream_handler = StreamHandler(st.empty())
                 
-                # Handle user input
-                if user_input != None:
-                    if not openai_api_key:
-                        st.info("Please add your OpenAI API key to continue.")
-                        st.stop()
+                        # Get response from LLM chain
+                        response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
-                    # Initialize OpenAI LLM
-                    llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model, streaming = True)
+                        if "Invoking browser agent" in response:
+                            with st.spinner(text="Browsing the internet.."):
+                                search_query = browser.query_prompt(query=user_input,api=openai_api_key)
+                                search_result = browser.perform_search(query=search_query.replace('"',''))
+                                response = search_result
+                                st.write(response)
 
-                    # Initialize Streamlit chat history
-                    chat_history = StreamlitChatMessageHistory(key="chat_history")
-
-                    # Set up memory for conversation
-                    memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=chat_history, return_messages=True)
-
-                    # Create the LLM chain
-                    llm_chain = LLMChain(
-                        llm=llm2,
-                        verbose=False,
-                        memory=memory,
-                        prompt=system_prompt
-                    )
-
-                    
-                    # Append user message to session state
-                    st.session_state["messages"].append({"role": "user", "content": user_input})
-                    st.chat_message("user").write(user_input)
-
-                    #introduce streaming in chat session
-                    stream_handler = StreamHandler(st.empty())
-            
-                    # Get response from LLM chain
-                    response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
-
-                    if "Invoking browser agent" in response:
-                         with st.spinner(text="Browsing the internet.."):
-                            search_query = browser.query_prompt(query=user_input,api=openai_api_key)
-                            search_result = browser.perform_search(query=search_query.replace('"',''))
-                            response = search_result
-                            st.write(response)
-
-                    #image generation function calling
-                    if response.startswith("Abracadabra baby."):
-                         with st.spinner(text="Generating image in progress..."):
-                            image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
-                            
-                            
-                            with tempfile.TemporaryDirectory() as temporary_directory:
-                                 image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
-                                 st.image(image=image_path,use_column_width=True)
-
-                                 if image_path:
-                                    with open(image_path,"rb") as file:
-                                         image_bytes = file.read()
-
-                                    st.download_button(
-                                         label="download_image",
-                                         data=image_bytes,
-                                         file_name="image.png",
-                                         mime="image/png"
-                                    )
-
-
-                    assistant_msg = response  # Adjusted to fetch text from the response
-
-                    if assistant_msg == "Generated image.":
-                        st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
-                         
-
-                    # Append assistant message to session state and display it
-                    st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
-
-                    
-                    responses_path=openai_audio.text_to_speech(response,openai_api_key)
-                    st.audio(responses_path,format="audio")
-
-                    #download the audio
-                        
-                    with open(responses_path, "rb") as audio_file:
-                        data = audio_file.read()
-                        st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
-                        
-                    #audio if huggingface
-                    if huggingface_api_token:
-                        try:
-                            audio_path = audio.text_to_speech(response,huggingface_api_token)
-                            if audio_path:
-                                st.audio(audio_path,format="wav")
-                                st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
+                        #image generation function calling
+                        if response.startswith("Abracadabra baby."):
+                            with st.spinner(text="Generating image in progress..."):
+                                image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                                 
-                        except Exception as e:
-                             st.write(f"an error occured while converting to speech: {e}")
+                                
+                                with tempfile.TemporaryDirectory() as temporary_directory:
+                                    image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
+                                    st.image(image=image_path,use_column_width=True)
 
-                    # Download chat button
-                    #if st.sidebar.button("Download Chat"):
-                        #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                        #create_and_download(text_content=all_messages)
+                                    if image_path:
+                                        with open(image_path,"rb") as file:
+                                            image_bytes = file.read()
 
-                   
+                                        st.download_button(
+                                            label="download_image",
+                                            data=image_bytes,
+                                            file_name="image.png",
+                                            mime="image/png"
+                                        )
 
-            except Exception as e:
-                st.write("an Error occured please enter a valid API key",e)
+
+                        assistant_msg = response  # Adjusted to fetch text from the response
+
+                        if assistant_msg == "Generated image.":
+                            st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                            
+
+                        # Append assistant message to session state and display it
+                        st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+
+                        
+                        responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                        st.audio(responses_path,format="audio")
+
+                        #download the audio
+                            
+                        with open(responses_path, "rb") as audio_file:
+                            data = audio_file.read()
+                            st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                            
+                        #audio if huggingface
+                        if huggingface_api_token:
+                            try:
+                                audio_path = audio.text_to_speech(response,huggingface_api_token)
+                                if audio_path:
+                                    st.audio(audio_path,format="wav")
+                                    st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
+                                    
+                            except Exception as e:
+                                st.write(f"an error occured while converting to speech: {e}")
+
+                        # Download chat button
+                        #if st.sidebar.button("Download Chat"):
+                            #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                            #create_and_download(text_content=all_messages)
+
+                    
+
+                except Exception as e:
+                    st.write("an Error occured please enter a valid API key",e)
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
