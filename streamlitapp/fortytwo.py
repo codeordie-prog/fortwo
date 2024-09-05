@@ -815,9 +815,10 @@ try:
                                 ass_msg = response
                                 st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                                 response_placeholder.write(ass_msg)
+                                user_input = st.chat_input(key="github")
+                                
 
-                        with user_input_placeholder.container():
-                            user_input = st.chat_input(key="github")  
+                        with user_input_placeholder.container(): 
                             if user_input != None:
 
                                 st.session_state["messages"].append({"role": "user", "content": user_input})
