@@ -84,7 +84,7 @@ try:
 
    
     with col2:
-         st.write("Artificial Intelligence will grant us the ultimate threshold up the Kardashev's scale")
+         st.markdown('"Artificial Intelligence will grant us the ultimate threshold up the Kardashev scale" Kelvin')
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
