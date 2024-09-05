@@ -806,13 +806,15 @@ try:
                             #create a response placeholder and set it to empty, it will be updated with each chunk
                             response_placeholder = st.empty()
                             response = ""
-                            for chunk in stream_chain.stream({"input":user_input}):
-                                response += f"{chunk}"
-                                response_placeholder.write(response) #update place holder
-                              
-                            ass_msg = response
-                            st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
-                            response_placeholder.write(ass_msg)
+                            with response_placeholder.container():
+                        
+                                for chunk in stream_chain.stream({"input":user_input}):
+                                    response += f"{chunk}"
+                                    response_placeholder.write(response) #update place holder
+                                
+                                ass_msg = response
+                                st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
+                                response_placeholder.write(ass_msg)
 
                             
 
