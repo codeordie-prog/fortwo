@@ -78,13 +78,10 @@ try:
     #Display the image in the center column
     with col1:
         if image_bytes:
-         st.image(io.BytesIO(image_bytes), width=80)
+         st.image(io.BytesIO(image_bytes), width=50)
         else:
          st.error("Failed to load image.")
 
-   
-    with col3:
-         st.info('"Artificial Intelligence will grant us the ultimate intellectual threshold needed up the Kardashev scale" Kelvin',icon="🤖")
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
