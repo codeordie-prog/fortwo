@@ -796,16 +796,11 @@ try:
 
                         user_input = st.chat_input(key="github")     
 
-                        with user_input_placeholder.container():
-                            if user_input != None:
-
-                                st.session_state["messages"].append({"role": "user", "content": user_input})
-                                st.chat_message("user").write(user_input)
                             
-                                chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
+                        chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
                                 
-                                #use pick to select the desired key
-                                stream_chain = chain.pick("answer")
+                        #use pick to select the desired key
+                        stream_chain = chain.pick("answer")
                             
                             
                             #create a response placeholder and set it to empty, it will be updated with each chunk
@@ -821,7 +816,11 @@ try:
                                 st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
                                 response_placeholder.write(ass_msg)
 
-                            
+                        with user_input_placeholder.container():
+                            if user_input != None:
+
+                                st.session_state["messages"].append({"role": "user", "content": user_input})
+                                st.chat_message("user").write(user_input)   
 
             
                 except Exception:
