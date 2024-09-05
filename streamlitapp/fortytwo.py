@@ -84,7 +84,7 @@ try:
 
    
     with col3:
-         st.info('"Artificial Intelligence will grant us the ultimate intellectual threshold needed up the Kardashev scale" Kelvin')
+         st.info('"Artificial Intelligence will grant us the ultimate intellectual threshold needed up the Kardashev scale" Kelvin',icon="🤖")
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
