@@ -671,6 +671,10 @@ try:
     #define repo query
    
     def github_repo_query(github_repo_url: str, open_ai_key: str):
+
+        if not repo_url:
+            st.info("please add the repository url to proceed")
+            st.stop()
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 # Clone the repo
