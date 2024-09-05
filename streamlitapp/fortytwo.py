@@ -371,32 +371,39 @@ try:
                 ]
             )
 
-            # Initialize chat history if not already in session state
-            if "messages" not in st.session_state:
-                st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+            response_placeholder = st.empty()
+            input_placeholder = st.empty()
 
-            #if "scratchpad" not in st.session_state:
-                 #st.session_state["scratchpad"] = ""
 
-            # Display chat history messages
-            for msg in st.session_state["messages"]:
-                st.chat_message(msg["role"]).write(msg["content"])
+            with response_placeholder.container():
+                # Initialize chat history if not already in session state
+                if "messages" not in st.session_state:
+                    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
-            #st.sidebar.subheader("LLM thought process")
-            #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
+                #if "scratchpad" not in st.session_state:
+                    #st.session_state["scratchpad"] = ""
+
+                # Display chat history messages
+                for msg in st.session_state["messages"]:
+                    st.chat_message(msg["role"]).write(msg["content"])
+
+                #st.sidebar.subheader("LLM thought process")
+                #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
 
             # "Clear Chat History" button
             if st.sidebar.button("Clear Chat History"):
                 st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
                 st.rerun()  # Rerun the app to clear the chat history
 
-            llm_model = st.sidebar.selectbox("Choose LLM model",
-                                    ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
+            llm_model = st.sidebar.selectbox("Choose chat model",
+                                    ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="chat model")
+            
+            user_input =  st.chat_input(key="chat input") 
             
             try:
                 
                 # Handle user input
-                if user_input := st.chat_input():
+                if user_input != None:
                     if not openai_api_key:
                         st.info("Please add your OpenAI API key to continue.")
                         st.stop()
@@ -552,14 +559,17 @@ try:
                 st.info("Please upload documents or add url to continue.")
                 st.stop()
                  
-            retriever = configure_retriever(uploaded_files)   
+            retriever = configure_retriever(uploaded_files)
+
+            response_placeholder = st.empty()
+            input_placeholder = st.empty()   
             
             # Setup memory for contextual conversation for the documents part
             msgs = StreamlitChatMessageHistory()
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
-            llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
+            llm_model = st.sidebar.selectbox("Choose document query model",
+                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="document query")
                 
                 
                 # Setup LLM and QA chain for the documents part
@@ -581,19 +591,22 @@ try:
                     msgs.clear()
                     msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
-            avatars = {"human": "user", "ai": "assistant"}
-            for msg in msgs.messages:
-                st.chat_message(avatars[msg.type]).write(msg.content)
+            with response_placeholder.container():
+                avatars = {"human": "user", "ai": "assistant"}
+                for msg in msgs.messages:
+                    st.chat_message(avatars[msg.type]).write(msg.content)
                 
-            st.markdown("Document query section. Utilize RAG you curious being.")
-            if user_query := st.chat_input(placeholder="Ask me about  your documents!"):
-                st.chat_message("user").write(user_query)
+            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="document")
 
-                with st.chat_message("ai"):
-                        retrieval_handler = PrintRetrievalHandler(st.container())
-                        stream_handler = StreamHandler(st.empty())
+            with input_placeholder.container():
+                if user_query !=None:
+                    st.chat_message("user").write(user_query)
 
-                        qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
+                    with st.chat_message("ai"):
+                            retrieval_handler = PrintRetrievalHandler(st.container())
+                            stream_handler = StreamHandler(st.empty())
+
+                            qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     def query_web():
 
@@ -602,13 +615,15 @@ try:
                 st.stop()
                 
             retriever = web_page_saver_to_txt(url)
+            response_placeholder = st.empty()
+            input_placeholder = st.empty()
 
             # Setup memory for contextual conversation for the documents part
             msgs = StreamlitChatMessageHistory()
             memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
-            llm_model = st.sidebar.selectbox("Choose LLM model",
-                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"))
+            llm_model = st.sidebar.selectbox("Choose web query model",
+                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="web")
                 
                 
                 # Setup LLM and QA chain for the documents part
@@ -630,19 +645,22 @@ try:
                     msgs.clear()
                     msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
-            avatars = {"human": "user", "ai": "assistant"}
-            for msg in msgs.messages:
-                st.chat_message(avatars[msg.type]).write(msg.content)
+            with response_placeholder.container():
+                avatars = {"human": "user", "ai": "assistant"}
+                for msg in msgs.messages:
+                    st.chat_message(avatars[msg.type]).write(msg.content)
                 
-            st.markdown("Document query section. Utilize RAG you curious being.")
-            if user_query := st.chat_input(placeholder="Ask me about  your documents!"):
-                st.chat_message("user").write(user_query)
+            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="web")
 
-                with st.chat_message("ai"):
-                        retrieval_handler = PrintRetrievalHandler(st.container())
-                        stream_handler = StreamHandler(st.empty())
+            with input_placeholder.container():
+                if user_query != None:
+                    st.chat_message("user").write(user_query)
 
-                        qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
+                    with st.chat_message("ai"):
+                            retrieval_handler = PrintRetrievalHandler(st.container())
+                            stream_handler = StreamHandler(st.empty())
+
+                            qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     #define repo query
    
@@ -746,18 +764,15 @@ try:
 
         try:
 
-            if sidebar_option == "chat and query":
-                
-                if uploaded_files and not url and not web_document_name:
-                    query_documents()
+            tab1,tab2,tab3,tab4 = st.tabs(["chat","document query","github","web"])
 
-                elif not uploaded_files and not url and not web_document_name:
+            with tab1:
+                 chat_with_42()
 
-                    chat_with_42()
-                else:
-                    query_web()
+            with tab2:
+                 query_documents()
 
-            elif sidebar_option == "Github":
+            with tab3:
                 try:
                     if repo_url:
                         if "messages" not in st.session_state:
@@ -793,6 +808,12 @@ try:
             
                 except Exception:
                      st.write("an error occured in Github sidebar option")
+                 
+
+            with tab4:
+                query_web()
+               
+             
 
             if st.sidebar.button("Download chat"):
                all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
