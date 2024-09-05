@@ -643,7 +643,7 @@ try:
 
                 
 
-            if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
+            if len(msgs.messages) == 0 or st.sidebar.button("Clear web query history",key="web"):
                     msgs.clear()
                     msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
