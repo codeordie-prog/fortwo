@@ -125,13 +125,8 @@ try:
 
    #________________________________________radios_______________________________________________________________________
 
-    sidebar_option = st.sidebar.radio(
-         "Select an option",
-         ("chat and query","Github")
-     )
-
-    if sidebar_option == "Github":
-         repo_url = st.sidebar.text_input("Enter repository url: ")
+   
+    repo_url = st.sidebar.text_input("Enter repository url: ")
 
     #-----------------------------------------------------upload documents sidebar--------------------------------------------------------------
     # File uploader in the sidebar
