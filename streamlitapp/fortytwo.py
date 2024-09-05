@@ -784,6 +784,7 @@ try:
             with tab2:
                  query_documents()
 
+            # Content for "Github" tab
             with tab3:
                 if repo_url:
                     # Initialize session state for messages if not already set
@@ -804,28 +805,34 @@ try:
 
                     # Process the user input if provided
                     if user_input:
-                        # Append user input to messages
+                        # Add the user's message to the session state
                         st.session_state["messages"].append({"role": "user", "content": user_input})
-                        st.chat_message("user").write(user_input)
+                        
+                        # Display updated chat messages with user message
+                        with chat_placeholder.container():
+                            for msg in st.session_state["messages"]:
+                                st.chat_message(msg["role"]).write(msg["content"])
 
-                        # Generate the response using the chain
+                        # Query the GitHub repository
                         chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
+
+                        # Use pick to select the desired key
                         stream_chain = chain.pick("answer")
-
-                        # Placeholder for assistant's response
-                        response_placeholder = st.chat_message("assistant")
-
-                        # Initialize an empty response
+                        
+                        # Create a response placeholder and set it to empty; it will be updated with each chunk
                         response = ""
-
-                        # Stream response chunks and update the placeholder in real-time
                         for chunk in stream_chain.stream({"input": user_input}):
-                            response += chunk  # Append each chunk to the response
-                            response_placeholder.write(response)  # Update the placeholder with the current accumulated response
-
-                        # Append the final response to the messages
+                            response += f"{chunk}"
+                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
+                        
+                        # Update session state with the assistant's message
                         st.session_state["messages"].append({"role": "assistant", "content": response})
                         
+                        # Display updated chat messages with assistant's response
+                        with chat_placeholder.container():
+                            for msg in st.session_state["messages"]:
+                                st.chat_message(msg["role"]).write(msg["content"])
+
                  
 
             with tab4:
