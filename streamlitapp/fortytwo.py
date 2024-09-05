@@ -794,7 +794,7 @@ try:
 
                         user_input_placeholder = st.empty()
 
-                        user_input = st.chat_input(key="github")     
+                         
 
                             
                         chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
@@ -807,6 +807,8 @@ try:
                         response_placeholder = st.empty()
                         response = ""
                         with response_placeholder.container():
+                                
+                                user_input = st.chat_input(key="github")    
                         
                                 for chunk in stream_chain.stream({"input":user_input}):
                                     response += f"{chunk}"
