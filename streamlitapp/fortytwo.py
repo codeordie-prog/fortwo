@@ -808,31 +808,23 @@ try:
                         # Add the user's message to the session state
                         st.session_state["messages"].append({"role": "user", "content": user_input})
                         
-                        # Display updated chat messages with user message
-                        with chat_placeholder.container():
-                            for msg in st.session_state["messages"]:
-                                st.chat_message(msg["role"]).write(msg["content"])
-
+                    
                         # Query the GitHub repository
                         chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
 
                         # Use pick to select the desired key
                         stream_chain = chain.pick("answer")
                         
-                        # Create a response placeholder and set it to empty; it will be updated with each chunk
-                        with chat_placeholder.container():
-                            response = ""
-                            for chunk in stream_chain.stream({"input": user_input}):
-                                response += f"{chunk}"
-                                chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
+                        
+                        response = ""
+                        for chunk in stream_chain.stream({"input": user_input}):
+                            response += f"{chunk}"
+                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
                             
-                            # Update session state with the assistant's message
-                            st.session_state["messages"].append({"role": "assistant", "content": response})
+                        # Update session state with the assistant's message
+                        st.session_state["messages"].append({"role": "assistant", "content": response})
                         
             
-                            for msg in st.session_state["messages"]:
-                                st.chat_message(msg["role"]).write(msg["content"])
-
                  
 
             with tab4:
