@@ -763,7 +763,7 @@ try:
 
                 return qa
         except Exception:
-             st.write("an error occured inside the github repo function, its related to parsing of languages that require Tree sitter.")
+             st.write("an error occured inside the github repo function, check the URL.")
 
 
     #-----------------------------------------------------------audio---------------------------------------------------------------------------
@@ -845,8 +845,8 @@ try:
          
         except TypeError:
             st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
-        except Exception as e:
-             st.write("An error was encountered at main call",e)
+        except Exception:
+             st.write("An error was encountered at main call")
     
 
         
