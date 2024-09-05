@@ -784,49 +784,53 @@ try:
                  query_documents()
 
             with tab3:
-                try:
-                    if repo_url:
-                        if "messages" not in st.session_state:
-                             st.session_state["messages"] = [{"role":"assistant","content":"how can I help with the code base?"}]
+                
+                if repo_url:
+                    # Initialize session state for messages if not already set
+                    if "messages" not in st.session_state:
+                        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
+                    
+                    # Create containers for chat messages and user input
+                    chat_placeholder = st.empty()  # Placeholder for chat messages
+                    input_placeholder = st.empty()  # Placeholder for user input
 
+                    # Display existing chat history in chat_placeholder
+                    with chat_placeholder.container():
                         for msg in st.session_state["messages"]:
-                             st.chat_message(msg["role"]).write(msg["content"])
+                            st.chat_message(msg["role"]).write(msg["content"])
 
-                        user_input_placeholder = st.empty()
+                    # Handle user input
+                    user_input = input_placeholder.chat_input(placeholder="Type your question here...")
 
-                         
-
-                            
-                        chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
-                                
-                        #use pick to select the desired key
-                        stream_chain = chain.pick("answer")
-                            
-                            
-                            #create a response placeholder and set it to empty, it will be updated with each chunk
-                        response_placeholder = st.empty()
-                        response = ""
-                        with response_placeholder.container():  
+                    # Process the user input if provided
+                    if user_input:
+                        # Add the user's message to the session state
+                        st.session_state["messages"].append({"role": "user", "content": user_input})
                         
-                                for chunk in stream_chain.stream({"input":user_input}):
-                                    response += f"{chunk}"
-                                    response_placeholder.write(response) #update place holder
-                                
-                                ass_msg = response
-                                st.session_state["messages"].append({"role":"assistant","content":ass_msg})  
-                                response_placeholder.write(ass_msg)
-                                user_input = st.chat_input(key="github")
-                                
+                        # Display updated chat messages with user message
+                        with chat_placeholder.container():
+                            for msg in st.session_state["messages"]:
+                                st.chat_message(msg["role"]).write(msg["content"])
 
-                        with user_input_placeholder.container(): 
-                            if user_input != None:
+                        # Query the GitHub repository
+                        chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
 
-                                st.session_state["messages"].append({"role": "user", "content": user_input})
-                                st.chat_message("user").write(user_input)   
-
-            
-                except Exception:
-                     st.write("an error occured in Github sidebar option")
+                        # Use pick to select the desired key
+                        stream_chain = chain.pick("answer")
+                        
+                        # Create a response placeholder and set it to empty; it will be updated with each chunk
+                        response = ""
+                        for chunk in stream_chain.stream({"input": user_input}):
+                            response += f"{chunk}"
+                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
+                        
+                        # Update session state with the assistant's message
+                        st.session_state["messages"].append({"role": "assistant", "content": response})
+                        
+                        # Display updated chat messages with assistant's response
+                        with chat_placeholder.container():
+                            for msg in st.session_state["messages"]:
+                                st.chat_message(msg["role"]).write(msg["content"])
                  
 
             with tab4:
