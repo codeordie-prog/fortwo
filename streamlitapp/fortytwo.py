@@ -792,23 +792,26 @@ try:
                         for msg in st.session_state["messages"]:
                              st.chat_message(msg["role"]).write(msg["content"])
 
+                        user_input_placeholder = st.empty()
+
                         user_input = st.chat_input(key="github")     
 
-                        if user_input != None:
+                        with user_input_placeholder.container():
+                            if user_input != None:
 
-                            st.session_state["messages"].append({"role": "user", "content": user_input})
-                            st.chat_message("user").write(user_input)
-                        
-                            chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
+                                st.session_state["messages"].append({"role": "user", "content": user_input})
+                                st.chat_message("user").write(user_input)
                             
-                            #use pick to select the desired key
-                            stream_chain = chain.pick("answer")
-                           
+                                chain = github_repo_query(repo_url,open_ai_key=openai_api_key)
+                                
+                                #use pick to select the desired key
+                                stream_chain = chain.pick("answer")
+                            
                             
                             #create a response placeholder and set it to empty, it will be updated with each chunk
-                            response_placeholder = st.empty()
-                            response = ""
-                            with response_placeholder.container():
+                        response_placeholder = st.empty()
+                        response = ""
+                        with response_placeholder.container():
                         
                                 for chunk in stream_chain.stream({"input":user_input}):
                                     response += f"{chunk}"
