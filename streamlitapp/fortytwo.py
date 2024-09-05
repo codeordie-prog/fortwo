@@ -785,7 +785,6 @@ try:
                  query_documents()
 
             with tab3:
-                
                 if repo_url:
                     # Initialize session state for messages if not already set
                     if "messages" not in st.session_state:
@@ -805,26 +804,28 @@ try:
 
                     # Process the user input if provided
                     if user_input:
-                        # Add the user's message to the session state
+                        # Append user input to messages
                         st.session_state["messages"].append({"role": "user", "content": user_input})
-                        
-                    
-                        # Query the GitHub repository
-                        chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
+                        st.chat_message("user").write(user_input)
 
-                        # Use pick to select the desired key
+                        # Generate the response using the chain
+                        chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
                         stream_chain = chain.pick("answer")
-                        
-                        
+
+                        # Placeholder for assistant's response
+                        response_placeholder = st.chat_message("assistant")
+
+                        # Initialize an empty response
                         response = ""
+
+                        # Stream response chunks and update the placeholder in real-time
                         for chunk in stream_chain.stream({"input": user_input}):
-                            response += f"{chunk}"
-                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
-                            
-                        # Update session state with the assistant's message
+                            response += chunk  # Append each chunk to the response
+                            response_placeholder.write(response)  # Update the placeholder with the current accumulated response
+
+                        # Append the final response to the messages
                         st.session_state["messages"].append({"role": "assistant", "content": response})
                         
-            
                  
 
             with tab4:
