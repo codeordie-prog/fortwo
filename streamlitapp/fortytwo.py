@@ -610,14 +610,14 @@ try:
 
                             response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
-                responses_path=openai_audio.text_to_speech(response,openai_api_key)
-                st.audio(responses_path,format="audio")
+                            responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                            st.audio(responses_path,format="audio")
 
-                        #download the audio
-                            
-                with open(responses_path, "rb") as audio_file:
-                        data = audio_file.read()
-                        st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                    #download the audio
+                                        
+                            with open(responses_path, "rb") as audio_file:
+                                    data = audio_file.read()
+                                    st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
 
     def query_web():
 
