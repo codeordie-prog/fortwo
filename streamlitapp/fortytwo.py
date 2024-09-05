@@ -671,96 +671,98 @@ try:
     #define repo query
    
     def github_repo_query(github_repo_url: str, open_ai_key: str):
-
-        if not repo_url:
-            st.info("please add the repository url to proceed")
-            st.stop()
         try:
-            with tempfile.TemporaryDirectory() as temp_dir:
-                # Clone the repo
-                repo_path = os.path.join(temp_dir, "repo")
-                repo = Repo.clone_from(github_repo_url, to_path=repo_path)
-                documents = []
+            if not repo_url:
+                st.info("please add the repository url to proceed")
+                st.stop()
 
-                #add suffixes
-                language_suffixes = {
-                     
-                     Language.PYTHON : [".py"],
-                     Language.JAVA : [".java"],
-                     Language.GO : [".go"],
-                     Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
-                     Language.KOTLIN:[".kt",".kts"],
-                     Language.TS : [".ts"],
-                     Language.CSHARP : [".cs"]
+            else:
+            
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    # Clone the repo
+                    repo_path = os.path.join(temp_dir, "repo")
+                    repo = Repo.clone_from(github_repo_url, to_path=repo_path)
+                    documents = []
+
+                    #add suffixes
+                    language_suffixes = {
+                        
+                        Language.PYTHON : [".py"],
+                        Language.JAVA : [".java"],
+                        Language.GO : [".go"],
+                        Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
+                        Language.KOTLIN:[".kt",".kts"],
+                        Language.TS : [".ts"],
+                        Language.CSHARP : [".cs"]
+                        
+                    }
+
+                    #document loader
+                    for language, suffix in language_suffixes.items():
+                        loader = GenericLoader.from_filesystem(
+                            
+                            repo_path,
+                            glob="**/*",
+                            suffixes=suffix,
+                            exclude=["**/non-utf8-encoding.*"],
+                            parser=LanguageParser(
+                                language=language, parser_threshold=500
+                            )
+                        )
+
+                        documents.extend(loader.load())
+
+                    #split
+
+                    split_texts = []
+
+                    for language in language_suffixes.keys():
+                        splitter = RecursiveCharacterTextSplitter.from_language(
+                            language=language, chunk_size = 2000, chunk_overlap = 200
+                        )
+
+                        split_texts.extend(splitter.split_documents(documents))
+
                     
-                }
-
-                #document loader
-                for language, suffix in language_suffixes.items():
-                     loader = GenericLoader.from_filesystem(
-                          
-                          repo_path,
-                          glob="**/*",
-                          suffixes=suffix,
-                          exclude=["**/non-utf8-encoding.*"],
-                          parser=LanguageParser(
-                               language=language, parser_threshold=500
-                          )
-                     )
-
-                     documents.extend(loader.load())
-
-                #split
-
-                split_texts = []
-
-                for language in language_suffixes.keys():
-                     splitter = RecursiveCharacterTextSplitter.from_language(
-                          language=language, chunk_size = 2000, chunk_overlap = 200
+                    # Retriever
+                    db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
+                    retriever = db.as_retriever(
+                        search_type="mmr",  # Also test "similarity"
+                        search_kwargs={"k": 8},
                     )
 
-                     split_texts.extend(splitter.split_documents(documents))
+                    
+                    llm = ChatOpenAI(model_name="gpt-4o",api_key=open_ai_key)
 
-                
-                # Retriever
-                db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
-                retriever = db.as_retriever(
-                    search_type="mmr",  # Also test "similarity"
-                    search_kwargs={"k": 8},
-                )
+                    # Prompt
+                    prompt_retriever = ChatPromptTemplate.from_messages(
+                        [
+                            ("placeholder", "{chat_history}"),
+                            ("user", "{input}"),
+                            (
+                                "user",
+                                "Given the above conversation, generate a search query to look up to get information relevant to the conversation",
+                            ),
+                        ]
+                    )
 
-                
-                llm = ChatOpenAI(model_name="gpt-4o",api_key=open_ai_key)
+                    retriever_chain = create_history_aware_retriever(llm, retriever, prompt_retriever)
 
-                # Prompt
-                prompt_retriever = ChatPromptTemplate.from_messages(
-                    [
-                        ("placeholder", "{chat_history}"),
-                        ("user", "{input}"),
-                        (
-                            "user",
-                            "Given the above conversation, generate a search query to look up to get information relevant to the conversation",
-                        ),
-                    ]
-                )
+                    prompt_document = ChatPromptTemplate.from_messages(
+                        [
+                            (
+                                "system",
+                                "Answer the user's questions based on the below context:\n\n{context}",
+                            ),
+                            ("placeholder", "{chat_history}"),
+                            ("user", "{input}"),
+                        ]
+                    )
+                    document_chain = create_stuff_documents_chain(llm, prompt_document)
 
-                retriever_chain = create_history_aware_retriever(llm, retriever, prompt_retriever)
+                    qa = create_retrieval_chain(retriever_chain, document_chain)
 
-                prompt_document = ChatPromptTemplate.from_messages(
-                    [
-                        (
-                            "system",
-                            "Answer the user's questions based on the below context:\n\n{context}",
-                        ),
-                        ("placeholder", "{chat_history}"),
-                        ("user", "{input}"),
-                    ]
-                )
-                document_chain = create_stuff_documents_chain(llm, prompt_document)
-
-                qa = create_retrieval_chain(retriever_chain, document_chain)
-
-                return qa
+                    return qa
         except Exception:
              st.write("an error occured inside the github repo function, check the URL.")
 
@@ -830,6 +832,10 @@ try:
                         with chat_placeholder.container():
                             for msg in st.session_state["messages"]:
                                 st.chat_message(msg["role"]).write(msg["content"])
+
+                    else:
+                        st.info("please add repository url to proceed")
+                        st.stop()
                  
 
             with tab4:
