@@ -652,7 +652,7 @@ try:
                 for msg in msgs.messages:
                     st.chat_message(avatars[msg.type]).write(msg.content)
                 
-            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="web")
+            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="web query")
 
             with input_placeholder.container():
                 if user_query != None:
