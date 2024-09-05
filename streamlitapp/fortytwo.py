@@ -790,9 +790,11 @@ try:
                              st.session_state["messages"] = [{"role":"assistant","content":"how can I help with the code base?"}]
 
                         for msg in st.session_state["messages"]:
-                             st.chat_message(msg["role"]).write(msg["content"])     
+                             st.chat_message(msg["role"]).write(msg["content"])
 
-                        if user_input := st.chat_input():
+                        user_input = st.chat_input(key="github")     
+
+                        if user_input != None:
 
                             st.session_state["messages"].append({"role": "user", "content": user_input})
                             st.chat_message("user").write(user_input)
