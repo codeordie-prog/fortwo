@@ -672,7 +672,7 @@ try:
    
     def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
-            if not repo_url:
+            if repo_url == None:
                 st.info("please add the repository url to proceed")
                 st.stop()
 
@@ -833,9 +833,6 @@ try:
                             for msg in st.session_state["messages"]:
                                 st.chat_message(msg["role"]).write(msg["content"])
 
-                    else:
-                        st.info("please add repository url to proceed")
-                        st.stop()
                  
 
             with tab4:
