@@ -673,7 +673,7 @@ try:
     def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
             if repo_url == None:
-                st.info("please add the repository url to proceed")
+                st.info("please add the repository url to proceed.")
                 st.stop()
 
             else:
@@ -820,13 +820,14 @@ try:
                         stream_chain = chain.pick("answer")
                         
                         # Create a response placeholder and set it to empty; it will be updated with each chunk
-                        response = ""
-                        for chunk in stream_chain.stream({"input": user_input}):
-                            response += f"{chunk}"
-                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
-                        
-                        # Update session state with the assistant's message
-                        st.session_state["messages"].append({"role": "assistant", "content": response})
+                        with chat_placeholder.container():
+                            response = ""
+                            for chunk in stream_chain.stream({"input": user_input}):
+                                response += f"{chunk}"
+                                chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
+                            
+                            # Update session state with the assistant's message
+                            st.session_state["messages"].append({"role": "assistant", "content": response})
                         
                         # Display updated chat messages with assistant's response
                         with chat_placeholder.container():
