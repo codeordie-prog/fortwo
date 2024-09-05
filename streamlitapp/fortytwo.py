@@ -829,8 +829,7 @@ try:
                             # Update session state with the assistant's message
                             st.session_state["messages"].append({"role": "assistant", "content": response})
                         
-                        # Display updated chat messages with assistant's response
-                        with chat_placeholder.container():
+            
                             for msg in st.session_state["messages"]:
                                 st.chat_message(msg["role"]).write(msg["content"])
 
