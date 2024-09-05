@@ -806,9 +806,7 @@ try:
                             #create a response placeholder and set it to empty, it will be updated with each chunk
                         response_placeholder = st.empty()
                         response = ""
-                        with response_placeholder.container():
-                                
-                                user_input = st.chat_input(key="github")    
+                        with response_placeholder.container():  
                         
                                 for chunk in stream_chain.stream({"input":user_input}):
                                     response += f"{chunk}"
@@ -819,6 +817,7 @@ try:
                                 response_placeholder.write(ass_msg)
 
                         with user_input_placeholder.container():
+                            user_input = st.chat_input(key="github")  
                             if user_input != None:
 
                                 st.session_state["messages"].append({"role": "user", "content": user_input})
