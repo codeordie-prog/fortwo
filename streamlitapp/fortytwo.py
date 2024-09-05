@@ -73,7 +73,7 @@ try:
     image_bytes = load_image(imag_path)
 
     # Create two columns
-    col1, col2,col3,= st.columns([1,1,1])
+    col1, col2,col3,= st.columns([1,2,1])
 
     #Display the image in the center column
     with col1:
@@ -83,7 +83,7 @@ try:
          st.error("Failed to load image.")
 
    
-    with col2:
+    with col3:
          st.info('"Artificial Intelligence will grant us the ultimate intellectual threshold needed up the Kardashev scale" Kelvin')
 
 
