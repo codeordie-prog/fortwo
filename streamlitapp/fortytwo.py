@@ -506,8 +506,6 @@ try:
     def web_page_saver_to_txt(url):
 
         try:
-
-            if url!=None and web_document_name != None:
                 results = requests.get(url)
                 web_content = results.content
     
