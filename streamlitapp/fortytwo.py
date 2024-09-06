@@ -613,7 +613,7 @@ try:
 
             if not url and not web_document_name:
                 st.info("Please add url to continue.")
-                st.stop()
+                # st.stop()
                 
             retriever = web_page_saver_to_txt(url)
             response_placeholder = st.empty()
