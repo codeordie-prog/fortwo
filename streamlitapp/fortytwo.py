@@ -840,9 +840,9 @@ try:
                
              
 
-            if st.sidebar.button("Download chat"):
-               all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-               create_and_download(all_messages)
+            #if st.sidebar.button("Download chat"):
+               #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+               #create_and_download(all_messages)
 
          
         except TypeError:
