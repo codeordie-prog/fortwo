@@ -125,6 +125,8 @@ try:
 
    
     repo_url = st.sidebar.text_input("Enter repository url: ")
+    url = st.sidebar.text_input("enter url")
+    web_document_name = st.sidebar.text_input("Enter name for the web document")
 
     #-----------------------------------------------------upload documents sidebar--------------------------------------------------------------
     # File uploader in the sidebar
@@ -141,8 +143,7 @@ try:
                     2. Enter the document saving name. as you desire.
                     3. Query the website for information by asking 42 about it.""")
     
-    url = st.sidebar.text_input("enter url")
-    web_document_name = st.sidebar.text_input("Enter name for the web document")
+
 
     # Inject custom CSS for glowing border effect
     st.markdown(
