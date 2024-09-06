@@ -488,8 +488,8 @@ try:
                                     st.audio(audio_path,format="wav")
                                     st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
                                     
-                            except Exception as e:
-                                st.write(f"an error occured while converting to speech: {e}")
+                            except Exception :
+                                st.write(f"an error occured while converting to speech")
 
                         #Download chat button
                         #if st.sidebar.button("Download Chat"):
