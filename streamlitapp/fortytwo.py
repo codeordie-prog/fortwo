@@ -787,7 +787,7 @@ try:
                 
                 # Initialize session state for messages if not already set
                   if "messages" not in st.session_state:
-                     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
+                      st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
                     
                     # Create containers for chat messages and user input
                     chat_placeholder = st.empty()  # Placeholder for chat messages
