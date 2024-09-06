@@ -507,7 +507,7 @@ try:
 
         try:
 
-            if url is not None:
+            if url!=None and web_document_name != None:
                 results = requests.get(url)
                 web_content = results.content
     
@@ -614,7 +614,7 @@ try:
 
     def query_web():
 
-            if not url or not web_document_name:
+            if not url and not web_document_name:
                 st.info("Please add url to continue.")
                 st.stop()
                 
