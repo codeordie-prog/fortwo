@@ -538,8 +538,7 @@ try:
                     retriever = vectordb.as_retriever()
     
                     return retriever
-            else:
-                st.write("url object returned is Null")
+           
         except Exception:
              st.write("enter valid URL")
 
