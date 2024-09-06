@@ -491,10 +491,10 @@ try:
                             except Exception as e:
                                 st.write(f"an error occured while converting to speech: {e}")
 
-                        # Download chat button
-                        #if st.sidebar.button("Download Chat"):
-                            #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                            #create_and_download(text_content=all_messages)
+                        #Download chat button
+                         if st.sidebar.button("Download Chat"):
+                            all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                            create_and_download(text_content=all_messages)
 
                     
 
