@@ -809,7 +809,7 @@ try:
                 with st.container():
                     if repo_url:
                         # Initialize session state for messages if not already set
-                        if "messages" not in st.session_state:
+                        if "messages_github" not in st.session_state:
                             st.session_state["messages_github"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
                         
                         # Create containers for chat messages and user input
@@ -831,7 +831,7 @@ try:
                             
                             # Display updated chat messages with user message
                             with chat_placeholder.container():
-                                for msg in st.session_state["messages"]:
+                                for msg in st.session_state["messages_github"]:
                                     st.chat_message(msg["role"]).write(msg["content"])
 
                             # Query the GitHub repository
@@ -847,11 +847,11 @@ try:
                                 chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
                             
                             # Update session state with the assistant's message
-                            st.session_state["messages"].append({"role": "assistant", "content": response})
+                            st.session_state["messages_github"].append({"role": "assistant", "content": response})
                             
                             # Display updated chat messages with assistant's response
                             with chat_placeholder.container():
-                                for msg in st.session_state["messages"]:
+                                for msg in st.session_state["messages_github"]:
                                     st.chat_message(msg["role"]).write(msg["content"])
 
                  
