@@ -810,7 +810,7 @@ try:
                     if repo_url:
                         # Initialize session state for messages if not already set
                         if "messages" not in st.session_state:
-                            st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
+                            st.session_state["messages_github"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
                         
                         # Create containers for chat messages and user input
                         chat_placeholder = st.empty()  # Placeholder for chat messages
@@ -818,7 +818,7 @@ try:
 
                         # Display existing chat history in chat_placeholder
                         with chat_placeholder.container():
-                            for msg in st.session_state["messages"]:
+                            for msg in st.session_state["messages_github"]:
                                 st.chat_message(msg["role"]).write(msg["content"])
 
                         # Handle user input
@@ -827,7 +827,7 @@ try:
                         # Process the user input if provided
                         if user_input:
                             # Add the user's message to the session state
-                            st.session_state["messages"].append({"role": "user", "content": user_input})
+                            st.session_state["messages_github"].append({"role": "user", "content": user_input})
                             
                             # Display updated chat messages with user message
                             with chat_placeholder.container():
