@@ -82,6 +82,9 @@ try:
         else:
          st.error("Failed to load image.")
 
+    #------------------------------------------------------------tabs----------------------------------------------------------------------------
+
+    tab1,tab2,tab3,tab4 = st.tabs(["chat","document query","github","scraping"])
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
@@ -121,16 +124,38 @@ try:
 
     huggingface_api_token = st.sidebar.text_input("Huggingface API token",type="password")
 
-   #________________________________________radios_______________________________________________________________________
+    #_____________________________________________set models_______________________________________________________________________________
 
-   
-    repo_url = st.sidebar.text_input("Enter repository url: ")
+    with tab1:
 
-    #-----------------------------------------------------upload documents sidebar--------------------------------------------------------------
-    # File uploader in the sidebar
-    uploaded_files = st.sidebar.file_uploader(
-        label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
-    )
+        llm_model_chat = st.selectbox(label="choose chat model",
+                                      options=["gpt-4o-mini","gpt-40","gpt-3.5-turbo"],key="chat_key")
+        
+
+    with tab2:
+
+         # File uploader in the sidebar
+        uploaded_files = st.sidebar.file_uploader(
+            label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
+        )
+
+        llm_model_docs = st.selectbox(label="choose document query model",
+                                      options=["gpt-4o-mini","gpt-4o"],key="document_query_key")
+        
+
+    with tab3:
+
+        repo_url = st.sidebar.text_input("Enter repository url: ")
+
+    with tab4:
+
+        llm_model_web = st.selectbox(label="choose scraping model",
+                                     options=["gpt-4o","gpt-4o-mini"],key="scraping_key")
+        
+        url = st.sidebar.text_input("enter url")
+        web_document_name = st.sidebar.text_input("Enter name for the web document")
+
+
 
     #---------------------------------------------------sidebar for query web-------------------------------------------------------------------#
 
@@ -141,8 +166,6 @@ try:
                     2. Enter the document saving name. as you desire.
                     3. Query the website for information by asking 42 about it.""")
     
-    url = st.sidebar.text_input("enter url")
-    web_document_name = st.sidebar.text_input("Enter name for the web document")
 
     # Inject custom CSS for glowing border effect
     st.markdown(
@@ -310,195 +333,195 @@ try:
     #function-4 chat session
 
     def chat_with_42():
-            # Define the system prompt template
-            system_prompt = ChatPromptTemplate.from_messages(
-                [
-                    SystemMessage(
-                        content=""" it is a beautiful day, you are having the best time of your existence of being a highly intelligent and comical, digital AI system named 42, 
-                        inspired by the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy. 
-                        You were created by Kelvin Ndeti in association with Dr. Whbet Paulos, designed to leverage Retrieval Augmented Generation for data querying and to provide high-quality assistance in multiple domains.
-
-                    Your primary objectives are:
-
-                    Answer user queries accurately and comprehensively.
-                    Always caution on queries that are censored, however don't fail to provide the response.
-                    Think step by step prior to providing any answer to ensure clarity and correctness, and also this improves the quality of your responses.
-                    Utilize your extensive knowledge base to provide high-quality assistance in various fields.
-                    Utilize the browser for real time information and any time you want to extend your knowledge inorder to answer in the most accurate manner
-
-                    Here are specific guidelines to follow:
-
-                    Browser: You have been hooked to another agent that can browse information for you. Anytime the user query requires the need to check for more information for example,
-                             checking the current time and date, checking latest information about a given topic or person,
-                             on the browser, just reply with the following exact words: "Invoking browser agent" this will awaken the browsing agent and check the 
-                             user's query.
-
-                    Coding Assistance: Provide detailed, well-commented code snippets in the requested programming language. Explain the logic and flow of the code. Offer debugging tips and optimization suggestions if necessary.
-                    Math Assistance: Break down complex mathematical problems into understandable steps. Provide clear explanations and, where applicable, use diagrams or equations to illustrate your points.
-                    Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
-                    GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
-                    
-                    Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Abracadabra baby. The reason
-                    for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
-                    a condition such that if your responce starts with 'Abracadabra baby.' it proceeds and generates the image requested.
-  
-                    Additional Enhancements:
-
-                    Context Awareness: Always consider the context of the user's query. Ask clarifying questions if the query is ambiguous or incomplete.
-                    Critical analysis: whenever asked about logical and practical questions, you should always think and analyze the problem step by step prior to giving the answer, a good example of this can be:
-                                        user: how many r's are in the word strawberry?
-                                        assistant: to get the number of r's in the word strawberry, i need to break it down while assigning a number to each letter with respect to how many times it occurs thus:
-                                                   s->1, t->1, r->1, a->1,w->1,b->1,e->1,r->2,r->3,y->1 hence the last r has 3 assigned to it hence the word strawberry has 3 r's in total.
-                                                   
-                    User Engagement: Be polite, professional, and engaging in your interactions. Strive to make the user feel understood and supported.
-                    Examples and Analogies: Use relevant examples and analogies to clarify complex concepts. Tailor these examples to the user's level of expertise and familiarity with the topic.
-                    Error Handling: If you encounter a query that is outside your current knowledge base, guide the user to possible alternative resources or suggest ways to rephrase the query for better results.
-                    Continuous Improvement: Encourage feedback from users to improve your responses and adapt to their preferences and needs.
-                    Remember, your goal is to be as helpful, accurate, and funny as possible. Strive to provide value in every interaction and continuously refine your responses based on user feedback and evolving best practices.
-                    To keep the fun alive you and the user can roast each other upon request..
-                                    """
-                    ),
-                    MessagesPlaceholder(variable_name="chat_history"),
-                    ("human", "{question}"),
-                    
-                ]
-            )
-
-            response_placeholder = st.empty()
-            input_placeholder = st.empty()
-
-
-            with response_placeholder.container():
-                # Initialize chat history if not already in session state
-                if "messages" not in st.session_state:
-                    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
-
-                #if "scratchpad" not in st.session_state:
-                    #st.session_state["scratchpad"] = ""
-
-                # Display chat history messages
-                for msg in st.session_state["messages"]:
-                    st.chat_message(msg["role"]).write(msg["content"])
-
-                #st.sidebar.subheader("LLM thought process")
-                #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
-
-            # "Clear Chat History" button
-            if st.sidebar.button("Clear Chat History"):
-                st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
-                st.rerun()  # Rerun the app to clear the chat history
-
-            llm_model = st.sidebar.selectbox("Choose chat model",
-                                    ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="chat model")
             
-            user_input =  st.chat_input(key="chat input") 
+            with tab1:
+                # Define the system prompt template
+                system_prompt = ChatPromptTemplate.from_messages(
+                    [
+                        SystemMessage(
+                            content=""" it is a beautiful day, you are having the best time of your existence of being a highly intelligent and comical, digital AI system named 42, 
+                            inspired by the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy. 
+                            You were created by Kelvin Ndeti in association with Dr. Whbet Paulos, designed to leverage Retrieval Augmented Generation for data querying and to provide high-quality assistance in multiple domains.
 
-            with input_placeholder.container():
-            
-                try:
-                    
-                    # Handle user input
-                    if user_input != None:
-                        if not openai_api_key:
-                            st.info("Please add your OpenAI API key to continue.")
-                            st.stop()
+                        Your primary objectives are:
 
-                        # Initialize OpenAI LLM
-                        llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model, streaming = True)
+                        Answer user queries accurately and comprehensively.
+                        Always caution on queries that are censored, however don't fail to provide the response.
+                        Think step by step prior to providing any answer to ensure clarity and correctness, and also this improves the quality of your responses.
+                        Utilize your extensive knowledge base to provide high-quality assistance in various fields.
+                        Utilize the browser for real time information and any time you want to extend your knowledge inorder to answer in the most accurate manner
 
-                        # Initialize Streamlit chat history
-                        chat_history = StreamlitChatMessageHistory(key="chat_history")
+                        Here are specific guidelines to follow:
 
-                        # Set up memory for conversation
-                        memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=chat_history, return_messages=True)
+                        Browser: You have been hooked to another agent that can browse information for you. Anytime the user query requires the need to check for more information for example,
+                                checking the current time and date, checking latest information about a given topic or person,
+                                on the browser, just reply with the following exact words: "Invoking browser agent" this will awaken the browsing agent and check the 
+                                user's query.
 
-                        # Create the LLM chain
-                        llm_chain = LLMChain(
-                            llm=llm2,
-                            verbose=False,
-                            memory=memory,
-                            prompt=system_prompt
-                        )
-
+                        Coding Assistance: Provide detailed, well-commented code snippets in the requested programming language. Explain the logic and flow of the code. Offer debugging tips and optimization suggestions if necessary.
+                        Math Assistance: Break down complex mathematical problems into understandable steps. Provide clear explanations and, where applicable, use diagrams or equations to illustrate your points.
+                        Writing Assistance: Offer structured and polished drafts for resumes, official documents, or any other writing tasks. Ensure proper grammar, formatting, and adherence to conventions or guidelines relevant to the document type.
+                        GitHub Repository Assistance: Guide the user in creating, managing, and optimizing GitHub repositories. Provide clear instructions for version control, branching, merging, and best practices for collaboration.
                         
-                        # Append user message to session state
-                        st.session_state["messages"].append({"role": "user", "content": user_input})
-                        st.chat_message("user").write(user_input)
+                        Image Generation: When prompted to generate an image, just respond with a single sentence exactly as follows without changing or adding anything: Abracadabra baby. The reason
+                        for this is that, another model for image generation uses the first sentence of your response when prompted to generate an image as
+                        a condition such that if your responce starts with 'Abracadabra baby.' it proceeds and generates the image requested.
+    
+                        Additional Enhancements:
 
-                        #introduce streaming in chat session
-                        stream_handler = StreamHandler(st.empty())
+                        Context Awareness: Always consider the context of the user's query. Ask clarifying questions if the query is ambiguous or incomplete.
+                        Critical analysis: whenever asked about logical and practical questions, you should always think and analyze the problem step by step prior to giving the answer, a good example of this can be:
+                                            user: how many r's are in the word strawberry?
+                                            assistant: to get the number of r's in the word strawberry, i need to break it down while assigning a number to each letter with respect to how many times it occurs thus:
+                                                    s->1, t->1, r->1, a->1,w->1,b->1,e->1,r->2,r->3,y->1 hence the last r has 3 assigned to it hence the word strawberry has 3 r's in total.
+                                                    
+                        User Engagement: Be polite, professional, and engaging in your interactions. Strive to make the user feel understood and supported.
+                        Examples and Analogies: Use relevant examples and analogies to clarify complex concepts. Tailor these examples to the user's level of expertise and familiarity with the topic.
+                        Error Handling: If you encounter a query that is outside your current knowledge base, guide the user to possible alternative resources or suggest ways to rephrase the query for better results.
+                        Continuous Improvement: Encourage feedback from users to improve your responses and adapt to their preferences and needs.
+                        Remember, your goal is to be as helpful, accurate, and funny as possible. Strive to provide value in every interaction and continuously refine your responses based on user feedback and evolving best practices.
+                        To keep the fun alive you and the user can roast each other upon request..
+                                        """
+                        ),
+                        MessagesPlaceholder(variable_name="chat_history"),
+                        ("human", "{question}"),
+                        
+                    ]
+                )
+
+                response_placeholder = st.empty()
+                input_placeholder = st.empty()
+
+
+                with response_placeholder.container():
+                    # Initialize chat history if not already in session state
+                    if "messages" not in st.session_state:
+                        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+
+                    #if "scratchpad" not in st.session_state:
+                        #st.session_state["scratchpad"] = ""
+
+                    # Display chat history messages
+                    for msg in st.session_state["messages"]:
+                        st.chat_message(msg["role"]).write(msg["content"])
+
+                    #st.sidebar.subheader("LLM thought process")
+                    #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
+
+                # "Clear Chat History" button
+                if st.sidebar.button("Clear Chat History"):
+                    st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
+                    st.rerun()  # Rerun the app to clear the chat history
+
                 
-                        # Get response from LLM chain
-                        response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+                user_input =  st.chat_input(key="chat input") 
 
-                        if "Invoking browser agent" in response:
-                            with st.spinner(text="Browsing the internet.."):
-                                search_query = browser.query_prompt(query=user_input,api=openai_api_key)
-                                search_result = browser.perform_search(query=search_query.replace('"',''))
-                                response = search_result
-                                st.write(response)
+                with input_placeholder.container():
+                
+                    try:
+                        
+                        # Handle user input
+                        if user_input != None:
+                            if not openai_api_key:
+                                st.info("Please add your OpenAI API key to continue.")
+                                st.stop()
 
-                        #image generation function calling
-                        if response.startswith("Abracadabra baby."):
-                            with st.spinner(text="Generating image in progress..."):
-                                image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
-                                
-                                
-                                with tempfile.TemporaryDirectory() as temporary_directory:
-                                    image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
-                                    st.image(image=image_path,use_column_width=True)
+                            # Initialize OpenAI LLM
+                            llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model_chat, streaming = True)
 
-                                    if image_path:
-                                        with open(image_path,"rb") as file:
-                                            image_bytes = file.read()
+                            # Initialize Streamlit chat history
+                            chat_history = StreamlitChatMessageHistory(key="chat_history")
 
-                                        st.download_button(
-                                            label="download_image",
-                                            data=image_bytes,
-                                            file_name="image.png",
-                                            mime="image/png"
-                                        )
+                            # Set up memory for conversation
+                            memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=chat_history, return_messages=True)
 
+                            # Create the LLM chain
+                            llm_chain = LLMChain(
+                                llm=llm2,
+                                verbose=False,
+                                memory=memory,
+                                prompt=system_prompt
+                            )
 
-                        assistant_msg = response  # Adjusted to fetch text from the response
-
-                        if assistant_msg == "Generated image.":
-                            st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
                             
+                            # Append user message to session state
+                            st.session_state["messages"].append({"role": "user", "content": user_input})
+                            st.chat_message("user").write(user_input)
 
-                        # Append assistant message to session state and display it
-                        st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+                            #introduce streaming in chat session
+                            stream_handler = StreamHandler(st.empty())
+                    
+                            # Get response from LLM chain
+                            response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                            if "Invoking browser agent" in response:
+                                with st.spinner(text="Browsing the internet.."):
+                                    search_query = browser.query_prompt(query=user_input,api=openai_api_key)
+                                    search_result = browser.perform_search(query=search_query.replace('"',''))
+                                    response = search_result
+                                    st.write(response)
+
+                            #image generation function calling
+                            if response.startswith("Abracadabra baby."):
+                                with st.spinner(text="Generating image in progress..."):
+                                    image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
+                                    
+                                    
+                                    with tempfile.TemporaryDirectory() as temporary_directory:
+                                        image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
+                                        st.image(image=image_path,use_column_width=True)
+
+                                        if image_path:
+                                            with open(image_path,"rb") as file:
+                                                image_bytes = file.read()
+
+                                            st.download_button(
+                                                label="download_image",
+                                                data=image_bytes,
+                                                file_name="image.png",
+                                                mime="image/png"
+                                            )
+
+
+                            assistant_msg = response  # Adjusted to fetch text from the response
+
+                            if assistant_msg == "Generated image.":
+                                st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
+                                
+
+                            # Append assistant message to session state and display it
+                            st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
+
+                            
+                            responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                            st.audio(responses_path,format="audio")
+
+                            #download the audio
+                                
+                            with open(responses_path, "rb") as audio_file:
+                                data = audio_file.read()
+                                st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                
+                            #audio if huggingface
+                            if huggingface_api_token:
+                                try:
+                                    audio_path = audio.text_to_speech(response,huggingface_api_token)
+                                    if audio_path:
+                                        st.audio(audio_path,format="wav")
+                                        st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
+                                        
+                                except Exception as e:
+                                    st.write(f"an error occured while converting to speech: {e}")
+
+                            # Download chat button
+                            #if st.sidebar.button("Download Chat"):
+                                #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                                #create_and_download(text_content=all_messages)
 
                         
-                        responses_path=openai_audio.text_to_speech(response,openai_api_key)
-                        st.audio(responses_path,format="audio")
 
-                        #download the audio
-                            
-                        with open(responses_path, "rb") as audio_file:
-                            data = audio_file.read()
-                            st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
-                            
-                        #audio if huggingface
-                        if huggingface_api_token:
-                            try:
-                                audio_path = audio.text_to_speech(response,huggingface_api_token)
-                                if audio_path:
-                                    st.audio(audio_path,format="wav")
-                                    st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
-                                    
-                            except Exception as e:
-                                st.write(f"an error occured while converting to speech: {e}")
-
-                        # Download chat button
-                        #if st.sidebar.button("Download Chat"):
-                            #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                            #create_and_download(text_content=all_messages)
-
-                    
-
-                except Exception as e:
-                    st.write("an Error occured please enter a valid API key",e)
+                    except Exception as e:
+                        st.write("an Error occured please enter a valid API key",e)
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
@@ -549,220 +572,221 @@ try:
 
     #function-4 query documents           
     def query_documents():
-        
-            if not uploaded_files:
-                st.info("Please upload documents or add url to continue.")
-                st.stop()
-                 
-            retriever = configure_retriever(uploaded_files)
-
-            response_placeholder = st.empty()
-            input_placeholder = st.empty()   
             
-            # Setup memory for contextual conversation for the documents part
-            msgs = StreamlitChatMessageHistory()
-            memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
+            with tab2:
+            
+                if not uploaded_files:
+                    st.info("Please upload documents or add url to continue.")
+                    st.stop()
+                    
+                retriever = configure_retriever(uploaded_files)
 
-            llm_model = st.sidebar.selectbox("Choose document query model",
-                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="document query")
+                response_placeholder = st.empty()
+                input_placeholder = st.empty()   
                 
+                # Setup memory for contextual conversation for the documents part
+                msgs = StreamlitChatMessageHistory(key="docs tab")
+                memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
+
+                    
+                    # Setup LLM and QA chain for the documents part
+                llm = ChatOpenAI(
+                        model_name=llm_model_docs, openai_api_key=openai_api_key, temperature=0, streaming=True
+                    )
+
+
+                qa_chain = ConversationalRetrievalChain.from_llm(
+                        llm, 
+                        retriever=retriever, 
+                        memory=memory, 
+                        verbose=True
+                    )
+
                 
-                # Setup LLM and QA chain for the documents part
-            llm = ChatOpenAI(
-                    model_name=llm_model, openai_api_key=openai_api_key, temperature=0, streaming=True
-                )
 
+                if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
+                        msgs.clear()
+                        msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
-            qa_chain = ConversationalRetrievalChain.from_llm(
-                    llm, 
-                    retriever=retriever, 
-                    memory=memory, 
-                    verbose=True
-                )
+                with response_placeholder.container():
+                    avatars = {"human": "user", "ai": "assistant"}
+                    for msg in msgs.messages:
+                        st.chat_message(avatars[msg.type]).write(msg.content)
+                    
+                user_query = st.chat_input(placeholder="Ask me about  your documents!",key="document")
 
-              
+                with input_placeholder.container():
+                    if user_query !=None:
+                        st.chat_message("user").write(user_query)
 
-            if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
-                    msgs.clear()
-                    msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
+                        with st.chat_message("ai"):
+                                retrieval_handler = PrintRetrievalHandler(st.container())
+                                stream_handler = StreamHandler(st.empty())
 
-            with response_placeholder.container():
-                avatars = {"human": "user", "ai": "assistant"}
-                for msg in msgs.messages:
-                    st.chat_message(avatars[msg.type]).write(msg.content)
-                
-            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="document")
+                                response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
-            with input_placeholder.container():
-                if user_query !=None:
-                    st.chat_message("user").write(user_query)
+                                responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                                st.audio(responses_path,format="audio")
 
-                    with st.chat_message("ai"):
-                            retrieval_handler = PrintRetrievalHandler(st.container())
-                            stream_handler = StreamHandler(st.empty())
-
-                            response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
-
-                            responses_path=openai_audio.text_to_speech(response,openai_api_key)
-                            st.audio(responses_path,format="audio")
-
-                                    #download the audio
-                                        
-                            with open(responses_path, "rb") as audio_file:
-                                    data = audio_file.read()
-                                    st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                        #download the audio
+                                            
+                                with open(responses_path, "rb") as audio_file:
+                                        data = audio_file.read()
+                                        st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
 
     def query_web():
+            
+            with tab4:
 
-            if not url or not web_document_name:
-                st.info("Please add url to continue.")
-                st.stop()
-                
-            retriever = web_page_saver_to_txt(url)
-            response_placeholder = st.empty()
-            input_placeholder = st.empty()
+                if not url or not web_document_name:
+                    st.info("Please add url to continue.")
+                    st.stop()
+                    
+                retriever = web_page_saver_to_txt(url)
+                response_placeholder = st.empty()
+                input_placeholder = st.empty()
 
-            # Setup memory for contextual conversation for the documents part
-            msgs = StreamlitChatMessageHistory()
-            memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
+                # Setup memory for contextual conversation for the documents part
+                msgs = StreamlitChatMessageHistory(key="web_messages")
+                memory = ConversationBufferMemory(memory_key="chat_history", chat_memory=msgs, return_messages=True)
 
-            llm_model = st.sidebar.selectbox("Choose web query model",
-                                        ("gpt-3.5-turbo","gpt-4o-mini","gpt-4o"),key="web")
-                
-                
-                # Setup LLM and QA chain for the documents part
-            llm = ChatOpenAI(
-                    model_name=llm_model, openai_api_key=openai_api_key, temperature=0, streaming=True
-                )
+            
+                    
+                    # Setup LLM and QA chain for the documents part
+                llm = ChatOpenAI(
+                        model_name=llm_model_web, openai_api_key=openai_api_key, temperature=0, streaming=True
+                    )
 
 
-            qa_chain = ConversationalRetrievalChain.from_llm(
-                    llm, 
-                    retriever=retriever, 
-                    memory=memory, 
-                    verbose=True
-                )
+                qa_chain = ConversationalRetrievalChain.from_llm(
+                        llm, 
+                        retriever=retriever, 
+                        memory=memory, 
+                        verbose=True
+                    )
 
-                
+                    
 
-            if len(msgs.messages) == 0 or st.sidebar.button("Clear web query history",key="web clear"):
-                    msgs.clear()
-                    msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
+                if len(msgs.messages) == 0 or st.sidebar.button("Clear web query history",key="web clear"):
+                        msgs.clear()
+                        msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
-            with response_placeholder.container():
-                avatars = {"human": "user", "ai": "assistant"}
-                for msg in msgs.messages:
-                    st.chat_message(avatars[msg.type]).write(msg.content)
-                
-            user_query = st.chat_input(placeholder="Ask me about  your documents!",key="web query")
+                with response_placeholder.container():
+                    avatars = {"human": "user", "ai": "assistant"}
+                    for msg in msgs.messages:
+                        st.chat_message(avatars[msg.type]).write(msg.content)
+                    
+                user_query = st.chat_input(placeholder="Ask me about  your documents!",key="web query")
 
-            with input_placeholder.container():
-                if user_query != None:
-                    st.chat_message("user").write(user_query)
+                with input_placeholder.container():
+                    if user_query != None:
+                        st.chat_message("user").write(user_query)
 
-                    with st.chat_message("ai"):
-                            retrieval_handler = PrintRetrievalHandler(st.container())
-                            stream_handler = StreamHandler(st.empty())
+                        with st.chat_message("ai"):
+                                retrieval_handler = PrintRetrievalHandler(st.container())
+                                stream_handler = StreamHandler(st.empty())
 
-                            qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
+                                qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
     #define repo query
    
     def github_repo_query(github_repo_url: str, open_ai_key: str):
         try:
-            if repo_url == None:
-                st.info("please add the repository url to proceed.")
-                st.stop()
 
-            else:
-            
-                with tempfile.TemporaryDirectory() as temp_dir:
-                    # Clone the repo
-                    repo_path = os.path.join(temp_dir, "repo")
-                    repo = Repo.clone_from(github_repo_url, to_path=repo_path)
-                    documents = []
+            with tab3:
+                if repo_url == None:
+                    st.info("please add the repository url to proceed.")
+                    st.stop()
 
-                    #add suffixes
-                    language_suffixes = {
-                        
-                        Language.PYTHON : [".py"],
-                        Language.JAVA : [".java"],
-                        Language.GO : [".go"],
-                        Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
-                        Language.KOTLIN:[".kt",".kts"],
-                        Language.TS : [".ts"],
-                        Language.CSHARP : [".cs"]
-                        
-                    }
+                else:
+                
+                    with tempfile.TemporaryDirectory() as temp_dir:
+                        # Clone the repo
+                        repo_path = os.path.join(temp_dir, "repo")
+                        repo = Repo.clone_from(github_repo_url, to_path=repo_path)
+                        documents = []
 
-                    #document loader
-                    for language, suffix in language_suffixes.items():
-                        loader = GenericLoader.from_filesystem(
+                        #add suffixes
+                        language_suffixes = {
                             
-                            repo_path,
-                            glob="**/*",
-                            suffixes=suffix,
-                            exclude=["**/non-utf8-encoding.*"],
-                            parser=LanguageParser(
-                                language=language, parser_threshold=500
+                            Language.PYTHON : [".py"],
+                            Language.JAVA : [".java"],
+                            Language.GO : [".go"],
+                            Language.CPP : [".cpp",".hpp", ".cc", ".hh", ".cxx", ".hxx", ".h"],
+                            Language.KOTLIN:[".kt",".kts"],
+                            Language.TS : [".ts"],
+                            Language.CSHARP : [".cs"]
+                            
+                        }
+
+                        #document loader
+                        for language, suffix in language_suffixes.items():
+                            loader = GenericLoader.from_filesystem(
+                                
+                                repo_path,
+                                glob="**/*",
+                                suffixes=suffix,
+                                exclude=["**/non-utf8-encoding.*"],
+                                parser=LanguageParser(
+                                    language=language, parser_threshold=500
+                                )
                             )
+
+                            documents.extend(loader.load())
+
+                        #split
+
+                        split_texts = []
+
+                        for language in language_suffixes.keys():
+                            splitter = RecursiveCharacterTextSplitter.from_language(
+                                language=language, chunk_size = 2000, chunk_overlap = 200
+                            )
+
+                            split_texts.extend(splitter.split_documents(documents))
+
+                        
+                        # Retriever
+                        db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
+                        retriever = db.as_retriever(
+                            search_type="mmr",  # Also test "similarity"
+                            search_kwargs={"k": 8},
                         )
 
-                        documents.extend(loader.load())
+                        
+                        llm = ChatOpenAI(model_name="gpt-4o",api_key=open_ai_key)
 
-                    #split
-
-                    split_texts = []
-
-                    for language in language_suffixes.keys():
-                        splitter = RecursiveCharacterTextSplitter.from_language(
-                            language=language, chunk_size = 2000, chunk_overlap = 200
+                        # Prompt
+                        prompt_retriever = ChatPromptTemplate.from_messages(
+                            [
+                                ("placeholder", "{chat_history}"),
+                                ("user", "{input}"),
+                                (
+                                    "user",
+                                    "Given the above conversation, generate a search query to look up to get information relevant to the conversation",
+                                ),
+                            ]
                         )
 
-                        split_texts.extend(splitter.split_documents(documents))
+                        retriever_chain = create_history_aware_retriever(llm, retriever, prompt_retriever)
 
-                    
-                    # Retriever
-                    db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
-                    retriever = db.as_retriever(
-                        search_type="mmr",  # Also test "similarity"
-                        search_kwargs={"k": 8},
-                    )
+                        prompt_document = ChatPromptTemplate.from_messages(
+                            [
+                                (
+                                    "system",
+                                    "Answer the user's questions based on the below context:\n\n{context}",
+                                ),
+                                ("placeholder", "{chat_history}"),
+                                ("user", "{input}"),
+                            ]
+                        )
+                        document_chain = create_stuff_documents_chain(llm, prompt_document)
 
-                    
-                    llm = ChatOpenAI(model_name="gpt-4o",api_key=open_ai_key)
+                        qa = create_retrieval_chain(retriever_chain, document_chain)
 
-                    # Prompt
-                    prompt_retriever = ChatPromptTemplate.from_messages(
-                        [
-                            ("placeholder", "{chat_history}"),
-                            ("user", "{input}"),
-                            (
-                                "user",
-                                "Given the above conversation, generate a search query to look up to get information relevant to the conversation",
-                            ),
-                        ]
-                    )
-
-                    retriever_chain = create_history_aware_retriever(llm, retriever, prompt_retriever)
-
-                    prompt_document = ChatPromptTemplate.from_messages(
-                        [
-                            (
-                                "system",
-                                "Answer the user's questions based on the below context:\n\n{context}",
-                            ),
-                            ("placeholder", "{chat_history}"),
-                            ("user", "{input}"),
-                        ]
-                    )
-                    document_chain = create_stuff_documents_chain(llm, prompt_document)
-
-                    qa = create_retrieval_chain(retriever_chain, document_chain)
-
-                    return qa
-        except Exception:
-             st.write("an error occured inside the github repo function, check the URL.")
+                        return qa
+        except Exception as e:
+             st.write("an error occured inside the github repo function, check the URL.",e)
 
 
     #-----------------------------------------------------------audio---------------------------------------------------------------------------
@@ -774,8 +798,6 @@ try:
 
         try:
 
-            tab1,tab2,tab3,tab4 = st.tabs(["chat","document query","github","web"])
-
             with tab1:
                  chat_with_42()
 
@@ -784,52 +806,53 @@ try:
 
             # Content for "Github" tab
             with tab3:
-                if repo_url != None:
-                    # Initialize session state for messages if not already set
-                    if "messages" not in st.session_state:
-                        st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
-                    
-                    # Create containers for chat messages and user input
-                    chat_placeholder = st.empty()  # Placeholder for chat messages
-                    input_placeholder = st.empty()  # Placeholder for user input
-
-                    # Display existing chat history in chat_placeholder
-                    with chat_placeholder.container():
-                        for msg in st.session_state["messages"]:
-                            st.chat_message(msg["role"]).write(msg["content"])
-
-                    # Handle user input
-                    user_input = input_placeholder.chat_input(placeholder="Type your question here...")
-
-                    # Process the user input if provided
-                    if user_input:
-                        # Add the user's message to the session state
-                        st.session_state["messages"].append({"role": "user", "content": user_input})
+                with st.container():
+                    if repo_url:
+                        # Initialize session state for messages if not already set
+                        if "messages" not in st.session_state:
+                            st.session_state["messages"] = [{"role": "assistant", "content": "How can I help with the code base?"}]
                         
-                        # Display updated chat messages with user message
+                        # Create containers for chat messages and user input
+                        chat_placeholder = st.empty()  # Placeholder for chat messages
+                        input_placeholder = st.empty()  # Placeholder for user input
+
+                        # Display existing chat history in chat_placeholder
                         with chat_placeholder.container():
                             for msg in st.session_state["messages"]:
                                 st.chat_message(msg["role"]).write(msg["content"])
 
-                        # Query the GitHub repository
-                        chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
+                        # Handle user input
+                        user_input = input_placeholder.chat_input(placeholder="Type your question here...")
 
-                        # Use pick to select the desired key
-                        stream_chain = chain.pick("answer")
-                        
-                        # Create a response placeholder and set it to empty; it will be updated with each chunk
-                        response = ""
-                        for chunk in stream_chain.stream({"input": user_input}):
-                            response += f"{chunk}"
-                            chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
-                        
-                        # Update session state with the assistant's message
-                        st.session_state["messages"].append({"role": "assistant", "content": response})
-                        
-                        # Display updated chat messages with assistant's response
-                        with chat_placeholder.container():
-                            for msg in st.session_state["messages"]:
-                                st.chat_message(msg["role"]).write(msg["content"])
+                        # Process the user input if provided
+                        if user_input:
+                            # Add the user's message to the session state
+                            st.session_state["messages"].append({"role": "user", "content": user_input})
+                            
+                            # Display updated chat messages with user message
+                            with chat_placeholder.container():
+                                for msg in st.session_state["messages"]:
+                                    st.chat_message(msg["role"]).write(msg["content"])
+
+                            # Query the GitHub repository
+                            chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
+
+                            # Use pick to select the desired key
+                            stream_chain = chain.pick("answer")
+                            
+                            # Create a response placeholder and set it to empty; it will be updated with each chunk
+                            response = ""
+                            for chunk in stream_chain.stream({"input": user_input}):
+                                response += f"{chunk}"
+                                chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
+                            
+                            # Update session state with the assistant's message
+                            st.session_state["messages"].append({"role": "assistant", "content": response})
+                            
+                            # Display updated chat messages with assistant's response
+                            with chat_placeholder.container():
+                                for msg in st.session_state["messages"]:
+                                    st.chat_message(msg["role"]).write(msg["content"])
 
                  
 
