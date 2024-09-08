@@ -399,7 +399,7 @@ try:
                     #st.sidebar.text_area("Scratchpad",st.session_state["scratchpad"],height=300)
 
                 # "Clear Chat History" button
-                if st.sidebar.button("Clear Chat History"):
+                if st.button("Clear Chat History",key="chat_clear"):
                     st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
                     st.rerun()  # Rerun the app to clear the chat history
 
@@ -594,7 +594,7 @@ try:
 
                 
 
-                if len(msgs.messages) == 0 or st.sidebar.button("Clear message history"):
+                if len(msgs.messages) == 0 or st.button("Clear message history",key="docs_clear"):
                         msgs.clear()
                         msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
@@ -657,7 +657,7 @@ try:
 
                     
 
-                if len(msgs.messages) == 0 or st.sidebar.button("Clear web query history",key="web clear"):
+                if len(msgs.messages) == 0 or st.button("Clear web query history",key="web clear"):
                         msgs.clear()
                         msgs.add_ai_message("Hey carbon entity, Want to query your documents? ask me!")
 
@@ -823,6 +823,11 @@ try:
                             with chat_placeholder.container():
                                 for msg in st.session_state["messages_github"]:
                                     st.chat_message(msg["role"]).write(msg["content"])
+
+                            # "Clear Chat History" button
+                            if st.button("Clear github History",key="github_clear"):
+                                st.session_state["messages"] = [{"role": "assistant", "content": "github history cleared. How can I help you?"}]
+                                st.rerun()  # Rerun the app to clear the chat history
 
                             # Query the GitHub repository
                             chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
