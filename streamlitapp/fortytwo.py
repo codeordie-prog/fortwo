@@ -153,7 +153,7 @@ try:
                                      options=["gpt-4o","gpt-4o-mini"],key="scraping_key")
         
         url = st.text_input("enter url")
-        web_document_name = st.sidebar.text_input("Enter name for the web document")
+        web_document_name = st.text_input("Enter name for the web document")
 
 
 
