@@ -135,7 +135,7 @@ try:
     with tab2:
 
          # File uploader in the sidebar
-        uploaded_files = st.sidebar.file_uploader(
+        uploaded_files = st.file_uploader(
             label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
         )
 
@@ -145,14 +145,14 @@ try:
 
     with tab3:
 
-        repo_url = st.sidebar.text_input("Enter repository url: ")
+        repo_url = st.text_input("Enter repository url: ")
 
     with tab4:
 
         llm_model_web = st.selectbox(label="choose scraping model",
                                      options=["gpt-4o","gpt-4o-mini"],key="scraping_key")
         
-        url = st.sidebar.text_input("enter url")
+        url = st.text_input("enter url")
         web_document_name = st.sidebar.text_input("Enter name for the web document")
 
 
