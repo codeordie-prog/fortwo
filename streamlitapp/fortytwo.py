@@ -849,6 +849,10 @@ try:
                                 for msg in st.session_state["messages_github"]:
                                     st.chat_message(msg["role"]).write(msg["content"])
 
+                            if st.sidebar.button("Download github chat"):
+                               all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages_github"]])
+                               create_and_download(all_messages)
+
                  
 
             with tab4:
