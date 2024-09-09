@@ -861,9 +861,6 @@ try:
                all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                create_and_download(all_messages)
 
-            elif st.button("Download github chat"):
-                 all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages_github"]])
-                 create_and_download(all_messages)
 
          
         except TypeError:
