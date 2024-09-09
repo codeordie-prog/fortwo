@@ -849,9 +849,6 @@ try:
                                 for msg in st.session_state["messages_github"]:
                                     st.chat_message(msg["role"]).write(msg["content"])
 
-                            if st.sidebar.button("Download github chat"):
-                               all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages_github"]])
-                               create_and_download(all_messages)
 
                  
 
@@ -860,9 +857,13 @@ try:
                
              
 
-            if st.sidebar.button("Download chat"):
+            if st.button("Download chat"):
                all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
                create_and_download(all_messages)
+
+            elif st.button("Download github chat"):
+                 all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages_github"]])
+                 create_and_download(all_messages)
 
          
         except TypeError:
