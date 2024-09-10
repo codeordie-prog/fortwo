@@ -510,9 +510,9 @@ try:
                             
 
                             # Download chat button
-                            #if st.sidebar.button("Download Chat"):
-                                #all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                                #create_and_download(text_content=all_messages)
+                            if st.sidebar.button("Download Chat"):
+                                all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                                create_and_download(text_content=all_messages)
 
                         
 
