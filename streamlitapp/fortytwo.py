@@ -403,6 +403,10 @@ try:
                     st.session_state["messages"] = [{"role": "assistant", "content": "Chat history cleared. How can I help you?"}]
                     st.rerun()  # Rerun the app to clear the chat history
 
+                if st.button("Download chat"):
+                    all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                    create_and_download(all_messages)
+
                 
                 user_input =  st.chat_input(key="chat input") 
 
@@ -502,6 +506,8 @@ try:
                                         
                                 except Exception as e:
                                     st.write(f"an error occured while converting to speech: {e}")
+
+                            
 
                             # Download chat button
                             #if st.sidebar.button("Download Chat"):
@@ -856,9 +862,6 @@ try:
                
              
 
-            if st.button("Download chat"):
-               all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-               create_and_download(all_messages)
 
          
         except TypeError:
