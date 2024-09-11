@@ -503,10 +503,7 @@ try:
                                 except Exception as e:
                                     st.write(f"an error occured while converting to speech: {e}")
 
-                            
-                            if st.button("Download chat"):
-                                all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
-                                create_and_download(all_messages)
+                        
 
                             
 
@@ -791,7 +788,11 @@ try:
         try:
 
             with tab1:
-                 chat_with_42()
+                chat_with_42()
+                  
+                if st.button("Download chat"):
+                        all_messages = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state["messages"]])
+                        create_and_download(all_messages)
 
             with tab2:
                  query_documents()
