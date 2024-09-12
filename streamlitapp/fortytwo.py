@@ -129,7 +129,7 @@ try:
     with tab1:
 
         llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-40-2024-08-06","gpt-3.5-turbo"],key="chat_key")
+                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-3.5-turbo"],key="chat_key")
         
 
     with tab2:
