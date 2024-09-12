@@ -99,9 +99,6 @@ try:
         - Retrieval Augmented Generation
         - Github repositories querying
         - Web scrapping
-        
-        I can query documents in formats: .pdf, .csv, .txt, .jpeg, .png, .jpg.
-        or a GitHub repository using the GitHub toggle.
         """)
 
 
