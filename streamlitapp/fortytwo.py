@@ -129,7 +129,7 @@ try:
     with tab1:
 
         llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-3.5-turbo"],key="chat_key")
+                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
         
 
     with tab2:
@@ -140,7 +140,7 @@ try:
         )
 
         llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["gpt-4o-mini","gpt-4o"],key="document_query_key")
+                                      options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
         
 
     with tab3:
