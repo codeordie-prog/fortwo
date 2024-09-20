@@ -33,7 +33,7 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import vision,audio,openai_audio
-import browser
+
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -441,12 +441,12 @@ try:
                             # Get response from LLM chain
                             response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
-                            if "Invoking browser agent" in response:
-                                with st.spinner(text="Browsing the internet.."):
-                                    search_query = browser.query_prompt(query=user_input,api=openai_api_key)
-                                    search_result = browser.perform_search(query=search_query.replace('"',''))
-                                    response = search_result
-                                    st.write(response)
+                            #if "Invoking browser agent" in response:
+                                #with st.spinner(text="Browsing the internet.."):
+                                    #search_query = browser.query_prompt(query=user_input,api=openai_api_key)
+                                    #search_result = browser.perform_search(query=search_query.replace('"',''))
+                                    #response = search_result
+                                    #st.write(response)
 
                             #image generation function calling
                             if response.startswith("Abracadabra baby."):
