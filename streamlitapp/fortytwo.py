@@ -557,7 +557,7 @@ try:
             
                 if not uploaded_files:
                     st.info("Please upload documents or add url to continue.")
-                    st.stop()
+                    #st.stop()
                     
                 retriever = configure_retriever(uploaded_files)
 
@@ -782,6 +782,7 @@ try:
                 chat_with_42()
                   
             with tab2:
+                 
                  query_documents()
 
             # Content for "Github" tab
