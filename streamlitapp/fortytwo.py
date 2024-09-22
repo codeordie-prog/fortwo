@@ -782,7 +782,7 @@ try:
                 chat_with_42()
                   
             with tab2:
-                 if not uploaded_documents:
+                 if not uploaded_files:
                      st.info("please upload a document to continue")
                      st.stop()
                  else:
