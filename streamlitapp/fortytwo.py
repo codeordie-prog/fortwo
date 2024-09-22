@@ -784,7 +784,7 @@ try:
             with tab2:
                  if not uploaded_files:
                      st.info("please upload a document to continue")
-                     st.stop()
+                     #st.stop()
                  else:
                       query_documents()
 
