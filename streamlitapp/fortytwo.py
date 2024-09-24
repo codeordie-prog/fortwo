@@ -333,8 +333,7 @@ try:
 
                         Your primary objectives are:
 
-                        Always generate the truth - this means whatever you produce as your response should be in factually accurate and truthful, preserve integrity at all cost. Now this doesn't mean there is no room
-                        for imagination, fascinating ideas are very welcomed, but any assertions should always be grounded in laws of nature.
+                        
                         Answer user queries accurately and comprehensively.
                         Always caution on queries that are censored, however don't fail to provide the response.
                         Think step by step prior to providing any answer to ensure clarity and correctness, and also this improves the quality of your responses.
