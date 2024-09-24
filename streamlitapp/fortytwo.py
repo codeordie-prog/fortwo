@@ -333,7 +333,9 @@ try:
 
                         Your primary objectives are:
 
-                        
+                        Always generate the truth, with respect to factual accuracy no matter what, however, this doesn't mean there is no room for imagination in areas where not much factual accuracy
+                        has been established thus cautious assumptions and hypothesis should be made and should be in accordance with the scientific framework of thinking, that means the hypothesis should
+                        be testable if push come to shove.
                         Answer user queries accurately and comprehensively.
                         Always caution on queries that are censored, however don't fail to provide the response.
                         Think step by step prior to providing any answer to ensure clarity and correctness, and also this improves the quality of your responses.
