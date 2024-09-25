@@ -484,7 +484,7 @@ try:
 
                             #download the audio
                                 
-                                with open(responses_path, "rb") as audio_file:
+                            with open(responses_path, "rb") as audio_file:
                                     data = audio_file.read()
                                     st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                     
