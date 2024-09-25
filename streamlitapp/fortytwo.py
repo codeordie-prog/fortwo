@@ -477,8 +477,8 @@ try:
                             # Append assistant message to session state and display it
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
-                        
-                            
+
+                            st.write(len(response))
                             responses_path=openai_audio.text_to_speech(response,openai_api_key)
                             st.audio(responses_path,format="audio")
 
