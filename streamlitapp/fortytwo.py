@@ -187,21 +187,35 @@ try:
     
         
     class StreamHandler(BaseCallbackHandler):
-            def __init__(self, container: st.delta_generator.DeltaGenerator, initial_text: str = ""):
-                self.container = container
-                self.text = initial_text
-                self.run_id_ignore_token = None
+        def __init__(self, container: st.delta_generator.DeltaGenerator, initial_text: str = ""):
+            self.container = container
+            self.text = initial_text
+            self.run_id_ignore_token = None
+            self.latex_mode = False  # Track if we are in LaTeX mode
 
-            def on_llm_start(self, serialized: dict, prompts: list, **kwargs):
-                # Workaround to prevent showing the rephrased question as output
-                if prompts[0].startswith("Human"):
-                    self.run_id_ignore_token = kwargs.get("run_id")
+        def on_llm_start(self, serialized: dict, prompts: list, **kwargs):
+            # Workaround to prevent showing the rephrased question as output
+            if prompts[0].startswith("Human"):
+                self.run_id_ignore_token = kwargs.get("run_id")
 
-            def on_llm_new_token(self, token: str, **kwargs) -> None:
-                if self.run_id_ignore_token == kwargs.get("run_id", False):
-                    return
-                self.text += token
-                self.container.markdown(self.text)
+        def on_llm_new_token(self, token: str, **kwargs) -> None:
+            if self.run_id_ignore_token == kwargs.get("run_id", False):
+                return
+            
+            # Check if the token indicates the start or end of LaTeX
+            if token == '$':
+                self.latex_mode = not self.latex_mode  # Toggle LaTeX mode
+
+            # Append the token to the text
+            self.text += token
+            
+            # If in LaTeX mode, format accordingly
+            if self.latex_mode:
+                formatted_text = f"${self.text}$"  # Wrap in LaTeX
+            else:
+                formatted_text = self.text
+            
+            self.container.markdown(formatted_text)
 
 
     class PrintRetrievalHandler(BaseCallbackHandler):
