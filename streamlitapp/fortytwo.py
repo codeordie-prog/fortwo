@@ -453,6 +453,11 @@ try:
                             # Get response from LLM chain
                             response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
+                            # Format response for LaTeX
+                            if any(token in response for token in ["$", "\\", "^{", "_{"]):  # Check if it contains LaTeX
+                                response = f"$${response}$$"  # Wrap it in double dollar signs for display
+
+
                             #if "Invoking browser agent" in response:
                                # with st.spinner(text="Browsing the internet.."):
                                 #    search_query = browser.query_prompt(query=user_input,api=openai_api_key)
