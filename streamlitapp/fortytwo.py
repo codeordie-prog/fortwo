@@ -520,8 +520,8 @@ try:
                                         st.audio(audio_path,format="wav")
                                         st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
                                         
-                                except Exception as e:
-                                    st.write(f"an error occured while converting to speech: {e}")
+                                except Exception :
+                                    st.write(f"an error occured while converting to speech:")
 
                         
 
@@ -529,8 +529,8 @@ try:
 
                         
 
-                    except Exception as e:
-                        st.write("an Error occured please enter a valid API key",e)
+                    except Exception:
+                        st.write("an Error occured please enter a valid API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
@@ -794,8 +794,8 @@ try:
                         qa = create_retrieval_chain(retriever_chain, document_chain)
 
                         return qa
-        except Exception as e:
-             st.write("an error occured inside the github repo function, check the URL.",e)
+        except Exception:
+             st.write("an error occured inside the github repo function, check the URL.")
 
 
     #-----------------------------------------------------------audio---------------------------------------------------------------------------
@@ -881,8 +881,8 @@ try:
          
         except TypeError:
             st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
-        except Exception as e:
-             st.write("An error was encountered at main call",e)
+        except Exception:
+             st.write("An error was encountered at main call")
     
 
         
