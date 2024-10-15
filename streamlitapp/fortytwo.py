@@ -151,10 +151,21 @@ try:
             label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
         )
 
-        llm_model_docs = st.selectbox(label="choose document query model",
+        if api_provider == "openai":
+
+            llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
         
-        include_audio = st.toggle(label="turn on audio")
+            include_audio = st.toggle(label="turn on audio")
+
+        elif api_provider =="nvidia nim":
+
+            llm_model_chat=st.selectbox(label="choose model",
+                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
+            
+            include_audio = st.toggle(label="turn on audio responses")
+        
+
         
 
     with tab3:
