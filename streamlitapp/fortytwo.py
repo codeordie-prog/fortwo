@@ -154,6 +154,8 @@ try:
         llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
         
+        include_audio = st.toggle(label="turn on audio")
+        
 
     with tab3:
 
