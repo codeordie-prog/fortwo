@@ -247,7 +247,6 @@ try:
     def generate_image(description:str, api_key:str):
 
         try:
-            st.write(api_key)
             llm = OpenAI(temperature=0,api_key=api_key)
             prompt = PromptTemplate(
                 input_variables=["image_desc"],
@@ -480,23 +479,10 @@ try:
                             #image generation function calling
                             if response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
-                                    image_url = generate_image(description=user_input,api_key=openai_api_key)
+                                    image = vision.generate_image(description=user_input,api_key=openai_api_key)
                                     
-                                    
-                                    with tempfile.TemporaryDirectory() as temporary_directory:
-                                        image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
-                                        st.image(image=image_path,use_column_width=True)
-
-                                        if image_path:
-                                            with open(image_path,"rb") as file:
-                                                image_bytes = file.read()
-
-                                            st.download_button(
-                                                label="download_image",
-                                                data=image_bytes,
-                                                file_name="image.png",
-                                                mime="image/png"
-                                            )
+                                    st.write(image)
+                                   
 
 
                             assistant_msg = response  # Adjusted to fetch text from the response

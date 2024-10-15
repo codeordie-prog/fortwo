@@ -91,15 +91,17 @@ def generate_image(description:str, openai_api_key:str):
 
     try:
         
-        llm = OpenAI(temperature=0,api_key=openai_api_key)
-        prompt = PromptTemplate(
-            input_variables=["image_desc"],
-            template="Generate a short but extremely detailed prompt to generate an high definition image given the following description: {description}",
+        client = OpenAI(openai_api_key=openai_api_key)
 
-        )
-        chain = LLMChain(llm=llm,prompt=prompt)
-
-        return DallEAPIWrapper(model="dall-e-3",api_key=openai_api_key).run(chain.run(description))
+        response = client.images.generate(
+                    model="dall-e-3",
+                    prompt=description,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1,
+                    )
+        
+        return response
 
     except Exception as e:
         st.write("An error occured while generating the image",e)
