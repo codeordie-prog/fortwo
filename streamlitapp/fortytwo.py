@@ -247,7 +247,7 @@ try:
     def generate_image(description:str, api_key:str):
 
         try:
-            
+            st.write(api_key)
             llm = OpenAI(temperature=0,api_key=api_key)
             prompt = PromptTemplate(
                 input_variables=["image_desc"],
