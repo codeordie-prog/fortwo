@@ -102,7 +102,11 @@ def generate_image(description:str, openai_api_key:str):
                     n=1,
                     )
         
-        return response
+        image_created = response.data
+        first_image = image_created[0]
+        image_url = first_image.url
+
+        return image_url
 
     except Exception as e:
         st.write("An error occured while generating the image",e)
