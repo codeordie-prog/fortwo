@@ -509,25 +509,26 @@ try:
                                 #    st.write(response)
 
                             #image generation function calling
-                            if response.startswith("Abracadabra baby."):
-                                with st.spinner(text="Generating image in progress..."):
-                                    image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
-                                    
-                                    
-                                    with tempfile.TemporaryDirectory() as temporary_directory:
-                                        image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
-                                        st.image(image=image_path,use_column_width=True)
+                            if openai_api_key:
+                                if response.startswith("Abracadabra baby."):
+                                    with st.spinner(text="Generating image in progress..."):
+                                        image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
+                                        
+                                        
+                                        with tempfile.TemporaryDirectory() as temporary_directory:
+                                            image_path = vision.download_generated_image(image_url=image_url,image_storage_path=temporary_directory)
+                                            st.image(image=image_path,use_column_width=True)
 
-                                        if image_path:
-                                            with open(image_path,"rb") as file:
-                                                image_bytes = file.read()
+                                            if image_path:
+                                                with open(image_path,"rb") as file:
+                                                    image_bytes = file.read()
 
-                                            st.download_button(
-                                                label="download_image",
-                                                data=image_bytes,
-                                                file_name="image.png",
-                                                mime="image/png"
-                                            )
+                                                st.download_button(
+                                                    label="download_image",
+                                                    data=image_bytes,
+                                                    file_name="image.png",
+                                                    mime="image/png"
+                                                )
 
 
                             assistant_msg = response  # Adjusted to fetch text from the response
