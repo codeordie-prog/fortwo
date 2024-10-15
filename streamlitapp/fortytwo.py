@@ -33,6 +33,8 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import vision,audio,openai_audio
+from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from langchain_core.output_parsers import StrOutputParser
 
 
 
@@ -112,22 +114,37 @@ try:
     2. Click on the `+ Create new secret key` button.
     3. Next, enter an identifier name (optional) and click on the `Create secret key` button.""")
 
-    
+    api_provider = st.sidebar.selectbox(label="Choose API provider",
+                                        options=["openAI","NVIDIA NIM"])
     # Input for OpenAI API key in the sidebar
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+    nvidia_api_key = st.sidebar.text_input("NVIDIA API Key", type="password")
     
     if not openai_api_key:
            st.info("Please add your OpenAI API key to continue.")
            st.stop()
 
-    huggingface_api_token = st.sidebar.text_input("Huggingface API token",type="password")
+    
 
     #_____________________________________________set models_______________________________________________________________________________
 
     with tab1:
 
-        llm_model_chat = st.selectbox(label="choose chat model",
+        if api_provider == "openAI":
+            if not openai_api_key:
+                st.info("Please add your OpenAI API key to continue.")
+                st.stop()
+
+            llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
+            
+        elif api_provider == "NVIDIA NIM":
+             if not nvidia_api_key:
+                st.info("Please add your NVIDIA API key to continue.")
+                st.stop()
+
+             llm_model_chat = st.selectbox(label="choose chat model",
+                                      options=["meta/llama-3.1-405b-instruct"],key="chat_key")
         
 
     with tab2:
@@ -421,12 +438,23 @@ try:
                         
                         # Handle user input
                         if user_input != None:
-                            if not openai_api_key:
-                                st.info("Please add your OpenAI API key to continue.")
-                                st.stop()
 
-                            # Initialize OpenAI LLM
-                            llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model_chat, streaming = True)
+                            if api_provider=="openAI":
+                                if not openai_api_key:
+                                    
+                                    st.info("Please add your OpenAI API key to continue.")
+                                    st.stop()
+
+                                  # Initialize OpenAI LLM
+                                llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model_chat, streaming = True)
+                            
+                            elif api_provider == "NVIDIA NIM":
+                                if not nvidia_api_key:
+                                        st.info("add NVIDIA API")
+                                        st.stop()
+
+                                llm2 = ChatNVIDIA(model=llm_model_chat,api_key = nvidia_api_key, streaming=True)
+
 
                             # Initialize Streamlit chat history
                             chat_history = StreamlitChatMessageHistory(key="chat_history")
@@ -449,9 +477,24 @@ try:
 
                             #introduce streaming in chat session
                             stream_handler = StreamHandler(st.empty())
-                    
+
                             # Get response from LLM chain
-                            response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                            if api_provider == "openAI":
+
+                                response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                            elif api_provider == "NVIDIA NIM":
+
+                                 nvidia_chain = system_prompt | llm2 | StrOutputParser()
+
+                                 
+                                 nim_resp = ""
+                                 response_display = st.empty()
+                                 response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
+                                 for chunk in response:
+                                      nim_resp+=chunk
+                                      response_display.write(nim_resp)
 
                             # Format response for LaTeX
                             if any(token in response for token in ["$", "\\", "^{", "_{"]):  # Check if it contains LaTeX
@@ -513,15 +556,7 @@ try:
                                 st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                     
                             #audio if huggingface
-                            if huggingface_api_token:
-                                try:
-                                    audio_path = audio.text_to_speech(response,huggingface_api_token)
-                                    if audio_path:
-                                        st.audio(audio_path,format="wav")
-                                        st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
-                                        
-                                except Exception :
-                                    st.write(f"an error occured while converting to speech:")
+                           
 
                         
 
