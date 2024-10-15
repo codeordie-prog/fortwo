@@ -479,7 +479,7 @@ try:
                             #image generation function calling
                             if response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
-                                    image = vision.generate_image(description=user_input,api_key=openai_api_key)
+                                    image = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                                     
                                     st.write(image)
                                    
