@@ -131,14 +131,14 @@ try:
     with tab1:
 
         if api_provider == "openAI":
-            if not openai_api_key:
-                st.info("Please add your OpenAI API key to continue.")
-                st.stop()
+            if openai_api_key:
+                
 
-            llm_model_chat = st.selectbox(label="choose chat model",
+                llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
         elif api_provider == "NVIDIA NIM":
+            
              if not nvidia_api_key:
                 st.info("Please add your NVIDIA API key to continue.")
                 st.stop()
