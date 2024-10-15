@@ -34,7 +34,8 @@ from langchain.chains.history_aware_retriever import create_history_aware_retrie
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import vision,audio,openai_audio
-
+from langchain_openai import OpenAI
+from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 
 
 # You might also need to install some additional dependencies used in the code such as:
@@ -243,7 +244,22 @@ try:
         #use the chain to invoke chat query
 
 
-    
+    def generate_image(description:str, openai_api_key:str):
+
+        try:
+            
+            llm = OpenAI(temperature=0,api_key=openai_api_key)
+            prompt = PromptTemplate(
+                input_variables=["image_desc"],
+                template="Generate a short but extremely detailed prompt to generate an high definition image given the following description: {description}",
+
+            )
+            chain = LLMChain(llm=llm,prompt=prompt)
+
+            return DallEAPIWrapper(model="dall-e-3",api_key=openai_api_key).run(chain.run(description))
+
+        except Exception as e:
+            st.write("An error occured while generating the image",e)
 
 
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
@@ -469,7 +485,7 @@ try:
                             #image generation function calling
                             if openai_api_key and response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
-                                    image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
+                                    image_url = generate_image(description=user_input,openai_api_key=openai_api_key)
                                     
                                     
                                     with tempfile.TemporaryDirectory() as temporary_directory:
@@ -513,16 +529,7 @@ try:
                                 data = audio_file.read()
                                 st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                     
-                            #audio if huggingface
-                            if huggingface_api_token:
-                                try:
-                                    audio_path = audio.text_to_speech(response,huggingface_api_token)
-                                    if audio_path:
-                                        st.audio(audio_path,format="wav")
-                                        st.download_button(label="download",data=audio_path,file_name="audio.wav",mime="audio/wav")
-                                        
-                                except Exception :
-                                    st.write(f"an error occured while converting to speech:")
+                        
 
                         
 
