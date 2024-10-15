@@ -134,10 +134,15 @@ try:
            
             llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
+            
+            include_audio = st.toggle(label="turn on audio")
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-405b-instruct"])
+            
+            include_audio = st.toggle(label="turn on audio")
+        
 
     with tab2:
 
@@ -517,22 +522,23 @@ try:
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
 
+                            if include_audio:
 
-                            responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                                responses_path=openai_audio.text_to_speech(response,openai_api_key)
 
-                            if responses_path != None:
-                                st.audio(responses_path,format="audio")
+                                if responses_path != None:
+                                    st.audio(responses_path,format="audio")
 
-                            else:
-                                st.write(f"Length {len(response)} of the response too long to process the audio.")
+                                else:
+                                    st.write(f"Length {len(response)} of the response too long to process the audio.")
 
-                            #download the audio
-                                
-                            with open(responses_path, "rb") as audio_file:
-                                data = audio_file.read()
-                                st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                #download the audio
                                     
-                        
+                                with open(responses_path, "rb") as audio_file:
+                                    data = audio_file.read()
+                                    st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                        
+                            
 
                         
 
