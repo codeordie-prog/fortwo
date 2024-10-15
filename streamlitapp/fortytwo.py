@@ -480,16 +480,10 @@ try:
                             if response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
                                     data= vision.generate_image(description=user_input,openai_api_key=openai_api_key)
-                                    image_str = data["data"][0]
+                                    st.write(type(data))
+                                    st.write(data)
 
-                                    # Find the starting position of the URL
-                                    start = image_str.find("url='") + len("url='")
-                                    end = image_str.find("'", start)  # Find the closing quote
 
-                                    # Extract the URL
-                                    url = image_str[start:end]
-
-                                    
                                     
                                     st.write(url)
                                    
