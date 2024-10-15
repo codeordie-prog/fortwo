@@ -161,7 +161,7 @@ try:
         elif api_provider =="nvidia nim":
 
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
+                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"],key="document_query_key")
             
             include_audio = st.toggle(label="turn on audio responses")
         
