@@ -92,7 +92,7 @@ def generate_image(description:str, openai_api_key:str):
 
     try:
         
-        client = OP(openai_api_key=openai_api_key)
+        client = OP(api_key=openai_api_key)
 
         response = client.images.generate(
                     model="dall-e-3",
