@@ -121,7 +121,7 @@ try:
            st.info("Please add your OpenAI API key to continue.")
            st.stop()
 
-    huggingface_api_token = st.sidebar.text_input("Huggingface API token",type="password")
+    
 
     #_____________________________________________set models_______________________________________________________________________________
 
@@ -467,7 +467,7 @@ try:
                                 #    st.write(response)
 
                             #image generation function calling
-                            if response.startswith("Abracadabra baby."):
+                            if openai_api_key and response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
                                     image_url = vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                                     
