@@ -139,9 +139,9 @@ try:
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct"])
+                                         options=["meta/llama-3.1-405b-instruct","mistralai/mixtral-8x22b-instruct-v0.1"])
             
-            include_audio = st.toggle(label="turn on audio")
+            include_audio = st.toggle(label="turn on audio responses")
         
 
     with tab2:
@@ -651,14 +651,16 @@ try:
 
                                 response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
-                                responses_path=openai_audio.text_to_speech(response,openai_api_key)
-                                st.audio(responses_path,format="audio")
+                                if include_audio:
 
-                                        #download the audio
-                                            
-                                with open(responses_path, "rb") as audio_file:
-                                        data = audio_file.read()
-                                        st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                    responses_path=openai_audio.text_to_speech(response,openai_api_key)
+                                    st.audio(responses_path,format="audio")
+
+                                            #download the audio
+                                                
+                                    with open(responses_path, "rb") as audio_file:
+                                            data = audio_file.read()
+                                            st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
 
     def query_web():
             
