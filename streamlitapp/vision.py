@@ -5,6 +5,7 @@ from langchain.chains.llm import LLMChain
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import OpenAI
+from openai import OpenAI as OP
 import requests
 import os
 import streamlit as st
@@ -91,7 +92,7 @@ def generate_image(description:str, openai_api_key:str):
 
     try:
         
-        client = OpenAI(openai_api_key=openai_api_key)
+        client = OP(openai_api_key=openai_api_key)
 
         response = client.images.generate(
                     model="dall-e-3",
