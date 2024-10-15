@@ -115,7 +115,7 @@ try:
     3. Next, enter an identifier name (optional) and click on the `Create secret key` button.""")
 
     
-    api_provider = st.selectbox(
+    api_provider = st.sidebar.selectbox(
         label="choose API provider",
         options=["openai", "nvidia nim"]
 
