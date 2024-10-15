@@ -35,8 +35,8 @@ from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 import vision,audio,openai_audio
 from langchain_openai import OpenAI
-from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
-
+from langchain_core.output_parsers import StrOutputParser
+from langchain_nvidia_ai_endpoints import ChatNVIDIA
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -115,12 +115,14 @@ try:
     3. Next, enter an identifier name (optional) and click on the `Create secret key` button.""")
 
     
+    api_provider = st.selectbox(
+        label="choose API provider",
+        options=["openai", "nvidia nim"]
+
+    )
     # Input for OpenAI API key in the sidebar
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-    
-    if not openai_api_key:
-           st.info("Please add your OpenAI API key to continue.")
-           st.stop()
+    nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
 
     
 
@@ -128,9 +130,14 @@ try:
 
     with tab1:
 
-        llm_model_chat = st.selectbox(label="choose chat model",
+        if api_provider == "openai":
+           
+            llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
         
+        else:
+            llm_model_chat=st.selectbox(label="choose model",
+                                         options=["meta/llama-3.1-405b-instruct"])
 
     with tab2:
 
@@ -243,22 +250,6 @@ try:
         #initialize the chain with all the set up fields i.e promp,memory,verbose false and llm
         #use the chain to invoke chat query
 
-
-    def generate_image(description:str, api_key:str):
-
-        try:
-            llm = OpenAI(temperature=0,api_key=api_key)
-            prompt = PromptTemplate(
-                input_variables=["image_desc"],
-                template="Generate a short but extremely detailed prompt to generate an high definition image given the following description: {description}",
-
-            )
-            chain = LLMChain(llm=llm,prompt=prompt)
-
-            return DallEAPIWrapper(model="dall-e-3",api_key=api_key).run(chain.run(description))
-
-        except Exception as e:
-            st.write("An error occured while generating the image",e)
 
 
     #----------------------------------------------configuring retriever section----------------------------------------------------------#
@@ -437,12 +428,22 @@ try:
                         
                         # Handle user input
                         if user_input != None:
-                            if not openai_api_key:
-                                st.info("Please add your OpenAI API key to continue.")
-                                st.stop()
 
-                            # Initialize OpenAI LLM
-                            llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model_chat, streaming = True)
+                            if api_provider == "openai":
+
+                                if not openai_api_key:
+                                    st.info("Please add your OpenAI API key to continue.")
+                                    st.stop()
+
+                                # Initialize OpenAI LLM
+                                llm2 = ChatOpenAI(openai_api_key=openai_api_key, model = llm_model_chat, streaming = True)
+
+                            elif api_provider == "nvidia nim":
+                                if not nvidia_api_key:
+                                        st.info("add NVIDIA API")
+                                        st.stop()
+
+                                llm2 = ChatNVIDIA(model=llm_model_chat,api_key = nvidia_api_key, streaming=True)
 
                             # Initialize Streamlit chat history
                             chat_history = StreamlitChatMessageHistory(key="chat_history")
@@ -467,8 +468,18 @@ try:
                             stream_handler = StreamHandler(st.empty())
                     
                             # Get response from LLM chain
-                            response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
+                            if api_provider == "openai":
+                                response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                            elif api_provider == "nvidia nim":
+                                    nvidia_chain = system_prompt | llm2 | StrOutputParser()
+                                    nim_resp = ""
+                                    response_display = st.empty()
+                                    response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
+                                    for chunk in response:
+                                        nim_resp+=chunk
+                                        response_display.write(nim_resp)
                             # Format response for LaTeX
                             if any(token in response for token in ["$", "\\", "^{", "_{"]):  # Check if it contains LaTeX
                                 response = f"$${response}$$"  # Wrap it in double dollar signs for display
