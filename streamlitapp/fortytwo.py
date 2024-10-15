@@ -244,11 +244,11 @@ try:
         #use the chain to invoke chat query
 
 
-    def generate_image(description:str, openai_api_key:str):
+    def generate_image(description:str, api_key:str):
 
         try:
             
-            llm = OpenAI(temperature=0,api_key=openai_api_key)
+            llm = OpenAI(temperature=0,api_key=api_key)
             prompt = PromptTemplate(
                 input_variables=["image_desc"],
                 template="Generate a short but extremely detailed prompt to generate an high definition image given the following description: {description}",
@@ -256,7 +256,7 @@ try:
             )
             chain = LLMChain(llm=llm,prompt=prompt)
 
-            return DallEAPIWrapper(model="dall-e-3",api_key=openai_api_key).run(chain.run(description))
+            return DallEAPIWrapper(model="dall-e-3",api_key=api_key).run(chain.run(description))
 
         except Exception as e:
             st.write("An error occured while generating the image",e)
@@ -475,17 +475,12 @@ try:
                                 response = f"$${response}$$"  # Wrap it in double dollar signs for display
 
 
-                            #if "Invoking browser agent" in response:
-                               # with st.spinner(text="Browsing the internet.."):
-                                #    search_query = browser.query_prompt(query=user_input,api=openai_api_key)
-                                #    search_result = browser.perform_search(query=search_query.replace('"',''))
-                                #    response = search_result
-                                #    st.write(response)
+                        
 
                             #image generation function calling
-                            if openai_api_key and response.startswith("Abracadabra baby."):
+                            if response.startswith("Abracadabra baby."):
                                 with st.spinner(text="Generating image in progress..."):
-                                    image_url = generate_image(description=user_input,openai_api_key=openai_api_key)
+                                    image_url = generate_image(description=user_input,api_key=openai_api_key)
                                     
                                     
                                     with tempfile.TemporaryDirectory() as temporary_directory:
