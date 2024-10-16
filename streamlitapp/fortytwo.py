@@ -133,6 +133,8 @@ try:
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
     nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
 
+    include_audio = st.toggle(label="turn on audio")
+
     
 
     #_____________________________________________set models_______________________________________________________________________________
@@ -144,13 +146,11 @@ try:
             llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
-            include_audio = st.toggle(label="turn on audio")
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
             
-            include_audio = st.toggle(label="turn on audio responses")
         
 
     with tab2:
@@ -163,8 +163,7 @@ try:
     
         llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
-        
-        include_audio = st.toggle(label="turn on audio",key="t3")
+    
 
     
 
