@@ -96,12 +96,12 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
-        My brain is powered by GPT and opensource models from OpenAI, Meta and NVIDIA.
+        My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
         My capabilities include:
-        - Chat
-        - Image Generation
-        - Image Description
-        - Retrieval Augmented Generation
+        - chat
+        - Image generation
+        - Image description
+        - Retrieval augmented generation
         - Github repositories querying
         - Web scrapping
         """)
