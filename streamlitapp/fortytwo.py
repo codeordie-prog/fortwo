@@ -133,7 +133,7 @@ try:
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
     nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
 
-    include_audio = st.sidebar.toggle(label="turn on audio")
+    include_audio = st.sidebar.toggle(label="turn on audio responses")
 
     
 
@@ -536,7 +536,7 @@ try:
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
 
-                            if include_audio:
+                            if include_audio and openai_api_key:
 
                                 responses_path=openai_audio.text_to_speech(response,openai_api_key)
 
@@ -553,8 +553,11 @@ try:
                                     data = audio_file.read()
                                     st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                         
-                            
-                        
+                            else:
+
+                                 st.info("add an openai api key to include audio response")
+                                 st.stop()
+                                
 
                             
 
@@ -665,7 +668,7 @@ try:
 
                                 response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
-                                if include_audio:
+                                if include_audio and openai_api_key:
 
                                     responses_path=openai_audio.text_to_speech(response,openai_api_key)
                                     st.audio(responses_path,format="audio")
@@ -674,7 +677,14 @@ try:
                                                 
                                     with open(responses_path, "rb") as audio_file:
                                             data = audio_file.read()
-                                            st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                
+                                        
+                                          st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+
+
+                                else:
+                                    st.info("add openai api key to include audio response")
+                                    st.stop()
 
     def query_web():
             
