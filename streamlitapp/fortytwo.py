@@ -507,7 +507,7 @@ try:
                         
 
                             #image generation function calling
-                            if response.startswith("Abracadabra baby."):
+                            if response.startswith("Abracadabra baby.") and openai_api_key:
                                 with st.spinner(text="Generating image in progress..."):
                                     image_url= vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                                     
@@ -682,7 +682,7 @@ try:
                                             st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
 
 
-                                else:
+                                elif include_audio and not openai_api_key:
                                     st.info("add openai api key to include audio response")
                                     st.stop()
 
