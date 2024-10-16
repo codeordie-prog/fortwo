@@ -537,7 +537,7 @@ try:
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
 
-                            if include_audio:
+                            if include_audio and openai_api_key:
 
                                 responses_path=openai_audio.text_to_speech(response,openai_api_key)
 
@@ -546,6 +546,7 @@ try:
 
                                 else:
                                     st.write(f"Length {len(response)} of the response too long to process the audio.")
+                           
 
                                 #download the audio
                                     
@@ -553,7 +554,9 @@ try:
                                     data = audio_file.read()
                                     st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                         
-                            
+                            else:
+                                st.info("please add your openai api key to include audio responses")
+                                st.stop()
 
                         
 
