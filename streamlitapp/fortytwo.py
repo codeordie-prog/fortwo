@@ -553,7 +553,7 @@ try:
                                      data = audio_file.read()
                                      st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                         
-                            else:
+                            elif include_audio and not openai_api_key:
 
                                  st.info("add an openai api key to include audio response")
                                  st.stop()
