@@ -150,7 +150,7 @@ try:
             llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
             
-            include_audio = st.toggle(label="turn on audio responses",key="t2")
+            include_audio = st.toggle(label="turn on audio responses",key="t1")
         
 
     with tab2:
