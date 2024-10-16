@@ -524,7 +524,11 @@ try:
                                                 data=image_bytes,
                                                 file_name="image.png",
                                                 mime="image/png"
+                            
                                             )
+
+                            elif response.startswith("Abracadabra baby.") and not openai_api_key:
+                                 st.info("Image generation requires a valid openai api key, please provide one. ")
 
                             assistant_msg = response  # Adjusted to fetch text from the response
 
