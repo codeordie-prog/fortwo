@@ -537,7 +537,7 @@ try:
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
 
-                            if include_audio and openai_api_key:
+                            if include_audio:
 
                                 responses_path=openai_audio.text_to_speech(response,openai_api_key)
 
