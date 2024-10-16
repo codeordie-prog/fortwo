@@ -96,7 +96,9 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
+        My brain is powered by GPT and opensource models from OpenAI, Meta and NVIDIA.
         My capabilities include:
+        - Chat
         - Image Generation
         - Image Description
         - Retrieval Augmented Generation
@@ -108,13 +110,20 @@ try:
 
     #--------------------------------------------------sidebar instructions section-------------------------------------------------------------#
 
-    st.sidebar.subheader("Get an openAI API key")
-    st.sidebar.info("""
+    st.sidebar.subheader("Get an API key")
+    st.sidebar.info(""" 
+    OpenAI:
     1. Go to [OpenAI API Keys](https://platform.openai.com/account/api-keys).
     2. Click on the `+ Create new secret key` button.
-    3. Next, enter an identifier name (optional) and click on the `Create secret key` button.""")
-
+    3. Next, enter an identifier name (optional) and click on the `Create secret key` button.
     
+    NVIDIA:
+    1. Go to [Nvidia platform](https://www.nvidia.com/en-us/ai/)
+    2. Click on the Try now button and register for an account
+    3. Generate an API key
+    4. Copy it inside the NVIDIA API key section""")
+
+    #-------------------------------------------------------API PROVIDERS--------------------------------------------------------------------------#
     api_provider = st.sidebar.selectbox(
         label="choose API provider",
         options=["openai", "nvidia nim"]
