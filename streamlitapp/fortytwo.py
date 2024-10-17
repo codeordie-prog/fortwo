@@ -125,9 +125,11 @@ try:
     4. Copy it inside the NVIDIA API key section""")
 
     #-------------------------------------------------------API PROVIDERS--------------------------------------------------------------------------#
-    api_provider = st.sidebar.selectbox(
-        label="choose API provider",
-        options=["openai", "nvidia nim"]
+
+    with st.sidebar.expander(label="Choose API provider"):
+        api_provider = st.selectbox(
+            label="choose API provider",
+            options=["openai", "nvidia nim"]
 
     )
     # Input for OpenAI API key in the sidebar
