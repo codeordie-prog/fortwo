@@ -111,8 +111,8 @@ try:
 
     #--------------------------------------------------sidebar instructions section-------------------------------------------------------------#
 
-    st.sidebar.subheader("Get an API key")
-    st.sidebar.info(""" 
+    with st.sidebar.expander(label="Instructions for an API key"):
+        st.markdown(""" 
     OpenAI:
     1. Go to [OpenAI API Keys](https://platform.openai.com/account/api-keys).
     2. Click on the `+ Create new secret key` button.
