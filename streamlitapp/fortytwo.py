@@ -149,7 +149,7 @@ try:
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-405b-instruct"])
+                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"])
             
         
 
@@ -168,7 +168,7 @@ try:
         elif api_provider == "nvidia nim":
 
              llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-405b-instruct"],key="document_query_key")
+                                      options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"],key="document_query_key")
 
     
 
