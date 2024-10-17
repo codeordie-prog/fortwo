@@ -150,14 +150,14 @@ try:
             
             with st.expander(label="choose GPT model",expanded=False):
                 llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo","nvidia/llama-3.1-nemotron-70b-instruct"],key="chat_key")
+                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
         
         else:
 
             with st.expander(label="choose model",expanded=False):
                 llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
+                                         options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct","nvidia/llama-3.1-nemotron-70b-instruct"])
             
         
 
@@ -168,14 +168,14 @@ try:
              with st.expander(label="choose GPT model",expanded=False):
              
                 llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06","nvidia/llama-3.1-nemotron-70b-instruct"],key="document_query_key")
+                                      options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
 
         elif api_provider == "nvidia nim":
              
              with st.expander(label="choose model",expanded=False):
 
                 llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"],key="document_query_key")
+                                      options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct"],key="document_query_key")
 
          # File uploader in the sidebar
         uploaded_files = st.file_uploader(
