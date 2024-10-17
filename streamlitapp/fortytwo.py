@@ -648,9 +648,9 @@ try:
                         model_name=llm_model_docs, openai_api_key=openai_api_key, temperature=0, streaming=True
                         )
 
-                elif api_provider == "nvidia nim" and nvidia_api_key:
+                elif api_provider == "nvidia nim" and nvidia_api_key and openai_api_key:
 
-                    llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=True)
+                    llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=False)
 
 
                 qa_chain = ConversationalRetrievalChain.from_llm(
