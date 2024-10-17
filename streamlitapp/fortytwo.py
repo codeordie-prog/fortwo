@@ -139,7 +139,7 @@ try:
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
+                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct","nvidia/nemotron-4-340b-instruct"])
             
             include_audio = st.toggle(label="turn on audio responses")
         
@@ -552,8 +552,8 @@ try:
 
                         
 
-                    except Exception as e:
-                        st.write("an Error occured please enter a valid API key",e)
+                    except Exception:
+                        st.write("an Error occured please enter a valid API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
