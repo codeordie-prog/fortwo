@@ -96,10 +96,12 @@ try:
     st.sidebar.subheader("About")
     st.sidebar.info("""
         Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
+        My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
         My capabilities include:
-        - Image Generation
-        - Image Description
-        - Retrieval Augmented Generation
+        - chat
+        - Image generation
+        - Image description
+        - Retrieval augmented generation
         - Github repositories querying
         - Web scrapping
         """)
@@ -108,13 +110,20 @@ try:
 
     #--------------------------------------------------sidebar instructions section-------------------------------------------------------------#
 
-    st.sidebar.subheader("Get an openAI API key")
-    st.sidebar.info("""
+    st.sidebar.subheader("Get an API key")
+    st.sidebar.info(""" 
+    OpenAI:
     1. Go to [OpenAI API Keys](https://platform.openai.com/account/api-keys).
     2. Click on the `+ Create new secret key` button.
-    3. Next, enter an identifier name (optional) and click on the `Create secret key` button.""")
-
+    3. Next, enter an identifier name (optional) and click on the `Create secret key` button.
     
+    NVIDIA:
+    1. Go to [Nvidia platform](https://www.nvidia.com/en-us/ai/)
+    2. Click on the Try now button and register for an account
+    3. Generate an API key
+    4. Copy it inside the NVIDIA API key section""")
+
+    #-------------------------------------------------------API PROVIDERS--------------------------------------------------------------------------#
     api_provider = st.sidebar.selectbox(
         label="choose API provider",
         options=["openai", "nvidia nim"]
@@ -123,6 +132,8 @@ try:
     # Input for OpenAI API key in the sidebar
     openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
     nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
+
+    include_audio = st.sidebar.toggle(label="turn on audio responses")
 
     
 
@@ -135,13 +146,11 @@ try:
             llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
-            include_audio = st.toggle(label="turn on audio")
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct","nvidia/nemotron-4-340b-instruct"])
             
-            include_audio = st.toggle(label="turn on audio responses")
         
 
     with tab2:
@@ -154,8 +163,7 @@ try:
     
         llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
-        
-        include_audio = st.toggle(label="turn on audio")
+    
 
     
 
@@ -499,7 +507,7 @@ try:
                         
 
                             #image generation function calling
-                            if response.startswith("Abracadabra baby."):
+                            if response.startswith("Abracadabra baby.") and openai_api_key:
                                 with st.spinner(text="Generating image in progress..."):
                                     image_url= vision.generate_image(description=user_input,openai_api_key=openai_api_key)
                                     
@@ -516,7 +524,11 @@ try:
                                                 data=image_bytes,
                                                 file_name="image.png",
                                                 mime="image/png"
+                            
                                             )
+
+                            elif response.startswith("Abracadabra baby.") and not openai_api_key:
+                                 st.info("Image generation requires a valid openai api key, please provide one. ")
 
                             assistant_msg = response  # Adjusted to fetch text from the response
 
@@ -528,7 +540,7 @@ try:
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
 
-                            if include_audio:
+                            if include_audio and openai_api_key:
 
                                 responses_path=openai_audio.text_to_speech(response,openai_api_key)
 
@@ -537,16 +549,19 @@ try:
 
                                 else:
                                     st.write(f"Length {len(response)} of the response too long to process the audio.")
+                           
 
                                 #download the audio
                                     
                                 with open(responses_path, "rb") as audio_file:
-                                    data = audio_file.read()
-                                    st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+                                     data = audio_file.read()
+                                     st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
                                         
-                            
+                            elif include_audio and not openai_api_key:
 
-                        
+                                 st.info("add an openai api key to include audio response")
+                                 st.stop()
+                                
 
                             
 
@@ -657,7 +672,7 @@ try:
 
                                 response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
-                                if include_audio:
+                                if include_audio and openai_api_key:
 
                                     responses_path=openai_audio.text_to_speech(response,openai_api_key)
                                     st.audio(responses_path,format="audio")
@@ -666,7 +681,14 @@ try:
                                                 
                                     with open(responses_path, "rb") as audio_file:
                                             data = audio_file.read()
+                                
+                                        
                                             st.download_button(label="download",data=data,file_name="audio.mp3",mime="audio/mp3")
+
+
+                                elif include_audio and not openai_api_key:
+                                    st.info("add openai api key to include audio response")
+                                    st.stop()
 
     def query_web():
             
@@ -916,8 +938,8 @@ try:
         main()
 
 
-except Exception :
-    st.write("an error occured check the key")
+except Exception as e:
+    st.write("an error occured check the key",e)
 
  
 
