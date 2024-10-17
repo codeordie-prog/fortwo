@@ -147,13 +147,16 @@ try:
     with tab1:
 
         if api_provider == "openai":
-           
-            llm_model_chat = st.selectbox(label="choose chat model",
+            
+            with st.expander(label="choose GPT model",expanded=False):
+                llm_model_chat = st.selectbox(label="choose chat model",
                                       options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
         
         else:
-            llm_model_chat=st.selectbox(label="choose model",
+
+            with st.expander(label="choose opensource model",expanded=False):
+                llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
             
         
@@ -166,13 +169,17 @@ try:
         )
 
         if api_provider == "openai":
-    
-             llm_model_docs = st.selectbox(label="choose document query model",
+             
+             with st.expander(label="choose GPT model",expanded=False):
+             
+                llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
 
         elif api_provider == "nvidia nim":
+             
+             with st.expander(label="choose opensource model",expanded=False):
 
-             llm_model_docs = st.selectbox(label="choose document query model",
+                llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"],key="document_query_key")
 
     
