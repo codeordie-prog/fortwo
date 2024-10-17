@@ -94,8 +94,8 @@ try:
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
     #st.sidebar.title("chatwith42")
-    st.sidebar.subheader("About")
-    st.sidebar.info("""
+    with st.sidebar.expander(label="About",expanded=False):
+     st.markdown("""
         Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
         My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
         My capabilities include:
