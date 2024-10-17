@@ -96,15 +96,15 @@ try:
     #st.sidebar.title("chatwith42")
     with st.sidebar.expander(label="About",expanded=False):
      st.markdown("""
-        Hi! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
+        Hi carbon entity! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
         My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
         My capabilities include:
         - chat
-        - Image generation
-        - Image description
-        - Retrieval augmented generation
-        - Github repositories querying
-        - Web scrapping
+        - image generation
+        - image description
+        - retrieval augmented generation
+        - github repositories querying
+        - web scrapping
         """)
 
 
