@@ -681,7 +681,18 @@ try:
                                 retrieval_handler = PrintRetrievalHandler(st.container())
                                 stream_handler = StreamHandler(st.empty())
 
+                                
                                 response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
+
+                                if api_provider == "nvidia nim":
+
+                                    string_resp = ""
+                                    string_resp_place = st.empty()
+
+                                    for chunk in response:
+
+                                        string_resp+=chunk
+                                        string_resp_place.write(string_resp)
 
                                 if include_audio and openai_api_key:
 
