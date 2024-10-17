@@ -131,8 +131,10 @@ try:
 
     )
     # Input for OpenAI API key in the sidebar
-    openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-    nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
+    with st.sidebar.expander(label = "Add API keys", expanded=False):
+
+        openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+        nvidia_api_key = st.sidebar.text_input("Nvidia API key", type="password")
 
     include_audio = st.sidebar.toggle(label="turn on audio responses")
 
