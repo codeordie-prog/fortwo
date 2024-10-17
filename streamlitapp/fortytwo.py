@@ -163,11 +163,6 @@ try:
 
     with tab2:
 
-         # File uploader in the sidebar
-        uploaded_files = st.file_uploader(
-            label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
-        )
-
         if api_provider == "openai":
              
              with st.expander(label="choose GPT model",expanded=False):
@@ -182,6 +177,10 @@ try:
                 llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"],key="document_query_key")
 
+         # File uploader in the sidebar
+        uploaded_files = st.file_uploader(
+            label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
+        )
     
 
         
