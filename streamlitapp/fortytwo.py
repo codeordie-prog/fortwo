@@ -155,7 +155,7 @@ try:
         
         else:
 
-            with st.expander(label="choose opensource model",expanded=False):
+            with st.expander(label="choose model",expanded=False):
                 llm_model_chat=st.selectbox(label="choose model",
                                          options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
             
@@ -177,7 +177,7 @@ try:
 
         elif api_provider == "nvidia nim":
              
-             with st.expander(label="choose opensource model",expanded=False):
+             with st.expander(label="choose model",expanded=False):
 
                 llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"],key="document_query_key")
