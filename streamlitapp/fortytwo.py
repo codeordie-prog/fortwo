@@ -150,7 +150,7 @@ try:
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct"])
+                                         options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
             
         
 
