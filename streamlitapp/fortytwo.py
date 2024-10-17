@@ -149,7 +149,7 @@ try:
         
         else:
             llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.2-3b-instruct"])
+                                         options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-405b-instruct"])
             
         
 
@@ -160,10 +160,15 @@ try:
             label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True
         )
 
+        if api_provider == "openai":
     
-        llm_model_docs = st.selectbox(label="choose document query model",
+             llm_model_docs = st.selectbox(label="choose document query model",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
-    
+
+        elif api_provider == "nvidia nim":
+
+             llm_model_docs = st.selectbox(label="choose document query model",
+                                      options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-405b-instruct"],key="document_query_key")
 
     
 
@@ -637,9 +642,15 @@ try:
 
                     
                     # Setup LLM and QA chain for the documents part
-                llm = ChatOpenAI(
+
+                if api_provider == "openai" and openai_api_key:
+                    llm = ChatOpenAI(
                         model_name=llm_model_docs, openai_api_key=openai_api_key, temperature=0, streaming=True
-                    )
+                        )
+
+                elif api_provider == "nvidia nim" and nvidia_api_key:
+
+                    llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=True)
 
 
                 qa_chain = ConversationalRetrievalChain.from_llm(
