@@ -150,7 +150,7 @@ try:
             
             with st.expander(label="choose GPT model",expanded=False):
                 llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","o1-preview-2024-09-12","o1-mini","gpt-3.5-turbo"],key="chat_key")
+                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
             
         
         else:
@@ -168,7 +168,7 @@ try:
              with st.expander(label="choose GPT model",expanded=False):
              
                 llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06","o1-preview-2024-09-12","o1-mini-2024-09-12"],key="document_query_key")
+                                      options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
 
         elif api_provider == "nvidia nim":
              
