@@ -319,15 +319,20 @@ try:
                         docs.extend(loader.load())  
 
                     elif any(temp_filepath.endswith(e) for e in ext):
-                        st.image(file,width=380)
-                        base64image = vision.encode_image(temp_filepath)
-                        description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=image_description_prompt)
-                        description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
-                        with open(description_file_path, "w") as description_file:
-                            description_file.write(description)
-                        loader = TextLoader(description_file_path)
+
+                        if api_provider == "nvidia nim" and not openai_api_key:
+                            st.info("please add api key")
+                            st.stop()
+                        else:
+                            st.image(file,width=380)
+                            base64image = vision.encode_image(temp_filepath)
+                            description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=image_description_prompt)
+                            description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
+                            with open(description_file_path, "w") as description_file:
+                                description_file.write(description)
+                            loader = TextLoader(description_file_path)
                         
-                        docs.extend(loader.load())
+                            docs.extend(loader.load())
                     
 
             # Split documents
