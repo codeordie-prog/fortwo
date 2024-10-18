@@ -150,7 +150,7 @@ try:
             
             with st.expander(label="choose GPT model",expanded=False):
                 llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","o1-preview-2024-09-12","o1-mini-2024-09-12","gpt-3.5-turbo"],key="chat_key")
+                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","o1-preview-2024-09-12","o1-mini","gpt-3.5-turbo"],key="chat_key")
             
         
         else:
