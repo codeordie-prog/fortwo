@@ -618,11 +618,10 @@ try:
                     ext = ["png","jpeg","jpg"]
                     
                     #check whether the uploaded doc is a picture and ensure openai api is provided 
-                    if any(doc.name.endswith(tuple(ext)) for doc in uploaded_files):
-
-                        if not openai_api_key:
-                            st.info("image analysis requires openai api key please add one")
-                            st.stop()
+                    if any(doc.name.endswith(tuple(ext)) for doc in uploaded_files) and not openai_api_key:
+                        
+                        st.info("image analysis requires openai api key please add one")
+                        st.stop()
 
                     llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=False)
 
