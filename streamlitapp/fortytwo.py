@@ -542,8 +542,8 @@ try:
 
                         
 
-                    except Exception as e:
-                        st.write("an Error occured please enter a valid API key",e)
+                    except Exception:
+                        st.write("an Error occured please enter a valid API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
