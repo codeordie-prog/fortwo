@@ -636,7 +636,7 @@ try:
 
 
                 qa_chain = ConversationalRetrievalChain.from_llm(
-                        llm=llm, 
+                        llm, 
                         retriever=retriever, 
                         memory=memory, 
                         verbose=True
