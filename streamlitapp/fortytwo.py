@@ -905,11 +905,11 @@ try:
                             chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
 
                             # Use pick to select the desired key
-                            stream_chain = chain.pick("answer")
+                            #stream_chain = chain.pick("answer")
                             
                             # Create a response placeholder and set it to empty; it will be updated with each chunk
                             response = ""
-                            for chunk in stream_chain.stream({"input": user_input}):
+                            for chunk in chain.stream({"input": user_input}):
                                 response += f"{chunk}"
                                 chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
                             
