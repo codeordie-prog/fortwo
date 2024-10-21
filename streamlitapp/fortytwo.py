@@ -806,7 +806,7 @@ try:
 
                         for language in language_suffixes.keys():
                             splitter = RecursiveCharacterTextSplitter.from_language(
-                                language=language, chunk_size = 200, chunk_overlap = 200
+                                language=language, chunk_size = 500, chunk_overlap = 200
                             )
 
                             split_texts.extend(splitter.split_documents(documents))
@@ -820,7 +820,7 @@ try:
                         # Retriever
                         db = DocArrayInMemorySearch.from_documents(split_texts, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
                         retriever = db.as_retriever(
-                            search_type = "similarity",                        # Also test "similarity"
+                            search_type = "mmr",                        # Also test "similarity"
                             search_kwargs={"k": 8},
                         )
 
