@@ -471,7 +471,7 @@ try:
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
                                     response_display = st.empty()
-                                    with st.spinner("Thinking..."):
+                                    with st.spinner("`Thinking..`"):
                                         response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
                                     for chunk in response:
                                         nim_resp+=chunk
