@@ -638,6 +638,10 @@ try:
 
                     llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=False)
 
+                else:
+
+                    st.info("make sure you have added the API keys")
+                    st.stop()
 
                 qa_chain = ConversationalRetrievalChain.from_llm(
                         llm, 
@@ -645,6 +649,7 @@ try:
                         memory=memory, 
                         verbose=True
                     )
+             
 
                 
 
