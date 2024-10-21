@@ -796,6 +796,8 @@ try:
 
                             documents.extend(loader.load())
 
+                            
+
                         #split
 
                         split_texts = []
@@ -846,7 +848,7 @@ try:
 
                         qa = create_retrieval_chain(retriever_chain, document_chain)
 
-
+                        
                         return qa
 
                         
