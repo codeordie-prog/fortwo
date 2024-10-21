@@ -464,7 +464,7 @@ try:
                             # Get response from LLM chain
 
                             if api_provider == "openai":
-                                with st.spinner("Thinking.."):
+                                with st.spinner("`Thinking..`"):
                                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
                             elif api_provider == "nvidia nim":
