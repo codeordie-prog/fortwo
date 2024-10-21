@@ -663,8 +663,8 @@ try:
                                 retrieval_handler = PrintRetrievalHandler(st.container())
                                 stream_handler = StreamHandler(st.empty())
 
-                                
-                                response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
+                                with st.spinner("Thinking..."):
+                                    response = qa_chain.run(user_query, callbacks=[retrieval_handler, stream_handler])
 
                                 if api_provider == "nvidia nim":
 
