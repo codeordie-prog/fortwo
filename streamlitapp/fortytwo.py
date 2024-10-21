@@ -157,7 +157,7 @@ try:
 
             with st.expander(label="choose model",expanded=False):
                 llm_model_chat=st.selectbox(label="choose model",
-                                         options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct","nvidia/llama-3.1-nemotron-70b-instruct"])
+                                         options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
             
         
 
@@ -175,7 +175,7 @@ try:
              with st.expander(label="choose model",expanded=False):
 
                 llm_model_docs = st.selectbox(label="choose document query model",
-                                      options=["meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct","nvidia/llama-3.1-nemotron-70b-instruct"],key="document_query_key")
+                                      options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"],key="document_query_key")
 
          # File uploader in the sidebar
         uploaded_files = st.file_uploader(
