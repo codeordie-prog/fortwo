@@ -38,6 +38,8 @@ from langchain_openai import OpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 import systemprompt
+import numpy as np
+
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -810,8 +812,11 @@ try:
                             split_texts.extend(splitter.split_documents(documents))
 
                         
+                        #use docarraysearch
+
+
                         # Retriever
-                        db = Chroma.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
+                        db = DocArrayInMemorySearch.from_documents(split_texts, OpenAIEmbeddings(disallowed_special=(), api_key=open_ai_key))
                         retriever = db.as_retriever(
                             search_type="mmr",  # Also test "similarity"
                             search_kwargs={"k": 8},
