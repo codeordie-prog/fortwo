@@ -846,7 +846,13 @@ try:
 
                         qa = create_retrieval_chain(retriever_chain, document_chain)
 
-                        return qa
+                        if qa is not None:
+
+                            return qa
+
+                        else:
+
+                            st.info("query chain is none")
         except Exception:
              st.write("an error occured inside the github repo function, check the URL.")
 
@@ -905,11 +911,11 @@ try:
                             chain = github_repo_query(repo_url, open_ai_key=openai_api_key)
 
                             # Use pick to select the desired key
-                            #stream_chain = chain.pick("answer")
+                            stream_chain = chain.pick("answer")
                             
                             # Create a response placeholder and set it to empty; it will be updated with each chunk
                             response = ""
-                            for chunk in chain.invoke({"input": user_input}):
+                            for chunk in Tstream_chain.stream({"input": user_input}):
                                 response += f"{chunk}"
                                 chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
                             
