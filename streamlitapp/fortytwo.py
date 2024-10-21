@@ -919,7 +919,7 @@ try:
                             
                             # Create a response placeholder and set it to empty; it will be updated with each chunk
                             response = ""
-                            for chunk in Tstream_chain.stream({"input": user_input}):
+                            for chunk in stream_chain.stream({"input": user_input}):
                                 response += f"{chunk}"
                                 chat_placeholder.chat_message("assistant").write(response)  # Update the placeholder with each chunk
                             
