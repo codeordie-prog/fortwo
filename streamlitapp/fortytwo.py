@@ -635,7 +635,7 @@ try:
                     llm = ChatNVIDIA(model=llm_model_docs,api_key = nvidia_api_key, streaming=False)
 
 
-                qa_chain = ConversationalRetrievalChain.from_llm(
+                    qa_chain = ConversationalRetrievalChain.from_llm(
                         llm, 
                         retriever=retriever, 
                         memory=memory, 
