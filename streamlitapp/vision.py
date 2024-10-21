@@ -88,7 +88,7 @@ def create_a_textfile(image_description,file_path):
         return file
     
 #generate image function
-def generate_image(prompt:str, openai_api_key:str):
+def generate_image(description:str, openai_api_key:str):
 
     try:
         
@@ -96,7 +96,7 @@ def generate_image(prompt:str, openai_api_key:str):
 
         response = client.images.generate(
                     model="dall-e-3",
-                    prompt=prompt,
+                    prompt=description,
                     size="1024x1024",
                     quality="standard",
                     n=1,
