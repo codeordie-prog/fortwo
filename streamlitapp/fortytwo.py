@@ -605,6 +605,8 @@ try:
                     
                 retriever = configure_retriever(uploaded_files)
 
+                llm = None
+
                 response_placeholder = st.empty()
                 input_placeholder = st.empty()   
                 
