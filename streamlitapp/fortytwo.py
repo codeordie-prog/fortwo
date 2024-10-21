@@ -846,13 +846,10 @@ try:
 
                         qa = create_retrieval_chain(retriever_chain, document_chain)
 
-                        if qa is not None:
 
-                            return qa
+                        return qa
 
-                        else:
-
-                            st.info("query chain is none")
+                        
         except Exception as e:
              st.write("an error occured inside the github repo function, check the URL.",e)
 
