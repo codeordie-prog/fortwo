@@ -853,8 +853,8 @@ try:
                         else:
 
                             st.info("query chain is none")
-        except Exception:
-             st.write("an error occured inside the github repo function, check the URL.")
+        except Exception as e:
+             st.write("an error occured inside the github repo function, check the URL.",e)
 
 
     #-----------------------------------------------------------audio---------------------------------------------------------------------------
