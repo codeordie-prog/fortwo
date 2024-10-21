@@ -811,12 +811,15 @@ try:
 
                             split_texts.extend(splitter.split_documents(documents))
 
+                        split_text = [{"page_content": doc} for doc in split_texts]
+
+
                         
                         #use docarraysearch
 
 
                         # Retriever
-                        db = DocArrayInMemorySearch.from_documents(split_texts, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
+                        db = DocArrayInMemorySearch.from_documents(split_text, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
                         retriever = db.as_retriever(
                             search_type="mmr",  # Also test "similarity"
                             search_kwargs={"k": 8},
