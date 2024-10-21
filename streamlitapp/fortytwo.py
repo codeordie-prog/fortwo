@@ -820,7 +820,7 @@ try:
                         # Retriever
                         db = DocArrayInMemorySearch.from_documents(split_texts, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
                         retriever = db.as_retriever(
-                            search_type="mmr",  # Also test "similarity"
+                                                        # Also test "similarity"
                             search_kwargs={"k": 8},
                         )
 
