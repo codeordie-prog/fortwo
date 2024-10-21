@@ -22,6 +22,7 @@ from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings
 from langchain_community.embeddings.openai import OpenAIEmbeddings
 from langchain_community.vectorstores.docarray import DocArrayInMemorySearch
 from langchain_community.vectorstores.chroma import Chroma
+from langchain_community.vectorstores.faiss import FAISS
 from langchain_core.prompts import ChatPromptTemplate,PromptTemplate,MessagesPlaceholder
 from langchain_core.messages import SystemMessage
 from langchain.memory.buffer import ConversationBufferMemory
@@ -811,15 +812,14 @@ try:
 
                             split_texts.extend(splitter.split_documents(documents))
 
-                        split_text = [{"page_content": doc} for doc in split_texts]
-
+                       
 
                         
                         #use docarraysearch
 
 
                         # Retriever
-                        db = DocArrayInMemorySearch.from_documents(split_text, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
+                        db = FAISS.from_documents(split_texts, embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
                         retriever = db.as_retriever(
                             search_type="mmr",  # Also test "similarity"
                             search_kwargs={"k": 8},
