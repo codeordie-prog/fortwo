@@ -940,8 +940,8 @@ try:
          
         except TypeError:
             st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
-        except Exception as e:
-             st.write("An error was encountered at main call", e)
+        except Exception :
+             st.write("An error was encountered at main call")
     
 
         
@@ -950,8 +950,8 @@ try:
         main()
 
 
-except Exception as e:
-    st.write("an error occured check the key",e)
+except Exception:
+    st.write("an error occured check the key")
 
  
 
