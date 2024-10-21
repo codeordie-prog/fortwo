@@ -806,7 +806,7 @@ try:
 
                         for language in language_suffixes.keys():
                             splitter = RecursiveCharacterTextSplitter.from_language(
-                                language=language, chunk_size = 2000, chunk_overlap = 200
+                                language=language, chunk_size = 200, chunk_overlap = 200
                             )
 
                             split_texts.extend(splitter.split_documents(documents))
