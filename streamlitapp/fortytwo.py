@@ -470,8 +470,8 @@ try:
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
                                     response_display = st.empty()
-                                    st.spinner("Generating response..")
-                                    response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
+                                    with st.spinner("Generating response.."):
+                                        response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
                                     for chunk in response:
                                         nim_resp+=chunk
                                         response_display.write(nim_resp)
