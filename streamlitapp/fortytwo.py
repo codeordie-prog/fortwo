@@ -142,7 +142,15 @@ try:
 
     include_audio = st.sidebar.toggle(label="turn on audio responses")
 
-    
+     #---------------------------------------------------def download pdf---------------------------------------------------------#
+
+    def download_pdf(content:str, filename:str):
+        st.download_button(
+            label="download pdf",
+            data=content,
+            file_name=f"{filename}.pdf",
+            mime="application/pdf"
+        )
 
     #_____________________________________________set models_______________________________________________________________________________
 
@@ -160,8 +168,20 @@ try:
             with st.expander(label="choose model",expanded=False):
                 llm_model_chat=st.selectbox(label="choose model",
                                          options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
-            
-        
+
+
+        with st.expander("prepare pdf file",expanded=False):
+            file_name = st.text_input("enter file name")
+
+            #download pdf
+            text = ""
+
+            for messages in st.session_state["messages"]:
+                text+=messages["content"] + "\n"
+            cleaned_response = pdfgenerator.clean_text(text=text)
+            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
+            download_pdf(content=pdf_file,filename=file_name)
+
 
     with tab2:
 
@@ -352,15 +372,7 @@ try:
 
             return retriever
 
-    #---------------------------------------------------def download pdf---------------------------------------------------------#
-
-    def download_pdf(content:str):
-        st.download_button(
-            label="download pdf",
-            data=content,
-            file_name="file.pdf",
-            mime="application/pdf"
-        )
+   
 
     #---------------------------------------------define download txt function-------------------------------------------------------------------#
 
