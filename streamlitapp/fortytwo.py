@@ -172,18 +172,21 @@ try:
                                          options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
 
 
-        with st.expander("prepare pdf file",expanded=False):
+        with st.expander("prepare pdf file for download",expanded=False):
             file_name = st.text_input("enter file name")
 
-            #download pdf
-            text = ""
+            if file_name:
 
-            for messages in st.session_state["messages"]:
-                text+=messages["content"] + "\n"
-            cleaned_response = pdfgenerator.clean_text(text=text)
-            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
-            download_pdf(content=pdf_file,filename=file_name)
+                #download pdf
+                text = ""
 
+                for messages in st.session_state["messages"]:
+                    text+=messages["content"] + "\n"
+                cleaned_response = pdfgenerator.clean_text(text=text)
+                pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
+                download_pdf(content=pdf_file,filename=file_name)
+            else:
+                st.info("provide a file name")
 
     with tab2:
 
