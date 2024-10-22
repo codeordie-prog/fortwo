@@ -39,7 +39,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 import systemprompt
 import numpy as np
-
+import pdfgenerator
 
 # You might also need to install some additional dependencies used in the code such as:
 # pip install streamlit langchain streamlit-chat gitpython requests lxml pillow pydantic
@@ -483,7 +483,15 @@ try:
                                 response = f"$${response}$$"  # Wrap it in double dollar signs for display
 
 
-                        
+                            cleaned_response = pdfgenerator.clean_text(text=response)
+                            pdf_file = pdfgenerator.generate_pdf(text=cleaned_response)
+
+                            st.download_button(
+                                label="download pdf",
+                                data=pdf_file,
+                                file_name="file.pdf",
+                                mime="application/pdf"
+                            )
 
                             #image generation function calling
                             if response.startswith("Abracadabra baby.") and openai_api_key:
