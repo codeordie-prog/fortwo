@@ -145,10 +145,12 @@ try:
      #---------------------------------------------------def download pdf---------------------------------------------------------#
 
     def download_pdf(content:str, filename:str):
+
+        file_name = f"{filename}.pdf"
         st.download_button(
             label="download pdf",
             data=content,
-            file_name=f"{filename}.pdf",
+            file_name=file_name,
             mime="application/pdf"
         )
 
