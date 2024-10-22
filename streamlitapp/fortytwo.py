@@ -406,7 +406,7 @@ try:
                 with response_placeholder.container():
                     # Initialize chat history if not already in session state
                     if "messages" not in st.session_state:
-                        st.session_state["messages"] = [{"role": "assistant", "content": f'42:"How can I help you?"'}]
+                        st.session_state["messages"] = [{"role": "assistant", "content": f'42 : "How can I help you?"'}]
 
                     #if "scratchpad" not in st.session_state:
                         #st.session_state["scratchpad"] = ""
@@ -420,7 +420,7 @@ try:
 
                 # "Clear Chat History" button
                 if st.button("Clear Chat History",key="chat_clear"):
-                    st.session_state["messages"] = [{"role": "assistant", "content": f"42: {'Chat history cleared. How can I help you?'}"}]
+                    st.session_state["messages"] = [{"role": "assistant", "content": f"42 : {'Chat history cleared. How can I help you?'}"}]
                     st.rerun()  # Rerun the app to clear the chat history
 
                 
@@ -465,7 +465,7 @@ try:
 
                             
                             # Append user message to session state
-                            st.session_state["messages"].append({"role": "user", "content": f"You: {user_input}"})
+                            st.session_state["messages"].append({"role": "user", "content": f"You : {user_input}"})
                             st.chat_message("user").write(user_input)
 
                             #introduce streaming in chat session
@@ -521,7 +521,7 @@ try:
                                 
 
                             # Append assistant message to session state and display it
-                            st.session_state["messages"].append({"role": "assistant", "content": f'42:{assistant_msg}'})
+                            st.session_state["messages"].append({"role": "assistant", "content": f'42 : {assistant_msg}'})
 
                              #download pdf
                             text = ""
@@ -701,6 +701,16 @@ try:
 
                                         string_resp+=chunk
                                         string_resp_place.write(string_resp)
+
+                                text = ""
+
+                                for message in msgs:
+                                    text+=message["content"] + "\n"
+
+                                cleaned_text = pdfgenerator.clean_text(text=text)
+                                pdf_file = pdfgenerator.generate_pdf(content=cleaned_text)
+
+                                download_pdf(content=pdf_file)
 
                                 if include_audio and openai_api_key:
 
