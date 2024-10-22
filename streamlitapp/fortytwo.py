@@ -167,7 +167,7 @@ try:
                                                 options=["gpt-4o-mini", "gpt-4o-2024-08-06", "gpt-4o", "gpt-3.5-turbo"],
                                                 key="chat_key")
             else:
-                with st.expander(label="Choose Model", expanded=False):
+                with st.expander(label="`Choose Model`", expanded=False):
                     llm_model_chat = st.selectbox(label="`Choose model`",
                                                 options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
                                                         "meta/llama-3.1-405b-instruct"])
