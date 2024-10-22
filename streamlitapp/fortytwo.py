@@ -158,7 +158,7 @@ try:
 
     with tab1:
 
-        col1, col2 = st.columns([2, 1])  # Adjust ratios to control width
+        col1, col2 = st.columns([1, 1])  # Adjust ratios to control width
 
         with col1:  # First column for the model selection
             if api_provider == "openai":
