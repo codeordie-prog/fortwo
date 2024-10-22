@@ -78,6 +78,6 @@ def generate_pdf(text:str):
             code_block+=line+"\n"
 
         else:
-            wrap_text(pdf,line,max_width)
+            wrap_text(pdf,line,max_width,code=False)
 
     return pdf.output(dest="S").encode(('latin1'))
