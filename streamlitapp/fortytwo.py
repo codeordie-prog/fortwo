@@ -140,7 +140,7 @@ try:
         openai_api_key = st.text_input("OpenAI API Key", type="password")
         nvidia_api_key = st.text_input("Nvidia API key", type="password")
 
-    include_audio = st.sidebar.toggle(label="turn on audio responses")
+    include_audio = st.sidebar.toggle(label="`Turn on audio responses`")
 
      #---------------------------------------------------def download pdf---------------------------------------------------------#
 
@@ -162,19 +162,19 @@ try:
 
         with col1:  # First column for the model selection
             if api_provider == "openai":
-                with st.expander(label="Choose GPT Model", expanded=False):
-                    llm_model_chat = st.selectbox(label="Choose chat model",
+                with st.expander(label="`Choose GPT model`", expanded=False):
+                    llm_model_chat = st.selectbox(label="`choose chat model`",
                                                 options=["gpt-4o-mini", "gpt-4o-2024-08-06", "gpt-4o", "gpt-3.5-turbo"],
                                                 key="chat_key")
             else:
                 with st.expander(label="Choose Model", expanded=False):
-                    llm_model_chat = st.selectbox(label="Choose model",
+                    llm_model_chat = st.selectbox(label="`Choose model`",
                                                 options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
                                                         "meta/llama-3.1-405b-instruct"])
 
         with col2:  # Second column for the PDF generation section
-            with st.expander("Prepare PDF file for download", expanded=False):
-                file_name = st.text_input("Enter file name")
+            with st.expander("`Prepare pdf file for download`", expanded=False):
+                file_name = st.text_input("`Enter file name`")
 
                 if file_name:
                     # Download PDF
@@ -193,16 +193,16 @@ try:
 
         if api_provider == "openai":
              
-             with st.expander(label="choose GPT model",expanded=False):
+             with st.expander(label="`choose GPT model`",expanded=False):
              
-                llm_model_docs = st.selectbox(label="choose document query model",
+                llm_model_docs = st.selectbox(label="`choose document query model`",
                                       options=["gpt-4o-mini","gpt-4o","gpt-4o-2024-08-06"],key="document_query_key")
 
         elif api_provider == "nvidia nim":
              
-             with st.expander(label="choose model",expanded=False):
+             with st.expander(label="`choose model`",expanded=False):
 
-                llm_model_docs = st.selectbox(label="choose document query model",
+                llm_model_docs = st.selectbox(label="`choose document query model`",
                                       options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"],key="document_query_key")
 
          # File uploader in the sidebar
@@ -215,7 +215,7 @@ try:
 
     with tab3:
 
-        repo_url = st.text_input("Enter repository url: ")
+        repo_url = st.text_input("`Enter repository url: `")
 
     with tab4:
 
