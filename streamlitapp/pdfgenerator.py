@@ -80,4 +80,4 @@ def generate_pdf(text:str):
         else:
             wrap_text(pdf,line,max_width,code=False)
 
-    return pdf.output(dest="S").encode(('latin1'))
+    return pdf.output(dest="S").encode('latin1')
