@@ -486,17 +486,9 @@ try:
                                     for chunk in response:
                                         nim_resp+=chunk
                                         response_display.write(nim_resp)
-                            # Format response for LaTeX
-                            if any(token in response for token in ["$", "\\", "^{", "_{"]):  # Check if it contains LaTeX
-                                response = f"$${response}$$"  # Wrap it in double dollar signs for display
-
-
-                            cleaned_response = pdfgenerator.clean_text(text=response)
-                            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
-
-                            download_pdf(content=pdf_file)
-
                             
+
+                           
 
                             #image generation function calling
                             if response.startswith("Abracadabra baby.") and openai_api_key:
@@ -531,6 +523,15 @@ try:
                             # Append assistant message to session state and display it
                             st.session_state["messages"].append({"role": "assistant", "content": assistant_msg})
 
+                             #download pdf
+                            text = ""
+
+                            for messages in st.session_state["messages"]:
+                                text+=messages["content"] + "\n"
+                            cleaned_response = pdfgenerator.clean_text(text=text)
+                            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
+                            download_pdf(content=pdf_file)
+
 
                             if include_audio and openai_api_key:
 
@@ -553,6 +554,9 @@ try:
 
                                  st.info("add an openai api key to include audio response")
                                  st.stop()
+
+                            
+                            
                                 
 
                             
