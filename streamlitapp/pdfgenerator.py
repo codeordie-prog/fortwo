@@ -1,10 +1,10 @@
 from fpdf import FPDF
 import re
 
-def clean_text(text: str) -> str:
-    text = re.sub(r'[“”]', '"', text)
-    text = re.sub(r"[‘’]", "'", text)
-    return text
+def clean_content(text: str) -> str:
+    # Remove or replace unsupported characters
+    # You can customize this function to handle different characters
+    return ''.join(c for c in text if ord(c) < 256)  # Keep only ASCII characters
 
 def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> None:
     """Wraps text to fit the specified width. Format as code if specified."""
@@ -72,4 +72,4 @@ def generate_pdf(content: str):
             wrap_text(pdf, line, max_width)
 
     # Return the PDF as UTF-8
-    return pdf.output(dest='S').encode(('latin1')) 
+    return pdf.output(dest='S').encode('utf-8') 
