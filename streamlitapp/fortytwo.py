@@ -702,13 +702,14 @@ try:
                                         string_resp+=chunk
                                         string_resp_place.write(string_resp)
 
+
                                 text = ""
 
-                                for message in msgs:
-                                    text+=message["content"] + "\n"
+                                for message in msgs.messages:
+                                    text+=f"{message.content}"
 
-                                cleaned_text = pdfgenerator.clean_text(text=text)
-                                pdf_file = pdfgenerator.generate_pdf(content=cleaned_text)
+                                clean_text = pdfgenerator.clean_text(text)
+                                pdf_file = pdfgenerator.generate_pdf(content=clean_text)
 
                                 download_pdf(content=pdf_file)
 
@@ -977,8 +978,8 @@ try:
 
 
          
-        except TypeError:
-            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
+        except TypeError as e:
+            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object",e)
         except Exception as e:
              st.write("An error was encountered at main call",e)
     
