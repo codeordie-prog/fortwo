@@ -37,12 +37,12 @@ def wrap_text(pdf:FPDF, text:str, max_width:float, code:bool):
             else:
 
                 if current_line:
-                    pdf.cell(0,5,text=current_line.strip(),ln=True)
+                    pdf.cell(0,5,txt=current_line.strip(),ln=True)
 
                 current_line = f"{word}"
         
         if current_line:
-            pdf.cell(0,5,text=current_line.strip(),ln=True)
+            pdf.cell(0,5,txt=current_line.strip(),ln=True)
 
 
 def generate_pdf(text:str):
