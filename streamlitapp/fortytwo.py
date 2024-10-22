@@ -683,7 +683,7 @@ try:
 
                 with input_placeholder.container():
                     if user_query !=None:
-                        st.chat_message("user").write(user_query)
+                        st.chat_message("user").write(f"You : {user_query}")
 
                         with st.chat_message("ai"):
                                 retrieval_handler = PrintRetrievalHandler(st.container())
