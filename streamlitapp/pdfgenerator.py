@@ -72,4 +72,4 @@ def generate_pdf(content: str):
             wrap_text(pdf, line, max_width)
 
     # Return the PDF as UTF-8
-    return pdf.output(dest='S')
+    return bytes(pdf.output(dest='S'))
