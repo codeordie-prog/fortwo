@@ -42,7 +42,8 @@ def generate_pdf(content: str):
     pdf.add_page()
     pdf.set_author("42 Chatbot")
 
-    
+    pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)  # Make sure the font file is in the correct path
+    pdf.set_font('DejaVu', size=10)
     
     # Set margins
     margin = 10
