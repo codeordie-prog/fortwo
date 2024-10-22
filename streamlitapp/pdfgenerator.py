@@ -4,7 +4,8 @@ import re
 def clean_text(text: str) -> str:
     # Remove or replace unsupported characters
     # You can customize this function to handle different characters
-    return ''.join(c for c in text if ord(c) < 256)  # Keep only ASCII characters
+    #return ''.join(c for c in text if ord(c) < 256)  # Keep only ASCII characters
+    return text
 
 def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> None:
     """Wraps text to fit the specified width. Format as code if specified."""
@@ -40,6 +41,10 @@ def generate_pdf(content: str):
     pdf = FPDF(orientation="landscape", format="A4")
     pdf.add_page()
     pdf.set_author("42 Chatbot")
+
+    # Set the font to support UTF-8 characters
+    pdf.add_font('ArialUnicode', '', 'arialunicodetmt.ttf', uni=True)  # Use a font that supports Unicode
+    pdf.set_font('ArialUnicode', size=10)
     
     # Set margins
     margin = 10
