@@ -158,35 +158,37 @@ try:
 
     with tab1:
 
-        if api_provider == "openai":
-            
-            with st.expander(label="choose GPT model",expanded=False):
-                llm_model_chat = st.selectbox(label="choose chat model",
-                                      options=["gpt-4o-mini","gpt-4o-2024-08-06","gpt-4o","gpt-3.5-turbo"],key="chat_key")
-            
-        
-        else:
+        col1, col2 = st.columns([2, 1])  # Adjust ratios to control width
 
-            with st.expander(label="choose model",expanded=False):
-                llm_model_chat=st.selectbox(label="choose model",
-                                         options=["nvidia/llama-3.1-nemotron-70b-instruct","meta/llama-3.1-8b-instruct","meta/llama-3.1-405b-instruct"])
-
-
-        with st.expander("prepare pdf file for download",expanded=False):
-            file_name = st.text_input("enter file name")
-
-            if file_name:
-
-                #download pdf
-                text = ""
-
-                for messages in st.session_state["messages"]:
-                    text+=messages["content"] + "\n"
-                cleaned_response = pdfgenerator.clean_text(text=text)
-                pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
-                download_pdf(content=pdf_file,filename=file_name)
+        with col1:  # First column for the model selection
+            if api_provider == "openai":
+                with st.expander(label="Choose GPT Model", expanded=False):
+                    llm_model_chat = st.selectbox(label="Choose chat model",
+                                                options=["gpt-4o-mini", "gpt-4o-2024-08-06", "gpt-4o", "gpt-3.5-turbo"],
+                                                key="chat_key")
             else:
-                st.info("provide a file name")
+                with st.expander(label="Choose Model", expanded=False):
+                    llm_model_chat = st.selectbox(label="Choose model",
+                                                options=["nvidia/llama-3.1-nemotron-70b-instruct",
+                                                        "meta/llama-3.1-8b-instruct",
+                                                        "meta/llama-3.1-405b-instruct"])
+
+        with col2:  # Second column for the PDF generation section
+            with st.expander("Prepare PDF file for download", expanded=False):
+                file_name = st.text_input("Enter file name")
+
+                if file_name:
+                    # Download PDF
+                    text = ""
+
+                    for messages in st.session_state["messages"]:
+                        text += messages["content"] + "\n"
+                    
+                    cleaned_response = pdfgenerator.clean_text(text=text)
+                    pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
+                    download_pdf(content=pdf_file, filename=file_name)
+                else:
+                    st.info("Please provide a file name.")
 
     with tab2:
 
