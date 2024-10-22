@@ -1,7 +1,7 @@
 from fpdf import FPDF
 import re
 
-def clean_content(text: str) -> str:
+def clean_text(text: str) -> str:
     # Remove or replace unsupported characters
     # You can customize this function to handle different characters
     return ''.join(c for c in text if ord(c) < 256)  # Keep only ASCII characters
