@@ -169,8 +169,7 @@ try:
             else:
                 with st.expander(label="Choose Model", expanded=False):
                     llm_model_chat = st.selectbox(label="Choose model",
-                                                options=["nvidia/llama-3.1-nemotron-70b-instruct",
-                                                        "meta/llama-3.1-8b-instruct",
+                                                options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
                                                         "meta/llama-3.1-405b-instruct"])
 
         with col2:  # Second column for the PDF generation section
