@@ -484,7 +484,7 @@ try:
 
 
                             cleaned_response = pdfgenerator.clean_text(text=response)
-                            pdf_file = pdfgenerator.generate_pdf(text=cleaned_response)
+                            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
 
                             st.download_button(
                                 label="download pdf",
