@@ -352,7 +352,15 @@ try:
 
             return retriever
 
+    #---------------------------------------------------def download pdf---------------------------------------------------------#
 
+    def download_pdf(content:str):
+        st.download_button(
+            label="download pdf",
+            data=content,
+            file_name="file.pdf",
+            mime="application/pdf"
+        )
 
     #---------------------------------------------define download txt function-------------------------------------------------------------------#
 
@@ -486,12 +494,9 @@ try:
                             cleaned_response = pdfgenerator.clean_text(text=response)
                             pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
 
-                            st.download_button(
-                                label="download pdf",
-                                data=pdf_file,
-                                file_name="file.pdf",
-                                mime="application/pdf"
-                            )
+                            download_pdf(content=pdf_file)
+
+                            
 
                             #image generation function calling
                             if response.startswith("Abracadabra baby.") and openai_api_key:
