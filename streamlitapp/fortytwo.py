@@ -706,7 +706,7 @@ try:
                                 text = ""
 
                                 for message in msgs.messages:
-                                    text+=f"{message.content}"
+                                    text+=f"{message.content}" + "\n"
 
                                 clean_text = pdfgenerator.clean_text(text)
                                 pdf_file = pdfgenerator.generate_pdf(content=clean_text)
@@ -978,10 +978,10 @@ try:
 
 
          
-        except TypeError as e:
-            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object",e)
-        except Exception as e:
-             st.write("An error was encountered at main call",e)
+        except TypeError :
+            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
+        except Exception :
+             st.write("An error was encountered at main call")
     
 
         
