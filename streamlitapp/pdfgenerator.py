@@ -43,7 +43,7 @@ def generate_pdf(content: str):
     pdf.set_author("42 Chatbot")
 
     # Set the font to support UTF-8 characters
-    pdf.add_font('ArialUnicode', '', 'arialunicodetmt.ttf', uni=True)  # Use a font that supports Unicode
+    pdf.add_font('ArialUnicode', uni=True)  # Use a font that supports Unicode
     pdf.set_font('ArialUnicode', size=10)
     
     # Set margins
