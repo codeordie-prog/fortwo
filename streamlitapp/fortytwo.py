@@ -542,16 +542,6 @@ try:
                             # Append assistant message to session state and display it
                             st.session_state["messages"].append({"role": "assistant", "content": f'42 : {assistant_msg}'})
 
-                             #download pdf
-                            text = ""
-
-                            for messages in st.session_state["messages"]:
-                                text+=messages["content"] + "\n"
-                            cleaned_response = pdfgenerator.clean_text(text=text)
-                            pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
-                            download_pdf(content=pdf_file)
-
-
                             if include_audio and openai_api_key:
 
                                 responses_path=openai_audio.text_to_speech(response,openai_api_key)
