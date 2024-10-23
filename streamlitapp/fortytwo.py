@@ -126,7 +126,7 @@ try:
         }
         </style>
         <div class="about-text">
-        Hi carbon entity! I am <strong>42</strong>, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhiker's Guide to the Galaxy.<br><br>
+        Hi carbon entity! I am <strong>42</strong>, a powerful knowledge discovery engine named after the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy.<br><br>
         My brain is powered by <strong>GPT models</strong> from OpenAI and open-source models from Meta and NVIDIA.<br><br>
         My capabilities include:
         <ul>
