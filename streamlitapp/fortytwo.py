@@ -185,7 +185,8 @@ try:
                     
                     cleaned_response = pdfgenerator.clean_text(text=text)
                     pdf_file = pdfgenerator.generate_pdf(content=cleaned_response)
-                    download_pdf(content=pdf_file, filename=file_name)
+                    clean_pdf = pdfgenerator.edit_the_generated_pdf(pdfbytesObj=pdf_file)
+                    download_pdf(content=clean_pdf, filename=file_name)
                 else:
                     st.info("Please provide a file name.")
 

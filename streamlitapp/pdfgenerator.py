@@ -1,5 +1,6 @@
 from fpdf import FPDF
-import re
+import re,io
+import fitz
 
 def clean_text(text: str) -> str:
     # Remove or replace unsupported characters
@@ -77,3 +78,39 @@ def generate_pdf(content: str):
 
     # Return the PDF as UTF-8
     return bytes(pdf.output(dest='S'))
+
+
+def edit_the_generated_pdf(pdfbytesObj: bytes):
+    try:
+
+        pdf_stream = io.BytesIO(pdfbytesObj)
+
+        doc = fitz.open(stream=pdf_stream, filetype = "pdf")
+
+        cleaned_text = []
+
+        for page_num in range(len(doc)):
+
+            page = doc.load_page(page_num)
+
+            text = page.get_text("text")
+
+            text = text.replace("*","")
+
+            lines = text.split("\n")
+
+
+            for line in lines:
+
+                if line.startswith("#"):
+                    line = line.replace("#","")
+                    line = f"**{line}**"
+
+                cleaned_text.append(line)
+
+        final_cleaned_text = "\n\n".join(cleaned_text)
+
+        return generate_pdf(content=final_cleaned_text)
+
+    except Exception:
+        pass
