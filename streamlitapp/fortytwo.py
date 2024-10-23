@@ -127,15 +127,15 @@ try:
         </style>
         <div class="about-text">
         Hi carbon entity! I am <strong>42</strong>, a powerful knowledge discovery engine named after the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy.<br><br>
-        My brain is powered by <strong>GPT models</strong> from OpenAI and open-source models from Meta and NVIDIA.<br><br>
+        My brain is powered by <strong>GPT models</strong> from openAI and opensource models from Meta and NVIDIA.<br><br>
         My capabilities include:
         <ul>
-            <li>Chat</li>
-            <li>Image generation</li>
-            <li>Image description</li>
-            <li>Retrieval augmented generation</li>
-            <li>GitHub repositories querying</li>
-            <li>Web scraping</li>
+            <li>chat</li>
+            <li>image generation</li>
+            <li>image description</li>
+            <li>retrieval augmented generation</li>
+            <li>gitHub repositories querying</li>
+            <li>web scraping</li>
         </ul>
         </div>
         """, unsafe_allow_html=True)
