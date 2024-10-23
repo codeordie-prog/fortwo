@@ -799,11 +799,7 @@ try:
         try:
 
             with tab3:
-                if repo_url == None:
-                    st.info("please add the repository url to proceed.")
-                    st.stop()
-
-                else:
+                if repo_url:
                 
                     with tempfile.TemporaryDirectory() as temp_dir:
                         # Clone the repo
