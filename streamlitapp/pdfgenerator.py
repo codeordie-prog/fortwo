@@ -62,7 +62,7 @@ def generate_pdf(content: str):
         line = line.strip()
         
         # Check for start of code block
-        if line.startswith("```")|line.startswith("``")|line.startswith('"""'):
+        if line.startswith("```") |line.startswith("``"):
             in_code_block = not in_code_block  # Toggle code block state
             if in_code_block:  # Starting a code block
                 code_block = ""  # Reset code block
