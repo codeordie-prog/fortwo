@@ -96,7 +96,7 @@ try:
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
     #st.sidebar.title("chatwith42")
-    with st.sidebar.expander(label="About",expanded=False):
+    with st.sidebar.expander(label="`About`",expanded=False):
      st.markdown("""
         Hi carbon entity! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
         My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
@@ -113,7 +113,7 @@ try:
 
     #--------------------------------------------------sidebar instructions section-------------------------------------------------------------#
 
-    with st.sidebar.expander(label="Instructions for an API key"):
+    with st.sidebar.expander(label="`Instructions for an API key`"):
         st.markdown(""" 
     OpenAI:
     1. Go to [OpenAI API Keys](https://platform.openai.com/account/api-keys).
@@ -128,14 +128,14 @@ try:
 
     #-------------------------------------------------------API PROVIDERS--------------------------------------------------------------------------#
 
-    with st.sidebar.expander(label="Choose API provider"):
+    with st.sidebar.expander(label="`Choose API provider`"):
         api_provider = st.selectbox(
             label="choose API provider",
             options=["openai", "nvidia nim"]
 
     )
     # Input for OpenAI API key in the sidebar
-    with st.sidebar.expander(label = "Add API keys", expanded=False):
+    with st.sidebar.expander(label = "`Add API keys`", expanded=False):
 
         openai_api_key = st.text_input("OpenAI API Key", type="password")
         nvidia_api_key = st.text_input("Nvidia API key", type="password")
@@ -631,6 +631,7 @@ try:
                     st.info("Please upload documents or add url to continue.")
                     st.stop()
                     
+                    
                 retriever = configure_retriever(uploaded_files)
 
                 llm = None
@@ -800,11 +801,7 @@ try:
         try:
 
             with tab3:
-                if repo_url == None:
-                    st.info("please add the repository url to proceed.")
-                    st.stop()
-
-                else:
+                if repo_url:
                 
                     with tempfile.TemporaryDirectory() as temp_dir:
                         # Clone the repo
