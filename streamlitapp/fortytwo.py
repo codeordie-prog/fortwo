@@ -628,6 +628,7 @@ try:
             
                 if not uploaded_files:
                     st.info("Please upload documents or add url to continue.")
+                    st.stop()
                     
                     
                 retriever = configure_retriever(uploaded_files)
