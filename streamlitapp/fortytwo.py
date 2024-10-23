@@ -96,35 +96,106 @@ try:
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
     st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
     #st.sidebar.title("chatwith42")
-    with st.sidebar.expander(label="`About`",expanded=False):
-     st.markdown("""
-        Hi carbon entity! am 42, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhikers Guide to the Galaxy.
-        My brain is powered by GPT models from OpenAI and opensource models from Meta and NVIDIA.
+    with st.sidebar.expander(label="`About`", expanded=False):
+        st.markdown("""
+        <style>
+        .about-text {
+            font-size: 16px;
+            font-family: 'Arial';
+            color: #4B0082;  /* Indigo for the main text */
+            line-height: 1.6;
+            padding: 15px; /* Added padding for spaciousness */
+            background-color: #f0f8ff; /* Light Alice Blue background */
+            border-radius: 8px; /* Rounded corners */
+        }
+        .about-text strong {
+            color: #FF6347;  /* Tomato for emphasis */
+        }
+        .about-text li {
+            font-size: 15px;
+            color: #4682B4;  /* Steel Blue for list items */
+            transition: color 0.3s; /* Smooth color transition on hover */
+        }
+        .about-text li:hover {
+            color: #FF4500; /* Change color on hover */
+        }
+        .about-text ul {
+            margin-top: 10px;
+            list-style-type: disc; /* Bullet style */
+            padding-left: 20px; /* Indent for bullet points */
+        }
+        </style>
+        <div class="about-text">
+        Hi carbon entity! I am <strong>42</strong>, a powerful knowledge discovery engine named after the ultimate answer in the Hitchhiker's Guide to the Galaxy.<br><br>
+        My brain is powered by <strong>GPT models</strong> from OpenAI and open-source models from Meta and NVIDIA.<br><br>
         My capabilities include:
-        - chat
-        - image generation
-        - image description
-        - retrieval augmented generation
-        - github repositories querying
-        - web scrapping
-        """)
+        <ul>
+            <li>Chat</li>
+            <li>Image generation</li>
+            <li>Image description</li>
+            <li>Retrieval augmented generation</li>
+            <li>GitHub repositories querying</li>
+            <li>Web scraping</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 
     #--------------------------------------------------sidebar instructions section-------------------------------------------------------------#
 
+
     with st.sidebar.expander(label="`Instructions for an API key`"):
-        st.markdown(""" 
-    OpenAI:
-    1. Go to [OpenAI API Keys](https://platform.openai.com/account/api-keys).
-    2. Click on the `+ Create new secret key` button.
-    3. Next, enter an identifier name (optional) and click on the `Create secret key` button.
-    
-    NVIDIA:
-    1. Go to [Nvidia platform](https://www.nvidia.com/en-us/ai/)
-    2. Click on the Try now button and register for an account
-    3. Generate an API key
-    4. Copy it inside the NVIDIA API key section""")
+        st.markdown("""
+        <style>
+        .instructions-text {
+            font-size: 16px;
+            font-family: 'Arial';
+            color: #4B0082;  /* Indigo for the main text */
+            line-height: 1.6;
+            padding: 15px; /* Added padding for spaciousness */
+            background-color: #f0f8ff; /* Light Alice Blue background */
+            border-radius: 8px; /* Rounded corners */
+        }
+        .instructions-text strong {
+            color: #FF6347;  /* Tomato for emphasis */
+        }
+        .instructions-text li {
+            font-size: 15px;
+            color: #4682B4;  /* Steel Blue for list items */
+            transition: color 0.3s; /* Smooth color transition on hover */
+        }
+        .instructions-text li:hover {
+            color: #FF4500; /* Change color on hover */
+        }
+        .instructions-text ul {
+            margin-top: 10px;
+            list-style-type: disc; /* Bullet style */
+            padding-left: 20px; /* Indent for bullet points */
+        }
+        </style>
+        <div class="instructions-text">
+        To obtain your API keys, follow these instructions:
+        <ul>
+            <li><strong>OpenAI:</strong>
+                <ul>
+                    <li>Go to <a href="https://platform.openai.com/account/api-keys" style="color: #4682B4;">OpenAI API Keys</a>.</li>
+                    <li>Click on the <code>+ Create new secret key</code> button.</li>
+                    <li>Enter an identifier name (optional) and click on the <code>Create secret key</code> button.</li>
+                </ul>
+            </li>
+            <li><strong>NVIDIA:</strong>
+                <ul>
+                    <li>Go to <a href="https://www.nvidia.com/en-us/ai/" style="color: #4682B4;">Nvidia platform</a>.</li>
+                    <li>Click on the <code>Try now</code> button and register for an account.</li>
+                    <li>Generate an API key.</li>
+                    <li>Copy it inside the NVIDIA API key section.</li>
+                </ul>
+            </li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
 
     #-------------------------------------------------------API PROVIDERS--------------------------------------------------------------------------#
 

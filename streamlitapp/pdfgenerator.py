@@ -7,7 +7,7 @@ def clean_text(text: str) -> str:
     # You can customize this function to handle different characters
     return ''.join(c for c in text if ord(c) < 256)  # Keep only ASCII characters
     
-
+#necessary to ensure the response fits properly into the pdf page also code blocks to appear well structured and formated
 def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> None:
     """Wraps text to fit the specified width. Format as code if specified."""
     # Set the font for code or regular text
@@ -38,6 +38,7 @@ def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> Non
         if current_line:
             pdf.cell(0, 5, txt=current_line.strip(), ln=True)
 
+#generate the first draft of the pdf
 def generate_pdf(content: str):
     pdf = FPDF(orientation="landscape", format="A4")
     pdf.add_page()
@@ -80,6 +81,7 @@ def generate_pdf(content: str):
     return bytes(pdf.output(dest='S'))
 
 
+#clean up the pdf to appear nice
 def edit_the_generated_pdf(pdfbytesObj: bytes):
     try:
 
