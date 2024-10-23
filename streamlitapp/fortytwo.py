@@ -49,6 +49,7 @@ st.set_page_config(
     page_icon="👽",
     layout="wide",
     initial_sidebar_state="expanded",
+    theme={"base":"dark"},
     menu_items={
         "Get help": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
         "Report a bug": "https://github.com/codeordie-prog/fortwo/blob/master/streamlitapp/fortytwo.py",
