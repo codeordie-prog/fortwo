@@ -606,6 +606,10 @@ try:
                             st.session_state["messages"].append({"role": "user", "content": f"You : {user_input}"})
                             st.chat_message("user").write(user_input)
 
+                            if audio_text and not user_input:
+                                st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
+                                st.chat_message("user").write(audio_text)
+
                             #introduce streaming in chat session
                             stream_handler = StreamHandler(st.empty())
                     
@@ -621,8 +625,6 @@ try:
                                   
                                   with st.spinner("`Thinking..`"):
                                         
-                                        st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
-                                        st.chat_message("user").write(audio_text)
                                 
                                         response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
   
@@ -637,9 +639,6 @@ try:
 
                                         if openai_api_key and audio_text:
 
-                                            st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
-                                            st.chat_message("user").write(audio_text)
-                                        
                                             response = nvidia_chain.invoke({"question":audio_text,"chat_history":st.session_state["messages"]})
 
                                         elif not openai_api_key and audio_text and user_input:
