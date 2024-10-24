@@ -561,7 +561,7 @@ try:
                 
                 audio_input = st.experimental_audio_input("record message..")
                 audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
-                st.write(audio_text)
+                
 
 
                 with input_placeholder.container():
@@ -620,8 +620,11 @@ try:
                             elif api_provider == "openai" and audio_text:
                                   
                                   with st.spinner("`Thinking..`"):
+                                        
+                                        st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
+                                        st.chat_message("user").write(audio_text)
                                 
-                                    response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
+                                        response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
   
 
                                     
@@ -629,9 +632,21 @@ try:
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
                                     response_display = st.empty()
+                    
                                     with st.spinner("`Thinking..`"):
+
+                                        if openai_api_key and audio_text:
+
+                                            st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
+                                            st.chat_message("user").write(audio_text)
                                         
-                                        response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
+                                            response = nvidia_chain.invoke({"question":audio_text,"chat_history":st.session_state["messages"]})
+
+                                        elif not openai_api_key and audio_text and user_input:
+                                             
+                                             response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
+
+
                                     for chunk in response:
                                         nim_resp+=chunk
                                         response_display.write(nim_resp)
