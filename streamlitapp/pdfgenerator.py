@@ -40,7 +40,7 @@ def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> Non
 
 # Generate the first draft of the PDF
 def generate_pdf(content: str):
-    pdf = FPDF(orientation="landscape", format="A4")
+    pdf = FPDF(orientation="portrait", format="A4")
     pdf.add_page()
     pdf.set_author("42 Chatbot")
 
