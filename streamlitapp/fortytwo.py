@@ -603,8 +603,9 @@ try:
 
                             
                             # Append user message to session state
-                            st.session_state["messages"].append({"role": "user", "content": f"You : {user_input}"})
-                            st.chat_message("user").write(user_input)
+                            if user_input:
+                                st.session_state["messages"].append({"role": "user", "content": f"You : {user_input}"})
+                                st.chat_message("user").write(user_input)
 
                             if audio_text and not user_input:
                                 st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
