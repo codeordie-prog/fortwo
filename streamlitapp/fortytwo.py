@@ -561,6 +561,7 @@ try:
                 
                 audio_input = st.experimental_audio_input("record message..")
                 audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
+                st.write(audio_text)
 
 
                 with input_placeholder.container():
