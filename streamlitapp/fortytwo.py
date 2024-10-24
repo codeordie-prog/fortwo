@@ -561,6 +561,8 @@ try:
                 audio_input = st.experimental_audio_input("record message..")
                 audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
 
+                
+
                 with input_placeholder.container():
                 
                     try:
@@ -609,10 +611,15 @@ try:
                             # Get response from LLM chain
 
                             if api_provider == "openai":
-                                with st.spinner("`Thinking..`"):
-                                    
-                                    response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
+                                with st.spinner("`Thinking..`"):
+                                    if st.button(label="send audio query",key="audioquery"):
+                                
+                                        response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
+
+                                    else:
+
+                                         response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
                             elif api_provider == "nvidia nim":
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
