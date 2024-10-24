@@ -559,14 +559,16 @@ try:
                 
                 user_input =  st.chat_input(key="chat input") 
                 
-                
+                audio_input = st.experimental_audio_input("record message..")
+                audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
+
 
                 with input_placeholder.container():
                 
                     try:
                         
                         # Handle user input
-                        if user_input != None:
+                        if user_input != None or audio_text!=None:
 
                             if api_provider == "openai":
 
@@ -608,11 +610,18 @@ try:
                     
                             # Get response from LLM chain
 
-                            if api_provider == "openai":
+                            if api_provider == "openai" and user_input:
                                 
                                 with st.spinner("`Thinking..`"):
                                 
                                     response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+
+                            elif api_provider == "openai" and audio_text:
+                                  
+                                  with st.spinner("`Thinking..`"):
+                                
+                                    response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
+  
 
                                     
                             elif api_provider == "nvidia nim":
