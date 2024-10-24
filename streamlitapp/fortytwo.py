@@ -88,6 +88,18 @@ try:
         else:
          st.error("Failed to load image.")
 
+    with col3:
+        st.markdown(
+            """
+
+            <a href="https://buymeacoffee.com/Kelvinndeti" target="_blank">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
+            </a>
+            """,
+            unsafe_allow_html=True
+             )
+
+
     st.markdown(
     """
     <style>
