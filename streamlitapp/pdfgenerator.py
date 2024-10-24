@@ -38,13 +38,12 @@ def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> Non
         if current_line:
             pdf.cell(0, 5, txt=current_line.strip(), ln=True)
 
-#generate the first draft of the pdf
+
 def generate_pdf(content: str):
     pdf = FPDF(orientation="landscape", format="A4")
     pdf.add_page()
     pdf.set_author("42 Chatbot")
 
-    
     pdf.set_font('Times', size=10)
     
     # Set margins
@@ -53,7 +52,7 @@ def generate_pdf(content: str):
     pdf.set_right_margin(margin)
     
     # Calculate maximum width for the text
-    max_width = pdf.w - 2 * margin  # Total width - left and right margins
+    max_width = pdf.w - 2 * margin  # Total width minus left and right margins
     
     # Wrap and add each line to the PDF
     in_code_block = False
@@ -62,23 +61,26 @@ def generate_pdf(content: str):
     for line in content.split("\n"):
         line = line.strip()
         
-        # Check for start of code block
-        if line.startswith("```") |line.startswith("``"):
+        # Check for start/end of code block
+        if line.startswith("```") or line.startswith("``"):
             in_code_block = not in_code_block  # Toggle code block state
-            if in_code_block:  # Starting a code block
-                code_block = ""  # Reset code block
-            else:  # Ending a code block
-                wrap_text(pdf, code_block, max_width, code=True)  # Print the code block
-                continue  # Skip the code block marker
+            
+            # If we've just exited a code block, render the accumulated block
+            if not in_code_block and code_block:
+                wrap_text(pdf, code_block.strip(), max_width, code=True)  # Print the accumulated code block
+                code_block = ""  # Reset the code block after printing
+            continue  # Skip the code block marker
         
         # If we are in a code block, accumulate lines
         if in_code_block:
             code_block += line + "\n"  # Keep the newline for each line in the code
         else:
+            # Otherwise, wrap normal text
             wrap_text(pdf, line, max_width)
 
-    # Return the PDF as UTF-8
+    # Return the PDF as bytes
     return bytes(pdf.output(dest='S'))
+
 
 
 #clean up the pdf to appear nice
