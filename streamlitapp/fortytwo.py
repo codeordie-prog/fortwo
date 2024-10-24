@@ -256,7 +256,16 @@ try:
                 with st.expander(label="`Choose Model`", expanded=False):
                     llm_model_chat = st.selectbox(label="`Choose model`",
                                                 options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
-                                                        "meta/llama-3.1-405b-instruct"])
+                                               "meta/llama-3.1-405b-instruct"])
+
+        st.markdown(
+            """
+            <a href="https://www.buymeacoffee.com/Kelvinndeti" target="_blank">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
+            </a>
+            """,
+            unsafe_allow_html=True
+             )
 
         with col2:  # Second column for the PDF generation section
             with st.expander("`Prepare pdf file for download`", expanded=False):
@@ -277,14 +286,7 @@ try:
                     st.info("Please provide a file name.")
 
             
-            st.markdown(
-            """
-            <a href="https://www.buymeacoffee.com/Kelvinndeti" target="_blank">
-                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
-            </a>
-            """,
-            unsafe_allow_html=True
-             )
+           
 
     with tab2:
 
