@@ -1055,8 +1055,8 @@ try:
 
 
          
-        except TypeError :
-            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object")
+        except TypeError as e:
+            st.write("encountered a None type inside main call, check url submitted it might be returning a none type object",e)
         except Exception :
              st.write("An error was encountered at main call")
     
