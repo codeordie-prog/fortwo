@@ -561,7 +561,7 @@ try:
                 user_input =  st.chat_input(key="chat input") 
                 
                 
-                audio_input = st.experimental_audio_input()
+                audio_input = st.experimental_audio_input("")
                 audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
                 
 
