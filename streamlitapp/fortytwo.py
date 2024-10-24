@@ -88,13 +88,28 @@ try:
         else:
          st.error("Failed to load image.")
 
+    st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] img {
+        border-radius: 15px; /* Adjust the value for roundness */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow effect */
+        margin-bottom: 20px; /* Adds space below the image */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+
+    st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
+
     #------------------------------------------------------------tabs----------------------------------------------------------------------------
 
     tab1,tab2,tab3,tab4 = st.tabs(["`chat`","`document query`","`github`","`scraping`"])
 
 
     #-----------------------------------------------------------sidebar about section-------------------------------------------------------------#
-    st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
+    #st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
     #st.sidebar.title("chatwith42")
     with st.sidebar.expander(label="`About`", expanded=False):
         st.markdown("""
