@@ -526,7 +526,7 @@ try:
 
     def chat_with_42():
             
-            user_input_column , audio_column = st.columns([1,1])
+           
             system_prompt = systemprompt.system_prompt
             
             with tab1:
@@ -557,12 +557,12 @@ try:
                     st.session_state["messages"] = [{"role": "assistant", "content": f"42 : {'Chat history cleared. How can I help you?'}"}]
                     st.rerun()  # Rerun the app to clear the chat history
 
-                with user_input_column:
-                    user_input =  st.chat_input(key="chat input") 
                 
-                with audio_column:
-                    audio_input = st.experimental_audio_input()
-                    audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
+                user_input =  st.chat_input(key="chat input") 
+                
+                
+                audio_input = st.experimental_audio_input()
+                audio_text = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
                 
 
 
