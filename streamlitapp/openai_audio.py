@@ -37,7 +37,7 @@ def speech_to_text(audio_file,api_key):
                                     response_format="text"
                                     )
         
-        return transcription.text
+        return transcription
 
     except:
         pass
