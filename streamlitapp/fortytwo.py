@@ -612,13 +612,12 @@ try:
 
                             if api_provider == "openai":
                                 
-                                if st.button(label="send audio query",key="audioquery"):
-                                    with st.spinner("`Thinking..`"):
+                                with st.spinner("`Thinking..`"):
                                     
-                                
+                                    if audio_text:
                                         response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
 
-                                else:
+                                    else:
 
                                          response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
                             elif api_provider == "nvidia nim":
