@@ -792,7 +792,7 @@ try:
                                 clean_text = pdfgenerator.clean_text(text)
                                 pdf_file = pdfgenerator.generate_pdf(content=clean_text)
 
-                                download_pdf(content=pdf_file)
+                                download_pdf(content=pdf_file,filename="myfile")
 
                                 if include_audio and openai_api_key:
 
