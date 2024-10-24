@@ -611,13 +611,14 @@ try:
                             # Get response from LLM chain
 
                             if api_provider == "openai":
-
-                                with st.spinner("`Thinking..`"):
-                                    if st.button(label="send audio query",key="audioquery"):
+                                
+                                if st.button(label="send audio query",key="audioquery"):
+                                    with st.spinner("`Thinking..`"):
+                                    
                                 
                                         response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
 
-                                    else:
+                                else:
 
                                          response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
                             elif api_provider == "nvidia nim":
