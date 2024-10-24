@@ -276,6 +276,16 @@ try:
                 else:
                     st.info("Please provide a file name.")
 
+            
+            st.markdown(
+            """
+            <a href="https://www.buymeacoffee.com/Kelvinndeti" target="_blank">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
+            </a>
+            """,
+            unsafe_allow_html=True
+             )
+
     with tab2:
 
         if api_provider == "openai":
