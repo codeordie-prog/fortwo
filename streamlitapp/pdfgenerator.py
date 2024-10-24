@@ -64,11 +64,12 @@ def generate_pdf(content: str):
             in_code_block = not in_code_block  # Toggle code block state
             
             # If we've just exited a code block, render the accumulated block
-            if not in_code_block and code_block:
-                pdf.ln(5)  # Add some space before the code block
-                wrap_text(pdf, code_block.strip(), max_width, code=True)  # Print the accumulated code block in Courier font
-                pdf.ln(5)  # Add space after the code block
-                code_block = ""  # Reset the code block after printing
+            if not in_code_block:
+                if code_block:
+                    pdf.ln(5)  # Add some space before the code block
+                    wrap_text(pdf, code_block.strip(), max_width, code=True)  # Print the accumulated code block in Courier font
+                    pdf.ln(5)  # Add space after the code block
+                    code_block = ""  # Reset the code block after printing
             continue  # Skip the code block marker
         
         # If we are in a code block, accumulate lines
