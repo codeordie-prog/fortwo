@@ -24,3 +24,20 @@ def text_to_speech(input,api_key):
     
     else:
         return None
+
+
+def speech_to_text(audio_file,api_key):
+    try:
+
+        client = OpenAI(api_key=api_key)
+
+        transcription = client.audio.transcriptions.create(
+                                    model="whisper-1", 
+                                    file=audio_file, 
+                                    response_format="text"
+                                    )
+        
+        return transcription.text
+
+    except:
+        pass

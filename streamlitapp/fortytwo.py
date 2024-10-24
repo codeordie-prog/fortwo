@@ -558,6 +558,7 @@ try:
 
                 
                 user_input =  st.chat_input(key="chat input") 
+                audio_input = st.experimental_audio_input("record message...")
 
                 with input_placeholder.container():
                 
@@ -608,14 +609,22 @@ try:
 
                             if api_provider == "openai":
                                 with st.spinner("`Thinking..`"):
-                                    response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+                                    if audio_input:
+                                        audio_query = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
+                                        response = llm_chain.run({"question": audio_query}, callbacks = [stream_handler])
+                                    else:
+                                        response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
 
                             elif api_provider == "nvidia nim":
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
                                     response_display = st.empty()
                                     with st.spinner("`Thinking..`"):
-                                        response = nvidia_chain.invoke({"question": user_input,"chat_history":st.session_state["messages"]})
+                                        if openai_api_key and audio_input:
+                                            audio_query = openai_audio.speech_to_text(audio_file=audio_input,api_key=openai_api_key)
+                                            response = nvidia_chain.invoke({"question": audio_query,"chat_history":st.session_state["messages"]})
+                                        else:
+                                            response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
                                     for chunk in response:
                                         nim_resp+=chunk
                                         response_display.write(nim_resp)
