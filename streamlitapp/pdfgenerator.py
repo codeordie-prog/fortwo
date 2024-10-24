@@ -12,7 +12,7 @@ def wrap_text(pdf: FPDF, text: str, max_width: float, code: bool = False) -> Non
     """Wraps text to fit the specified width. Format as code if specified."""
     # Set the font for code or regular text
     if code:
-        pdf.set_font("Courier", size=10)  # Use a monospaced font for code
+        pdf.set_font("Arial", size=10)  # Use a monospaced font for code
     else:
         pdf.set_font("Times", size=10)  # Use the standard font for regular text
 
