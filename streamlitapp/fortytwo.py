@@ -240,6 +240,18 @@ try:
 
     include_audio = st.sidebar.toggle(label="`Turn on audio responses`")
 
+
+    st.sidebar.markdown(
+            """
+
+            <a href="https://buymeacoffee.com/Kelvinndeti" target="_blank">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
+            </a>
+            """,
+            unsafe_allow_html=True
+             )
+
+
      #---------------------------------------------------def download pdf---------------------------------------------------------#
 
     def download_pdf(content:str, filename:str):
@@ -270,16 +282,7 @@ try:
                                                 options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
                                                "meta/llama-3.1-405b-instruct"])
 
-        st.markdown(
-            """
-
-            <a href="https://buymeacoffee.com/Kelvinndeti" target="_blank">
-                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px; width: 217px;" >
-            </a>
-            """,
-            unsafe_allow_html=True
-             )
-
+       
         with col2:  # Second column for the PDF generation section
             with st.expander("`Prepare pdf file for download`", expanded=False):
                 file_name = st.text_input("`Enter file name`")
