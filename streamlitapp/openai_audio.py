@@ -1,5 +1,5 @@
 import tempfile
-from openai import OpenAI
+from openai import OpenAI as opn
 
 
 def text_to_speech(input,api_key):
@@ -9,7 +9,7 @@ def text_to_speech(input,api_key):
     if count<4000:
 
 
-        client = OpenAI(api_key=api_key)
+        client = opn(api_key=api_key)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
             temp_path = temp_file.name  # Get the name of the temporary file
             response = client.audio.speech.create(
@@ -29,7 +29,7 @@ def text_to_speech(input,api_key):
 def speech_to_text(audio_file,api_key):
     try:
 
-        client = OpenAI(api_key=api_key)
+        client = opn(api_key=api_key)
 
         transcription = client.audio.transcriptions.create(
                                     model="whisper-1", 
