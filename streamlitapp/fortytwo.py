@@ -558,7 +558,7 @@ try:
 
                 
                 user_input =  st.chat_input(key="chat input") 
-                
+                audio_input = st.experimental_audio_input("record message..")
 
                 with input_placeholder.container():
                 
