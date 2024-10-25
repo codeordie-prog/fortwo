@@ -683,7 +683,9 @@ try:
                                         else:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
-
+                                            for chunk in response:
+                                                nim_resp += chunk
+                                                response_display.write(nim_resp)
                                         # Stream the response chunks if they are iterable
                                         try:
                                             for chunk in response:
