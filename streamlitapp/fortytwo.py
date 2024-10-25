@@ -652,10 +652,10 @@ try:
                                         response_display.write(nim_resp)
                             
 
-                            formated_response = f"""
+                            formated_response = f"""$$
 
                              {response}
-                            
+                            $$
                             """
 
                             #image generation function calling
