@@ -699,8 +699,8 @@ try:
                                                     nim_resp += chunk
                                                     nvidia_resp_display.write(nim_resp)
 
-                                        else:
-                                            
+                                        elif not uploaded_chat_documents:
+                                            query_for_docs = user_input if user_input else audio_text
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                             if response:
