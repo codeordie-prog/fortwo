@@ -660,58 +660,54 @@ try:
   
 
                                     
-                            elif api_provider == "nvidia nim":
+                            if api_provider == "nvidia nim":
                                 nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                 nim_resp = ""
-                            
-                                nvidia_resp_display=st.empty()
-
+                                nvidia_resp_display = st.empty()
+                                
                                 with st.spinner("`Thinking..`"):
 
-                                    if nvidia_api_key: 
-                                        if uploaded_chat_documents:
-
-                                            # Determine input source
-                                            if audio_text and not user_input:
-                                                query_for_docs = audio_text
-
-                                            elif not audio_text and user_input:
-                                                query_for_docs = user_input
-
-                                            else:
-
-                                                query_for_docs = user_input
-            
-                                            # Configure retriever and retrieve documents
-                                            chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
-                                            retrieved_docs = chat_doc_retriever.invoke(input=query_for_docs)
-
-                                            # Format documents into a single text string
-                                            docs_text = " ".join([str(doc) for doc in retrieved_docs])
-
-                                            # Create a context-enriched query
-                                            query_with_context = f"{query_for_docs} only if necessary with respect to context: {docs_text}"
-
-                                            # Run the LLM with context-enriched query
-                                            response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
-                                            if response:
-                                                for chunk in response:
-                                                    nim_resp += chunk
-                                                    nvidia_resp_display.write(nim_resp)
-
-                                        elif not uploaded_chat_documents:
-                                            query_for_docs = user_input if user_input else audio_text
-                                            # Run the LLM with a direct query if no documents are uploaded
-                                            response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
-                                            if response:
-                                                for chunk in response:
-                                                    nim_resp += chunk
-                                                    nvidia_resp_display.write(nim_resp)
-                                        
-
-                                    else:
+                                    if not nvidia_api_key:
                                         st.warning("Please provide a valid NVIDIA API key to continue.")
-                            
+                                        st.stop()
+
+                                    # Match cases for conditions based on available inputs
+                                    query_for_docs = None
+                                    retrieved_docs = ""
+
+                                    match (audio_text, user_input, uploaded_chat_documents):
+                                        # Case when audio_text is provided and documents are uploaded
+                                        case (audio_text, None, uploaded_chat_documents):
+                                            query_for_docs = audio_text
+                                            chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
+                                            retrieved_docs = " ".join(str(doc) for doc in chat_doc_retriever.invoke(input=query_for_docs))
+
+                                        # Case when user_input is provided and documents are uploaded
+                                        case (None, user_input, uploaded_chat_documents):
+                                            query_for_docs = user_input
+                                            chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
+                                            retrieved_docs = " ".join(str(doc) for doc in chat_doc_retriever.invoke(input=query_for_docs))
+
+                                        # Case when both audio_text and user_input are available with documents
+                                        case (_, user_input, uploaded_chat_documents):
+                                            query_for_docs = user_input
+                                            chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
+                                            retrieved_docs = " ".join(str(doc) for doc in chat_doc_retriever.invoke(input=query_for_docs))
+
+                                        # Default case: no documents, use either user_input or audio_text
+                                        case _:
+                                            query_for_docs = user_input if user_input else audio_text
+
+                                    # Add context from documents if available
+                                    query_with_context = f"{query_for_docs} only if necessary with respect to context: {retrieved_docs}" if retrieved_docs else query_for_docs
+
+                                    # Run the LLM with context-enriched or direct query
+                                    response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
+                                    if response:
+                                        for chunk in response:
+                                            nim_resp += chunk
+                                            nvidia_resp_display.write(nim_resp)
+                                                        
 
                     
 
