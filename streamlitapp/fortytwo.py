@@ -636,7 +636,7 @@ try:
 
                                     docs_text = "".join([str(doc) for doc in retrieved_docs])
 
-                                    query_with_context = f"{query_for_docs} only if necessary with respect to context : {docs_text}"
+                                    query_with_context = f"{query_for_docs} the retrieved document context is : {docs_text}"
                                 
                                     with st.spinner("`Thinking..`"):
                                 
