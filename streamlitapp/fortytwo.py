@@ -540,7 +540,7 @@ try:
                 with response_placeholder.container():
                     # Initialize chat history if not already in session state
                     if "messages" not in st.session_state:
-                        st.session_state["messages"] = [{"role": "assistant", "content": f'42 : "How can I help you?"'}]
+                        st.session_state["messages"] = [{"role": "assistant", "content": f'"How can I help you?"'}]
 
                     #if "scratchpad" not in st.session_state:
                         #st.session_state["scratchpad"] = ""
@@ -554,7 +554,7 @@ try:
 
                 # "Clear Chat History" button
                 if st.button("Clear Chat History",key="chat_clear"):
-                    st.session_state["messages"] = [{"role": "assistant", "content": f"42 : {'Chat history cleared. How can I help you?'}"}]
+                    st.session_state["messages"] = [{"role": "assistant", "content": f"{'Chat history cleared. How can I help you?'}"}]
                     st.rerun()  # Rerun the app to clear the chat history
 
                 
@@ -604,11 +604,11 @@ try:
                             
                             # Append user message to session state
                             if user_input:
-                                st.session_state["messages"].append({"role": "user", "content": f"You : {user_input}"})
+                                st.session_state["messages"].append({"role": "user", "content": f"{user_input}"})
                                 st.chat_message("user").write(user_input)
 
                             if audio_text and not user_input:
-                                st.session_state["messages"].append({"role": "user", "content": f"You : {audio_text}"})
+                                st.session_state["messages"].append({"role": "user", "content": f"{audio_text}"})
                                 st.chat_message("user").write(audio_text)
 
                             #introduce streaming in chat session
