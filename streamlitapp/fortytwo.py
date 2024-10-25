@@ -450,7 +450,7 @@ try:
                  temp_dir = tempfile.TemporaryDirectory()
                  for file in uploaded_files:
                     temp_filepath = os.path.join(temp_dir.name, file.name)
-                    st.write(temp_filepath)
+                    #st.write(temp_filepath)
                     with open(temp_filepath, "wb") as f:
                         f.write(file.getvalue())
 
@@ -473,7 +473,8 @@ try:
                             st.info("please add api key")
                             st.stop()
                         else:
-                            st.image(file,width=380)
+                            with col2:
+                                st.image(file,width=380)
                             base64image = vision.encode_image(temp_filepath)
                             description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=image_description_prompt)
                             description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
@@ -686,14 +687,7 @@ try:
                                             for chunk in response:
                                                 nim_resp += chunk
                                                 response_display.write(nim_resp)
-                                        # Stream the response chunks if they are iterable
-                                        try:
-                                            for chunk in response:
-                                                nim_resp += chunk
-                                                response_display.write(nim_resp)
-                                        except TypeError:
-                                            # If response is a single text, display it directly
-                                            response_display.write(response)
+                                        
 
                                     else:
                                         st.warning("Please provide a valid NVIDIA API key to continue.")
