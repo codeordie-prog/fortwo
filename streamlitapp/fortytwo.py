@@ -289,7 +289,7 @@ try:
 
                 #uploaded docs
                 uploaded_chat_documents = st.file_uploader(
-                 label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True,key="chat_document_file_uploader"
+                 label="Upload files, for large files use document query tab", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True,key="chat_document_file_uploader"
                 )
     
 
