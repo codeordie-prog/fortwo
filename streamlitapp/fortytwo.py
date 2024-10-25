@@ -690,6 +690,7 @@ try:
 
                             # Append assistant message to session state and display it
                             st.session_state["messages"].append({"role": "assistant", "content": f'42 : {assistant_msg}'})
+                            st.markdown(assistant_msg)
 
                             if include_audio and openai_api_key:
 
