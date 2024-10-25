@@ -284,7 +284,7 @@ try:
 
        
         with col2:  # Second column for the PDF generation section
-            with st.expander("`Prepare pdf file for download`", expanded=False):
+            with st.expander("`Upload and download documents`", expanded=False):
                 file_name = st.text_input("`Enter file name`")
 
                 #uploaded docs
@@ -661,8 +661,19 @@ try:
 
                                         if openai_api_key and audio_text:
 
+                                            if uploaded_chat_documents:
 
-                                            response = nvidia_chain.invoke({"question":audio_text,"chat_history":st.session_state["messages"]})
+                                                query_for_docs = audio_text if audio_text else user_input
+
+                                                chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)#define retriever
+
+                                                retrieved_docs = chat_doc_retriever.invoke(input=query_for_docs)
+
+                                                docs_text = "".join([str(doc) for doc in retrieved_docs])
+
+                                                query_with_context = f"{query_for_docs} only if necessary with respect to context : {docs_text}"
+
+                                                response = nvidia_chain.invoke({"question":query_for_docs,"chat_history":st.session_state["messages"]})
 
                                         elif not openai_api_key and audio_text and user_input:
                                              
