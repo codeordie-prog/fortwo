@@ -658,7 +658,8 @@ try:
                                 
                                         response = llm_chain.run({"question": chat_query}, callbacks = [stream_handler])
   
-
+                            # Ensure uploaded_chat_documents has a default value if undefined
+                            uploaded_chat_documents = uploaded_chat_documents if 'uploaded_chat_documents' in locals() else None
                                     
                             if api_provider == "nvidia nim":
                                 nvidia_chain = system_prompt | llm2 | StrOutputParser()
