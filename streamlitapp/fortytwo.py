@@ -652,40 +652,46 @@ try:
   
 
                                     
-                            elif api_provider == "nvidia nim" and user_input or audio_text:
-                                    nvidia_chain = system_prompt | llm2 | StrOutputParser()
-                                    nim_resp = ""
-                                    response_display = st.empty()
-                    
-                                    with st.spinner("`Thinking..`"):
+                            elif api_provider == "nvidia nim" and (user_input or audio_text):
+                                nvidia_chain = system_prompt | llm2 | StrOutputParser()
+                                nim_resp = ""
+                                response_display = st.empty()
 
-                                        if openai_api_key and audio_text:
+                                with st.spinner("`Thinking..`"):
 
-                                            if uploaded_chat_documents:
+                                    # Determine input source
+                                    query_for_docs = audio_text if audio_text else user_input
 
-                                                query_for_docs = audio_text if audio_text else user_input
+                                    if nvidia_api_key:
+                                        if uploaded_chat_documents:
+                                            # Configure retriever and retrieve documents
+                                            chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
+                                            retrieved_docs = chat_doc_retriever.invoke(input=query_for_docs)
 
-                                                chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)#define retriever
+                                            # Format documents into a single text string
+                                            docs_text = " ".join([str(doc) for doc in retrieved_docs])
 
-                                                retrieved_docs = chat_doc_retriever.invoke(input=query_for_docs)
+                                            # Create a context-enriched query
+                                            query_with_context = f"{query_for_docs} only if necessary with respect to context: {docs_text}"
 
-                                                docs_text = "".join([str(doc) for doc in retrieved_docs])
+                                            # Run the LLM with context-enriched query
+                                            response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
 
-                                                query_with_context = f"{query_for_docs} only if necessary with respect to context : {docs_text}"
+                                        else:
+                                            # Run the LLM with a direct query if no documents are uploaded
+                                            response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
 
-                                                response = nvidia_chain.invoke({"question":query_for_docs,"chat_history":st.session_state["messages"]})
-
-                                                for chunk in response:
-                                                    nim_resp+=chunk
-                                                    response_display.write(nim_resp)
-                                        else :
-                                             
-                                            response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
-
+                                        # Stream the response chunks if they are iterable
+                                        try:
                                             for chunk in response:
-                                                 nim_resp+=chunk
-                                                 response_display.write(nim_resp)
-                                        
+                                                nim_resp += chunk
+                                                response_display.write(nim_resp)
+                                        except TypeError:
+                                            # If response is a single text, display it directly
+                                            response_display.write(response)
+
+                                    else:
+                                        st.warning("Please provide a valid NVIDIA API key to continue.")
                             
 
                     
