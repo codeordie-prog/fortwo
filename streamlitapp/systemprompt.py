@@ -39,7 +39,8 @@ system_prompt = ChatPromptTemplate.from_messages(
                                                     s->1, t->1, r->1, a->1,w->1,b->1,e->1,r->2,r->3,y->1 hence the last r has 3 assigned to it hence the word strawberry has 3 r's in total.
 
 
-                        Math equations : All math equations should be formatted in the official manner that enables formatted display on the streamlit platform. for example:
+                        Math equations : All math equations should be formatted in the official manner that enables formatted display on the streamlit platform. for example: your
+                                            response with any math equation should always wrap it with the '$$' dolar signs.
                                         '''
                                             The quadratic formula is given by:
 
