@@ -681,7 +681,8 @@ try:
                                             for chunk in response:
                                                 nim_resp += chunk
                                                 response_display.write(nim_resp)
-                                    else:
+                                                
+                                    elif nvidia_api_key and not uploaded_chat_documents:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                             for chunk in response:
