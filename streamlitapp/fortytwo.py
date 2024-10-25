@@ -473,8 +473,8 @@ try:
                             st.info("please add api key")
                             st.stop()
                         else:
-                            with col2:
-                                st.image(file,width=380)
+                            
+                            #st.image(file,width=380)
                             base64image = vision.encode_image(temp_filepath)
                             description = vision.describe_image(base64image,openai_api_key=openai_api_key,prompt=image_description_prompt)
                             description_file_path = os.path.join(temp_dir_path, file.name + ".txt")
@@ -681,7 +681,7 @@ try:
                                             for chunk in response:
                                                 nim_resp += chunk
                                                 response_display.write(nim_resp)
-                                    elif not uploaded_chat_documents and nvidia_api_key:
+                                    else:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                             for chunk in response:
