@@ -653,15 +653,13 @@ try:
   
 
                                     
-                            elif api_provider == "nvidia nim" and (user_input or audio_text):
+                            elif api_provider == "nvidia nim":
                                 nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                 nim_resp = ""
                                 response_display = st.empty()
                                 nvidia_resp_display=st.empty()
 
                                 with st.spinner("`Thinking..`"):
-
-                        
 
                                     if nvidia_api_key: 
                                         if uploaded_chat_documents:
@@ -682,18 +680,17 @@ try:
                                             # Run the LLM with context-enriched query
                                             response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
 
-                                            for chunk in response:
-                                                nim_resp += chunk
-                                                response_display.write(nim_resp)
+                                            
 
                                         else:
                                             # Determine input source
                                             query_for_docs = audio_text if audio_text else user_input
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
-                                            for chunk in response:
-                                                nim_resp += chunk
-                                                nvidia_resp_display.write(nim_resp)
+                                       
+                                        for chunk in response:
+                                            nim_resp += chunk
+                                            nvidia_resp_display.write(nim_resp)
                                         
 
                                     else:
