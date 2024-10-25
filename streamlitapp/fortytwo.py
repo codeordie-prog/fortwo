@@ -652,11 +652,7 @@ try:
                                         response_display.write(nim_resp)
                             
 
-                            formated_response = f"""$$
-
-                             {response}
-                            $$
-                            """
+                    
 
                             #image generation function calling
                             if response.startswith("Abracadabra baby.") and openai_api_key:
@@ -682,7 +678,7 @@ try:
                             elif response.startswith("Abracadabra baby.") and not openai_api_key:
                                  st.info("Image generation requires a valid openai api key, please provide one. ")
 
-                            assistant_msg = formated_response  # Adjusted to fetch text from the response
+                            assistant_msg = response  # Adjusted to fetch text from the response
 
                             if assistant_msg == "Generated image.":
                                 st.session_state["messages"].append({"role":"assistant","content":f"Here is your generated image:{image_url}, for the description : {user_input}"})
@@ -690,7 +686,7 @@ try:
 
                             # Append assistant message to session state and display it
                             st.session_state["messages"].append({"role": "assistant", "content": f'42 : {assistant_msg}'})
-                            st.markdown(assistant_msg)
+                            
 
                             if include_audio and openai_api_key:
 
