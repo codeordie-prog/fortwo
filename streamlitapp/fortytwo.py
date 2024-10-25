@@ -287,6 +287,12 @@ try:
             with st.expander("`Prepare pdf file for download`", expanded=False):
                 file_name = st.text_input("`Enter file name`")
 
+                #uploaded docs
+                uploaded_chat_documents = st.file_uploader(
+                 label="Upload files", type=["pdf", "txt", "csv","jpg","png","jpeg"], accept_multiple_files=True,key="chat_document_file_uploader"
+                )
+    
+
                 if file_name:
                     # Download PDF
                     text = ""
@@ -519,6 +525,8 @@ try:
                 file_name="my_text_file.txt",
                 mime="text/plain"
             )
+
+   
         
     #-------------------------------------------------------------chat setup section---------------------------------------------------------#
 
@@ -616,22 +624,35 @@ try:
                     
                             # Get response from LLM chain
 
-                            if api_provider == "openai" and user_input:
-                                
-                                with st.spinner("`Thinking..`"):
-                                
-                                    response = llm_chain.run({"question": user_input}, callbacks = [stream_handler])
+                            if api_provider == "openai" and user_input or audio_text:
 
-                            elif api_provider == "openai" and audio_text:
-                                  
-                                  with st.spinner("`Thinking..`"):
-                                        
+                                if uploaded_chat_documents:
+
+                                    query_for_docs = audio_text if audio_text else user_input
+
+                                    chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)#define retriever
+
+                                    retrieved_docs = chat_doc_retriever.invoke(input=query_for_docs)
+
+                                    docs_text = "".join([str(doc) for doc in retrieved_docs])
+
+                                    query_with_context = f"{query_for_docs} with respect to context : {docs_text}"
                                 
-                                        response = llm_chain.run({"question": audio_text}, callbacks = [stream_handler])
+                                    with st.spinner("`Thinking..`"):
+                                
+                                        response = llm_chain.run({"question": query_with_context}, callbacks = [stream_handler])
+
+                                else:
+
+                                    with st.spinner("`Thinking..`"):
+
+                                        chat_query = audio_text if audio_text else user_input
+                                
+                                        response = llm_chain.run({"question": chat_query}, callbacks = [stream_handler])
   
 
                                     
-                            elif api_provider == "nvidia nim":
+                            elif api_provider == "nvidia nim" and user_input or audio_text:
                                     nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                     nim_resp = ""
                                     response_display = st.empty()
@@ -639,6 +660,7 @@ try:
                                     with st.spinner("`Thinking..`"):
 
                                         if openai_api_key and audio_text:
+
 
                                             response = nvidia_chain.invoke({"question":audio_text,"chat_history":st.session_state["messages"]})
 
