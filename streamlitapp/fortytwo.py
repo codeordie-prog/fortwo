@@ -628,8 +628,15 @@ try:
                             if api_provider == "openai" and user_input or audio_text:
 
                                 if uploaded_chat_documents:
+                                    
+                                    if user_input and audio_text:
+                                        query_for_docs = user_input
 
-                                    query_for_docs = audio_text if audio_text else user_input
+                                    elif not user_input and audio_text:
+                                        query_for_docs = audio_text
+
+                                    else:
+                                        query_for_docs = user_input
 
                                     chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)#define retriever
 
@@ -687,9 +694,6 @@ try:
 
                                             # Run the LLM with context-enriched query
                                             response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
-                                            for chunk in response:
-                                                nim_resp += chunk
-                                                nvidia_resp_display.write(nim_resp)
                                             
 
                                         else:
@@ -697,9 +701,9 @@ try:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                        
-                                            for chunk in response:
-                                                nim_resp += chunk
-                                                nvidia_resp_display.write(nim_resp)
+                                        for chunk in response:
+                                            nim_resp += chunk
+                                            nvidia_resp_display.write(nim_resp)
                                         
 
                                     else:
