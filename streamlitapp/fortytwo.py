@@ -661,11 +661,13 @@ try:
 
                                 with st.spinner("`Thinking..`"):
 
-                                    # Determine input source
-                                    query_for_docs = audio_text if audio_text else user_input
+                        
 
                                     if nvidia_api_key: 
                                         if uploaded_chat_documents:
+
+                                            # Determine input source
+                                            query_for_docs = audio_text if audio_text else user_input
             
                                             # Configure retriever and retrieve documents
                                             chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)
@@ -685,6 +687,8 @@ try:
                                                 response_display.write(nim_resp)
 
                                         else:
+                                            # Determine input source
+                                            query_for_docs = audio_text if audio_text else user_input
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                             for chunk in response:
