@@ -649,7 +649,7 @@ try:
 
                                     with st.spinner("`Thinking..`"):
 
-                                        chat_query = audio_text if audio_text else user_input
+                                        chat_query = user_input if user_input else audio_text
                                 
                                         response = llm_chain.run({"question": chat_query}, callbacks = [stream_handler])
   
