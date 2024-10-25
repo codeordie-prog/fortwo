@@ -677,6 +677,9 @@ try:
                                             # Run the LLM with context-enriched query
                                             response = nvidia_chain.invoke({"question": query_with_context, "chat_history": st.session_state["messages"]})
 
+                                            for chunk in response:
+                                                nim_resp += chunk
+                                                response_display.write(nim_resp)
                                         else:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
