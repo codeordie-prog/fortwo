@@ -680,9 +680,9 @@ try:
                                              response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
 
 
-                                    for chunk in response:
-                                        nim_resp+=chunk
-                                        response_display.write(nim_resp)
+                                        for chunk in response:
+                                            nim_resp+=chunk
+                                            response_display.write(nim_resp)
                             
 
                     
