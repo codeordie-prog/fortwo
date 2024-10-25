@@ -629,14 +629,9 @@ try:
 
                                 if uploaded_chat_documents:
                                     
-                                    if user_input and audio_text:
-                                        query_for_docs = user_input
+                                    
+                                    query_for_docs = user_input if user_input else audio_text
 
-                                    elif not user_input and audio_text:
-                                        query_for_docs = audio_text
-
-                                    else:
-                                        query_for_docs = user_input
 
                                     chat_doc_retriever = configure_retriever(uploaded_files=uploaded_chat_documents)#define retriever
 
