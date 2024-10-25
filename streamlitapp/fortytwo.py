@@ -657,6 +657,7 @@ try:
                                 nvidia_chain = system_prompt | llm2 | StrOutputParser()
                                 nim_resp = ""
                                 response_display = st.empty()
+                                nvidia_resp_display=st.empty()
 
                                 with st.spinner("`Thinking..`"):
 
@@ -681,13 +682,13 @@ try:
                                             for chunk in response:
                                                 nim_resp += chunk
                                                 response_display.write(nim_resp)
-                                                
+
                                     elif nvidia_api_key and not uploaded_chat_documents:
                                             # Run the LLM with a direct query if no documents are uploaded
                                             response = nvidia_chain.invoke({"question": query_for_docs, "chat_history": st.session_state["messages"]})
                                             for chunk in response:
                                                 nim_resp += chunk
-                                                response_display.write(nim_resp)
+                                                nvidia_resp_display.write(nim_resp)
                                         
 
                                     else:
