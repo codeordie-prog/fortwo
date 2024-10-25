@@ -776,8 +776,8 @@ try:
 
                         
 
-                    except Exception as e:
-                        st.write("an Error occured please enter a valid API key",e)
+                    except Exception :
+                        st.write("an Error occured please enter a valid API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
@@ -1102,8 +1102,8 @@ try:
                         return qa
 
                         
-        except Exception as e:
-             st.write("an error occured inside the github repo function, check the URL.",e)
+        except Exception:
+             st.write("an error occured inside the github repo function, check the URL.")
 
 
     #-----------------------------------------------------------audio---------------------------------------------------------------------------
