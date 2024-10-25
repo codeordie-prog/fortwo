@@ -675,14 +675,14 @@ try:
 
                                                 response = nvidia_chain.invoke({"question":query_for_docs,"chat_history":st.session_state["messages"]})
 
-                                        elif not openai_api_key and audio_text and user_input:
+                                        else :
                                              
-                                             response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
-
+                                            response = nvidia_chain.invoke({"question":user_input,"chat_history":st.session_state["messages"]})
 
                                         for chunk in response:
                                             nim_resp+=chunk
                                             response_display.write(nim_resp)
+                                        
                             
 
                     
