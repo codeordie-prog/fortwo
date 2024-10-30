@@ -279,8 +279,7 @@ try:
             else:
                 with st.expander(label="`Choose Model`", expanded=False):
                     llm_model_chat = st.selectbox(label="`Choose model`",
-                                                options=["meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct",
-                                               "meta/llama-3.1-405b-instruct"])
+                                                options=["meta/llama-3.1-405b-instruct","meta/llama-3.1-8b-instruct","nvidia/llama-3.1-nemotron-70b-instruct"])
 
        
         with col2:  # Second column for the PDF generation section
@@ -771,8 +770,8 @@ try:
 
                         
 
-                    except Exception as e :
-                        st.write("an Error occured please enter a valid API key",e)
+                    except Exception :
+                        st.write("an Error occured please enter a valid API key")
 
     #---------------------------------------------------------RAG setup section------------------------------------------------------------------#
     #query website function
