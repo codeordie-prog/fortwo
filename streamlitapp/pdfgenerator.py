@@ -80,7 +80,7 @@ def generate_pdf(content: str):
             wrap_text(pdf, line, max_width)
 
     # Return the PDF as bytes
-    return pdf.output(dest='S')
+    return bytes(pdf.output(dest='S').encode("utf-8"))
 
 #clean up the pdf to appear nice
 def edit_the_generated_pdf(pdfbytesObj: bytes):
