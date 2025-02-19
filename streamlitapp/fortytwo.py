@@ -124,48 +124,40 @@ try:
     #st.sidebar.image("streamlitapp/logo/stimage.jfif",width=250)
     #st.sidebar.title("chatwith42")
     with st.sidebar.expander(label="`About`", expanded=True):
-        st.markdown("""
-        <style>
-        .about-text {
-            font-size: 16px;
-            font-family: 'Arial';
-            color: #4B0082;  /* Indigo for the main text */
-            line-height: 1.6;
-            padding: 15px; /* Added padding for spaciousness */
-            background-color: #f0f8ff; /* Light Alice Blue background */
-            border-radius: 8px; /* Rounded corners */
-        }
-        .about-text strong {
-            color: #FF6347;  /* Tomato for emphasis */
-        }
-        .about-text li {
-            font-size: 15px;
-            color: #4682B4;  /* Steel Blue for list items */
-            transition: color 0.3s; /* Smooth color transition on hover */
-        }
-        .about-text li:hover {
-            color: #FF4500; /* Change color on hover */
-        }
-        .about-text ul {
-            margin-top: 10px;
-            list-style-type: disc; /* Bullet style */
-            padding-left: 20px; /* Indent for bullet points */
-        }
-        </style>
-        <div class="about-text">
-        Hi carbon entity! I am <strong>42</strong>, a powerful knowledge discovery engine named after the answer to the ultimate question in the Hitchhiker's Guide to the Galaxy.<br><br>
-        My brain is powered by <strong>GPT models</strong> from openAI and opensource models from Meta and NVIDIA.<br><br>
-        My capabilities include:
-        <ul>
-            <li>chat</li>
-            <li>image generation</li>
-            <li>image description</li>
-            <li>retrieval augmented generation</li>
-            <li>gitHub repositories querying</li>
-            <li>web scraping</li>
-        </ul>
-        </div>
-        """, unsafe_allow_html=True)
+     st.markdown("""
+    <style>
+    .about-text {
+        font-size: 16px;
+        font-family: 'Arial';
+        color: #4B0082;  /* Indigo for the main text */
+        line-height: 1.6;
+        padding: 15px; /* Added padding for spaciousness */
+        background-color: #f0f8ff; /* Light Alice Blue background */
+        border-radius: 8px; /* Rounded corners */
+    }
+    .about-text strong {
+        color: #FF6347;  /* Tomato for emphasis */
+    }
+    .about-text li {
+        font-size: 15px;
+        color: #4682B4;  /* Steel Blue for list items */
+        transition: color 0.3s; /* Smooth color transition on hover */
+    }
+    .about-text li:hover {
+        color: #FF4500; /* Change color on hover */
+    }
+    .about-text ul {
+        margin-top: 10px;
+        list-style-type: disc; /* Bullet style */
+        padding-left: 20px; /* Indent for bullet points */
+    }
+    </style>
+    <div class="about-text">
+        Find the advanced version of this, equipped with advanced tools, memory, research capabilities, and real world information search, <a href="https://witstorms.com" target="_blank" rel="noopener noreferrer">here</a>.<br><br>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 
 
 
